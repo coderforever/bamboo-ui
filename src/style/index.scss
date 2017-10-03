@@ -1,0 +1,14 @@
+// Misc
+pre.no-padding {
+	background: transparent;
+	border: none;
+	padding: 0;
+	font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: inherit;
+}
+
+.box .box-header .box-tools {
+	input {
+		height: 30px;
+	}
+}

@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+$default: #757575;
+$primary: #2B70E3;
+$info: #298185;
+$success: #3F8310;
+$danger: #B32828;
+$warning: #C1540B;
+$forbid: #2B2423;
+
+:root {
+	--bmbo-duration: 0.25s;
+
+	--bmbo-lead: #374249;
+	--bmbo-lead-active: #45A7B9;
+
+	--bmbo-component-spacing: 5px;
+
+	--bmbo-default: $default;
+	--bmbo-primary: $primary;
+	--bmbo-info: $info;
+	--bmbo-success: $success;
+	--bmbo-danger: $danger;
+	--bmbo-warning: $warning;
+	--bmbo-forbid: $forbid;
+
+	--bmbo-default-light: lighten($default, 5%);
+	--bmbo-primary-light: lighten($primary, 5%);
+	--bmbo-info-light: lighten($info, 5%);
+	--bmbo-success-light: lighten($success, 5%);
+	--bmbo-danger-light: lighten($danger, 5%);
+	--bmbo-warning-light: lighten($warning, 5%);
+	--bmbo-forbid-light: lighten($forbid, 5%);
+
+	--bmbo-default-dark: darken($default, 5%);
+	--bmbo-primary-dark: darken($primary, 5%);
+	--bmbo-info-dark: darken($info, 5%);
+	--bmbo-success-dark: darken($success, 5%);
+	--bmbo-danger-dark: darken($danger, 5%);
+	--bmbo-warning-dark: darken($warning, 5%);
+	--bmbo-forbid-dark: darken($forbid, 5%);
+
+	--bmbo-font-size: 14px;
+	--bmbo-color: #333;
+	--bmbo-color-light: #FFF;
+}

@@ -1,0 +1,84 @@
+@charset "UTF-8";
+
+.bmbo-row {
+	overflow-x: hidden;
+
+	> div {
+		display: flex;
+		flex-wrap: wrap;
+	}
+}
+
+.bmbo-col {
+	box-sizing: border-box;
+}
+
+@for $i from 1 through 24 {
+	.bmbo-col-#{$i}-24,
+	.bmbo-col-xs-#{$i}-24 {
+		width: percentage($i / 24);
+	}
+}
+
+@for $i from 1 through 10 {
+	.bmbo-col-#{$i}-10,
+	.bmbo-col-xs-#{$i}-10 {
+		width: percentage($i / 10);
+	}
+}
+
+@media (min-width: 576px) {
+	@for $i from 1 through 24 {
+		.bmbo-col-sm-#{$i}-24 {
+			width: percentage($i / 24);
+		}
+	}
+
+	@for $i from 1 through 10 {
+		.bmbo-col-sm-#{$i}-10 {
+			width: percentage($i / 10);
+		}
+	}
+}
+
+@media (min-width: 768px) {
+	@for $i from 1 through 24 {
+		.bmbo-col-md-#{$i}-24 {
+			width: percentage($i / 24);
+		}
+	}
+
+	@for $i from 1 through 10 {
+		.bmbo-col-md-#{$i}-10 {
+			width: percentage($i / 10);
+		}
+	}
+}
+
+@media (min-width: 992px) {
+	@for $i from 1 through 24 {
+		.bmbo-col-lg-#{$i}-24 {
+			width: percentage($i / 24);
+		}
+	}
+
+	@for $i from 1 through 10 {
+		.bmbo-col-lg-#{$i}-10 {
+			width: percentage($i / 10);
+		}
+	}
+}
+
+@media (min-width: 1200px) {
+	@for $i from 1 through 24 {
+		.bmbo-col-xl-#{$i}-24 {
+			width: percentage($i / 24);
+		}
+	}
+
+	@for $i from 1 through 10 {
+		.bmbo-col-xl-#{$i}-10 {
+			width: percentage($i / 10);
+		}
+	}
+}

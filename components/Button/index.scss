@@ -1,0 +1,45 @@
+@charset "UTF-8";
+
+@mixin buttonColor($color) {
+	background: var($color);
+
+	&:hover {
+		background: var(#{$color}-light);
+	}
+
+	&:active {
+		background: var(#{$color}-dark);
+	}
+}
+
+.bmbo-button {
+	color: var(--bmbo-color-light);
+	border: 0;
+	border-radius: 2px;
+	padding: 5px 12px;
+	font-size: var(--bmbo-font-size);
+
+	outline: none;
+	cursor: pointer;
+
+	@include buttonColor(--bmbo-default);
+
+	&.bmbo-primary {
+		@include buttonColor(--bmbo-primary);
+	}
+	&.bmbo-info {
+		@include buttonColor(--bmbo-info);
+	}
+	&.bmbo-success {
+		@include buttonColor(--bmbo-success);
+	}
+	&.bmbo-warning {
+		@include buttonColor(--bmbo-warning);
+	}
+	&.bmbo-danger {
+		@include buttonColor(--bmbo-danger);
+	}
+	&.bmbo-forbid {
+		@include buttonColor(--bmbo-forbid);
+	}
+}

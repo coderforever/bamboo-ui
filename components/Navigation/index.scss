@@ -1,0 +1,112 @@
+@mixin styleColor($color, $activeColor) {
+	background: var($color);
+
+	> ul {
+		> li.bmbo-nav-head {
+			&.bmbo-active > .bmbo-nav-head-title {
+				> .bmbo-nav-head-title-span {
+					border-bottom-color: var($activeColor, #FFF);
+				}
+			}
+
+			> .bmbo-nav-head-list {
+				background: var($color);
+				border-radius: 0 0 3px 3px;
+			}
+		}
+	}
+}
+
+.bmbo-nav.bmbo-horizontal {
+	color: var(--bmbo-color-light);
+
+	// Head
+	> ul {
+		margin: 0;
+		padding: 0;
+
+		> li.bmbo-nav-head {
+			position: relative;
+			display: inline-block;
+			cursor: pointer;
+
+			> .bmbo-nav-head-title {
+				padding: 6px 15px;
+
+				> .bmbo-nav-head-title-span {
+					padding: 6px 5px 3px 5px;
+					border-bottom: 3px solid transparent;
+
+					transition: border-bottom-color var(--bmbo-duration);
+				}
+
+				&:hover {
+					> .bmbo-nav-head-title-span {
+						border-bottom-color: rgba(#FFF, 0.3);
+					}
+				}
+			}
+
+			> .bmbo-nav-head-list {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				position: absolute;
+				top: 100%;
+				left: 0;
+				opacity: 0;
+
+				transform: scale(1, 0.5);
+				transform-origin: top;
+
+				transition: opacity var(--bmbo-duration) ease, transform var(--bmbo-duration) ease;
+			}
+
+			&:hover {
+				> .bmbo-nav-head-list {
+					opacity: 1;
+					transform: scale(1);
+				}
+			}
+		}
+	}
+
+	// Item
+	.bmbo-nav-item {
+		> .bmbo-nav-item-title {
+			padding: 6px 20px;
+			white-space: nowrap;
+			outline: none;
+
+			&:hover {
+				background: rgba(#FFF, 0.1);
+			}
+		}
+
+		> .bmbo-nav-item-list {
+		}
+	}
+
+	@include styleColor(--bmbo-lead, --bmbo-lead-active);
+	&.bmbo-default {
+		@include styleColor(--bmbo-default, --bmbo-color-light);
+	}
+	&.bmbo-primary {
+		@include styleColor(--bmbo-primary, --bmbo-color-light);
+	}
+	&.bmbo-info {
+		@include styleColor(--bmbo-info, --bmbo-color-light);
+	}
+	&.bmbo-success {
+		@include styleColor(--bmbo-success, --bmbo-color-light);
+	}
+	&.bmbo-warning {
+		@include styleColor(--bmbo-warning, --bmbo-color-light);
+	}
+	&.bmbo-danger {
+		@include styleColor(--bmbo-danger, --bmbo-color-light);
+	}
+	&.bmbo-forbid {
+		@include styleColor(--bmbo-forbid, --bmbo-color-light);
+	}
+}
