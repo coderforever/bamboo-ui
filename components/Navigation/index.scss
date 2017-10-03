@@ -1,4 +1,28 @@
-@mixin styleColor($color, $activeColor) {
+@import "../common";
+
+.bmbo-nav {
+	color: var(--bmbo-color-light);
+	margin-bottom: 10px;
+
+	[role="button"] {
+		cursor: pointer;
+	}
+
+	.bmbo-nav-item {
+		> .bmbo-nav-item-title {
+			white-space: nowrap;
+
+			&:hover {
+				background: rgba(#FFF, 0.1);
+			}
+		}
+	}
+}
+
+// ================================================
+// =                  Horizontal                  =
+// ================================================
+@mixin horizontalColor($color, $activeColor) {
 	background: var($color);
 
 	> ul {
@@ -18,12 +42,9 @@
 }
 
 .bmbo-nav.bmbo-horizontal {
-	color: var(--bmbo-color-light);
-
 	// Head
 	> ul {
-		margin: 0;
-		padding: 0;
+		@include listNoStyle;
 
 		> li.bmbo-nav-head {
 			position: relative;
@@ -48,23 +69,22 @@
 			}
 
 			> .bmbo-nav-head-list {
-				margin: 0;
-				padding: 0;
-				list-style: none;
+				@include listNoStyle;
 				position: absolute;
-				top: 100%;
+				top: 50%;
 				left: 0;
 				opacity: 0;
 
 				transform: scale(1, 0.5);
 				transform-origin: top;
 
-				transition: opacity var(--bmbo-duration) ease, transform var(--bmbo-duration) ease;
+				transition: opacity var(--bmbo-duration) ease, transform var(--bmbo-duration) ease, top var(--bmbo-duration) ease;
 			}
 
 			&:hover {
 				> .bmbo-nav-head-list {
 					opacity: 1;
+					top: 100%;
 					transform: scale(1);
 				}
 			}
@@ -75,38 +95,81 @@
 	.bmbo-nav-item {
 		> .bmbo-nav-item-title {
 			padding: 6px 20px;
-			white-space: nowrap;
-			outline: none;
-
-			&:hover {
-				background: rgba(#FFF, 0.1);
-			}
-		}
-
-		> .bmbo-nav-item-list {
 		}
 	}
 
-	@include styleColor(--bmbo-lead, --bmbo-lead-active);
+	@include horizontalColor(--bmbo-lead, --bmbo-lead-active);
 	&.bmbo-default {
-		@include styleColor(--bmbo-default, --bmbo-color-light);
+		@include horizontalColor(--bmbo-default, --bmbo-color-light);
 	}
 	&.bmbo-primary {
-		@include styleColor(--bmbo-primary, --bmbo-color-light);
+		@include horizontalColor(--bmbo-primary, --bmbo-color-light);
 	}
 	&.bmbo-info {
-		@include styleColor(--bmbo-info, --bmbo-color-light);
+		@include horizontalColor(--bmbo-info, --bmbo-color-light);
 	}
 	&.bmbo-success {
-		@include styleColor(--bmbo-success, --bmbo-color-light);
+		@include horizontalColor(--bmbo-success, --bmbo-color-light);
 	}
 	&.bmbo-warning {
-		@include styleColor(--bmbo-warning, --bmbo-color-light);
+		@include horizontalColor(--bmbo-warning, --bmbo-color-light);
 	}
 	&.bmbo-danger {
-		@include styleColor(--bmbo-danger, --bmbo-color-light);
+		@include horizontalColor(--bmbo-danger, --bmbo-color-light);
 	}
 	&.bmbo-forbid {
-		@include styleColor(--bmbo-forbid, --bmbo-color-light);
+		@include horizontalColor(--bmbo-forbid, --bmbo-color-light);
+	}
+}
+
+// ================================================
+// =                   Vertical                   =
+// ================================================
+@mixin verticalColor($color, $activeColor) {
+	background: var($color);
+}
+
+.bmbo-nav.bmbo-vertical {
+	> ul {
+		@include listNoStyle;
+
+		// Item
+		.bmbo-nav-item {
+			.bmbo-nav-item-title {
+				padding: 10px 20px;
+
+				> .bmbo-nav-item-title-offset {
+					display: inline-block;
+					height: 1px;
+				}
+			}
+
+			.bmbo-nav-item-list {
+				@include listNoStyle;
+			}
+		}
+	}
+
+	@include verticalColor(--bmbo-lead, --bmbo-lead-active);
+	&.bmbo-default {
+		@include verticalColor(--bmbo-default, --bmbo-color-light);
+	}
+	&.bmbo-primary {
+		@include verticalColor(--bmbo-primary, --bmbo-color-light);
+	}
+	&.bmbo-info {
+		@include verticalColor(--bmbo-info, --bmbo-color-light);
+	}
+	&.bmbo-success {
+		@include verticalColor(--bmbo-success, --bmbo-color-light);
+	}
+	&.bmbo-warning {
+		@include verticalColor(--bmbo-warning, --bmbo-color-light);
+	}
+	&.bmbo-danger {
+		@include horizontalColor(--bmbo-danger, --bmbo-color-light);
+	}
+	&.bmbo-forbid {
+		@include horizontalColor(--bmbo-forbid, --bmbo-color-light);
 	}
 }

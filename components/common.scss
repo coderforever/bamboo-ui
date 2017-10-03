@@ -8,6 +8,8 @@ $danger: #B32828;
 $warning: #C1540B;
 $forbid: #2B2423;
 
+$border: #CCC;
+
 :root {
 	--bmbo-duration: 0.25s;
 
@@ -40,7 +42,17 @@ $forbid: #2B2423;
 	--bmbo-warning-dark: darken($warning, 5%);
 	--bmbo-forbid-dark: darken($forbid, 5%);
 
+	--bmbo-font-size-small: 12px;
 	--bmbo-font-size: 14px;
+	--bmbo-font-size-large: 20px;
 	--bmbo-color: #333;
 	--bmbo-color-light: #FFF;
+
+	--bmbo-border: $border;
+}
+
+@mixin listNoStyle {
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }

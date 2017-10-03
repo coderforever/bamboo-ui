@@ -3,20 +3,15 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import HorizontalNav from './HorizontalNav';
-import Item, { BAMBOO_NAVIGATION_ITEM } from './FakeItem';
+import VerticalNav from './VerticalNav';
+import FakeItem, { BAMBOO_NAVIGATION_ITEM } from './FakeItem';
 
-import { mapChildrenByType } from '../utils/componentUtil';
-
-class Navigation extends React.Component {
-	render() {
-		const { vertical } = this.props;
-
-		if (!vertical) {
-			return <HorizontalNav {...this.props} />;
-		}
-		return null;
+const Navigation = (props) => {
+	if (props.vertical) {
+		return <VerticalNav {...props} />;
 	}
-}
+	return <HorizontalNav {...props} />;
+};
 
 Navigation.propTypes = {
 	type: PropTypes.string,
@@ -26,10 +21,6 @@ Navigation.propTypes = {
 	vertical: PropTypes.bool,
 };
 
-/* Navigation.childContextTypes = {
-	// navigationVertical: PropTypes.bool,
-}; */
-
-Navigation.Item = Item;
+Navigation.Item = FakeItem;
 
 export default Navigation;

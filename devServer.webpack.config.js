@@ -63,7 +63,7 @@ module.exports = {
 					'style-loader',
 					'css-loader?sourceMap&modules&importLoaders=1&localIdentName=bdp_[local]_[hash:base64:5]!postcss-loader?sourceMap=inline!sass-loader?sourceMap'
 				),
-				exclude: /components/,
+				exclude: [/components/, /main/],
 			},
 			{
 				test: /\.scss/,
@@ -75,13 +75,13 @@ module.exports = {
 					'style-loader',
 					'css-loader?sourceMap&importLoaders=1!postcss-loader?sourceMap=inline!sass-loader?sourceMap',
 				] : undefined,
-				include: /components/,
+				include: [/components/, /main/],
 			},
 			{
 				test: /\.css/,
 				loader: ExtractTextPlugin.extract(
 					'style-loader',
-					'css-loader'
+					'css-loader',
 				),
 			},
 			{

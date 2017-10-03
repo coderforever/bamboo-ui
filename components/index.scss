@@ -4,3 +4,13 @@
 @import "./Grid/index";
 @import "./Button/index";
 @import "./Navigation/index";
+@import "./Form/index";
+
+*[class^='bmbo-'], *[class*=' bmbo-'] {
+	box-sizing: border-box;
+	outline: none;
+
+	&[role="button"] {
+		cursor: pointer;
+	}
+}

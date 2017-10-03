@@ -3,11 +3,11 @@
 @mixin buttonColor($color) {
 	background: var($color);
 
-	&:hover {
+	&:not(.bmbo-disabled):hover {
 		background: var(#{$color}-light);
 	}
 
-	&:active {
+	&:not(.bmbo-disabled):active {
 		background: var(#{$color}-dark);
 	}
 }
@@ -15,12 +15,35 @@
 .bmbo-button {
 	color: var(--bmbo-color-light);
 	border: 0;
-	border-radius: 2px;
+	border-radius: 3px;
 	padding: 5px 12px;
 	font-size: var(--bmbo-font-size);
 
-	outline: none;
 	cursor: pointer;
+
+	transition: background var(--bmbo-duration),
+	font-size var(--bmbo-duration),
+	padding var(--bmbo-duration),
+	opacity var(--bmbo-duration);
+
+	&.bmbo-disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	&.bmbo-xs {
+		font-size: var(--bmbo-font-size-small);
+		padding: 0 5px;
+	}
+
+	&.bmbo-sm {
+		padding: 2px 7px;
+	}
+
+	&.bmbo-lg {
+		font-size: var(--bmbo-font-size-large);
+		padding: 10px 20px;
+	}
 
 	@include buttonColor(--bmbo-default);
 

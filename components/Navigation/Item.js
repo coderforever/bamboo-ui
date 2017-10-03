@@ -7,6 +7,14 @@ import { mapChildrenByType, mapChildrenByNotType } from '../utils/componentUtil'
 import { BAMBOO_NAVIGATION_ITEM } from './FakeItem';
 
 class Item extends React.Component {
+	getChildContext() {
+		const { navigationLevel = 0 } = this.context;
+
+		return {
+			navigationLevel: navigationLevel + 1,
+		};
+	}
+
 	getTitle = () => {
 		const { children } = this.props;
 
@@ -16,14 +24,17 @@ class Item extends React.Component {
 	getList = () => {
 		const { children } = this.props;
 
-		return mapChildrenByType(children, BAMBOO_NAVIGATION_ITEM, (node) => (
+		return mapChildrenByType(children, BAMBOO_NAVIGATION_ITEM, node => (
 			<Item key={node.key} {...node.props} />
 		));
 	};
 
 	render() {
 		const { onClick } = this.props;
+		const { navigationLevel = 0 } = this.context;
+
 		const title = this.getTitle();
+		const list = this.getList();
 
 		const clickProps = onClick ? {
 			role: 'button',
@@ -34,8 +45,15 @@ class Item extends React.Component {
 		return (
 			<li className="bmbo-nav-item">
 				<div className="bmbo-nav-item-title" {...clickProps}>
+					<span
+						className="bmbo-nav-item-title-offset"
+						style={{ width: `${navigationLevel * 15}px` }}
+					/>
 					{title}
 				</div>
+				<ul className="bmbo-nav-item-list">
+					{list}
+				</ul>
 			</li>
 		);
 	}
@@ -44,6 +62,15 @@ class Item extends React.Component {
 Item.propTypes = {
 	children: PropTypes.node,
 	onClick: PropTypes.func,
+};
+
+Item.childContextTypes = {
+	navigationLevel: PropTypes.number,
+};
+
+
+Item.contextTypes = {
+	navigationLevel: PropTypes.number,
 };
 
 export default Item;

@@ -21,7 +21,7 @@ window.$ = $;
 require('font-awesome/css/font-awesome.css');
 require('../components/index.scss');
 
-require('./index.scss');
+require('./main.scss');
 
 // Render & Hot Update
 delete AppContainer.prototype.unstable_handleError;

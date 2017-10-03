@@ -53,7 +53,7 @@ class Main extends React.Component {
 				</Navigation>
 
 				<Route exact path="/" component={Home} />
-				<Route exact path="/button" component={ButtonPage} />
+				<Route path="/button" component={ButtonPage} />
 			</div>
 		);
 	}

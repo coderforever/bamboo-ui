@@ -6,6 +6,15 @@ export const mapChildren = (children, func) => (
 		.filter(node => node)
 );
 
+export const mapChildrenForNode = (children, func) => (
+	mapChildren(children, (node, index) => {
+		if (React.isValidElement(node)) {
+			return func(node, index);
+		}
+		return node;
+	})
+);
+
 export const mapChildrenByType = (children, type, func) => (
 	mapChildren(children, (node, index) => {
 		if (
