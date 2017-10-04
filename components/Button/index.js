@@ -11,7 +11,7 @@ class Button extends React.Component {
 	};
 
 	render() {
-		const { children, type, disabled, size } = this.props;
+		const { children, type, disabled, size, transparent } = this.props;
 
 		return (
 			<button
@@ -20,6 +20,7 @@ class Button extends React.Component {
 					type && `bmbo-${type}`,
 					disabled && 'bmbo-disabled',
 					size && `bmbo-${size}`,
+					transparent && 'bmbo-transparent',
 				)}
 			>
 				{children}
@@ -35,6 +36,7 @@ Button.propTypes = {
 	disabled: PropTypes.bool,
 	onClick: PropTypes.func,
 	size: PropTypes.string,
+	transparent: PropTypes.bool,
 };
 
 export default Button;

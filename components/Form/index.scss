@@ -1,6 +1,7 @@
 @charset "UTF-8";
 @import "./Radio";
 @import "./Checkbox";
+@import "./Slider";
 
 .bmbo-form {
 	.bmbp-form-field {
@@ -11,6 +12,7 @@
 			font-weight: 600;
 			margin: 0 0 6px 0;
 			display: block;
+			color: var(--bmbo-color-dim);
 		}
 	}
 }

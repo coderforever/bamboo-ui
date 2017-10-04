@@ -3,6 +3,9 @@
 .bmbo-nav {
 	color: var(--bmbo-color-light);
 	margin-bottom: 10px;
+	font-size: var(--bmbo-font-size);
+
+	transition: background var(--bmbo-duration);
 
 	[role="button"] {
 		cursor: pointer;

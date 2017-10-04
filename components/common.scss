@@ -4,14 +4,15 @@ $default: #757575;
 $primary: #2B70E3;
 $info: #298185;
 $success: #3F8310;
-$danger: #B32828;
 $warning: #C1540B;
+$danger: #B32828;
 $forbid: #2B2423;
 
 $border: #CCC;
 
 :root {
 	--bmbo-duration: 0.25s;
+	--bmbo-duration-fast: 0.15s;
 
 	--bmbo-lead: #374249;
 	--bmbo-lead-active: #45A7B9;
@@ -22,33 +23,44 @@ $border: #CCC;
 	--bmbo-primary: $primary;
 	--bmbo-info: $info;
 	--bmbo-success: $success;
-	--bmbo-danger: $danger;
 	--bmbo-warning: $warning;
+	--bmbo-danger: $danger;
 	--bmbo-forbid: $forbid;
 
-	--bmbo-default-light: lighten($default, 5%);
-	--bmbo-primary-light: lighten($primary, 5%);
-	--bmbo-info-light: lighten($info, 5%);
-	--bmbo-success-light: lighten($success, 5%);
-	--bmbo-danger-light: lighten($danger, 5%);
-	--bmbo-warning-light: lighten($warning, 5%);
-	--bmbo-forbid-light: lighten($forbid, 5%);
+	--bmbo-default-light: lighten($default, 10%);
+	--bmbo-primary-light: lighten($primary, 10%);
+	--bmbo-info-light: lighten($info, 10%);
+	--bmbo-success-light: lighten($success, 10%);
+	--bmbo-warning-light: lighten($warning, 10%);
+	--bmbo-danger-light: lighten($danger, 10%);
+	--bmbo-forbid-light: lighten($forbid, 10%);
 
-	--bmbo-default-dark: darken($default, 5%);
-	--bmbo-primary-dark: darken($primary, 5%);
-	--bmbo-info-dark: darken($info, 5%);
-	--bmbo-success-dark: darken($success, 5%);
-	--bmbo-danger-dark: darken($danger, 5%);
-	--bmbo-warning-dark: darken($warning, 5%);
-	--bmbo-forbid-dark: darken($forbid, 5%);
+	--bmbo-default-dark: darken($default, 10%);
+	--bmbo-primary-dark: darken($primary, 10%);
+	--bmbo-info-dark: darken($info, 10%);
+	--bmbo-success-dark: darken($success, 10%);
+	--bmbo-warning-dark: darken($warning, 10%);
+	--bmbo-danger-dark: darken($danger, 10%);
+	--bmbo-forbid-dark: darken($forbid, 10%);
+
+	--bmbo-default-disabled: scale-color($default, $saturation: -70%, $lightness: 50%);
+	--bmbo-primary-disabled: scale-color($primary, $saturation: -70%, $lightness: 50%);
+	--bmbo-info-disabled: scale-color($info, $saturation: -70%, $lightness: 50%);
+	--bmbo-success-disabled: scale-color($success, $saturation: -70%, $lightness: 50%);
+	--bmbo-warning-disabled: scale-color($warning, $saturation: -50%, $lightness: 50%);
+	--bmbo-danger-disabled: scale-color($danger, $saturation: -40%, $lightness: 50%);
+	--bmbo-forbid-disabled: scale-color($forbid, $saturation: -70%, $lightness: 50%);
 
 	--bmbo-font-size-small: 12px;
 	--bmbo-font-size: 14px;
 	--bmbo-font-size-large: 20px;
 	--bmbo-color: #333;
+	--bmbo-color-dim: #999;
 	--bmbo-color-light: #FFF;
 
 	--bmbo-border: $border;
+	--bmbo-bac: #EEE;
+	--bmbo-bac-dark: #DDD;
 }
 
 @mixin listNoStyle {

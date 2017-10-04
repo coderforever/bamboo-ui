@@ -6,3 +6,4 @@ export Form from './Form';
 export Input from './Form/Input';
 export Radio from './Form/Radio';
 export Checkbox from './Form/Checkbox';
+export Slider from './Form/Slider';

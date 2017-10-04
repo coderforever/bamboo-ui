@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+.grid-preview {
+	margin: 0 0 5px 0;
+
+	:global(.bmbo-col) {
+		.col {
+			padding: 10px 0;
+			background: #ED8E7B;
+			border: 1px solid #FFF;
+			color: #FFF;
+			text-align: center;
+		}
+	}
+}

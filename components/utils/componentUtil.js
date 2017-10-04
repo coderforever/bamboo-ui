@@ -1,10 +1,10 @@
 import React from 'react';
 
-export const mapChildren = (children, func) => (
-	React.Children
-		.map(children, (node, index) => func(node, index))
-		.filter(node => node)
-);
+export const mapChildren = (children, func) => {
+	const list = React.Children
+		.map(children, (node, index) => func(node, index)) || [];
+	return list.filter(node => node);
+};
 
 export const mapChildrenForNode = (children, func) => (
 	mapChildren(children, (node, index) => {
@@ -42,4 +42,15 @@ export const mapChildrenByNotType = (children, type, func) => (
 	})
 );
 
-export default {};
+export const wrapperEventValue = (originEvent, target, value) => {
+	target.value = value; // eslint-disable-line no-param-reassign
+
+	return (
+		new Proxy(originEvent, {
+			get(tgt, key) {
+				if (key === 'target') return target;
+				return tgt[key];
+			},
+		})
+	);
+};

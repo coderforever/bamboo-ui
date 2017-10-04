@@ -1,0 +1,132 @@
+@charset "UTF-8";
+
+$pinSize: 14px;
+$pinSizeLarge: 16px;
+$barSize: 6px;
+
+@mixin sliderColor($color) {
+	.bmbo-slider-range {
+		background: var(#{$color});
+	}
+
+	.bmbo-slider-pin {
+		border: 2px solid var(#{$color});
+	}
+
+	&:not(.bmbo-disabled) {
+		.bmbo-slider-pin:hover {
+			box-shadow: 0 0 5px var(#{$color});
+		}
+	}
+
+	&.bmbo-disabled {
+		.bmbo-slider-range {
+			background: var(#{$color}-disabled);
+		}
+
+		.bmbo-slider-pin {
+			border-color: var(#{$color}-disabled);
+		}
+	}
+}
+
+.bmbo-slider {
+	position: relative;
+	height: $pinSize;
+	overflow: visible;
+	user-select: none;
+	cursor: pointer;
+
+	margin: 0 $pinSize / 2;
+
+	.bmbo-slider-bar {
+		position: absolute;
+		height: $barSize;
+		left: 0;
+		width: 100%;
+		top: 50%;
+		transform: translate(0, -50%);
+		background: var(--bmbo-bac);
+
+		transition: background var(--bmbo-duration);
+	}
+
+	.bmbo-slider-range {
+		position: absolute;
+		left: 0;
+		top: 50%;
+		transform: translate(0, -50%);
+		width: 100px;
+		height: $barSize;
+		pointer-events: none;
+
+		transition: background var(--bmbo-duration);
+	}
+
+	.bmbo-slider-pin {
+		position: absolute;
+		left: 100%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+
+		width: $pinSize;
+		height: $pinSize;
+		border-radius: 100%;
+		background: #FFF;
+		border: 2px solid transparent;
+
+		transition: border-color var(--bmbo-duration),
+					width var(--bmbo-duration-fast),
+					height var(--bmbo-duration-fast),
+					box-shadow var(--bmbo-duration-fast);
+	}
+
+	&:not(.bmbo-disabled) {
+		&:hover {
+			.bmbo-slider-bar {
+				background: var(--bmbo-bac-dark);
+			}
+		}
+
+		.bmbo-slider-pin:hover {
+			width: $pinSizeLarge;
+			height: $pinSizeLarge;
+		}
+	}
+
+	&.bmbo-disabled {
+		cursor: not-allowed;
+
+		.bmbo-slider-pin {
+			cursor: not-allowed;
+		}
+	}
+
+	@include sliderColor(--bmbo-default);
+
+	&.bmbo-primary {
+		@include sliderColor(--bmbo-primary);
+	}
+	&.bmbo-info {
+		@include sliderColor(--bmbo-info);
+	}
+	&.bmbo-success {
+		@include sliderColor(--bmbo-success);
+	}
+	&.bmbo-warning {
+		@include sliderColor(--bmbo-warning);
+	}
+	&.bmbo-danger {
+		@include sliderColor(--bmbo-danger);
+	}
+	&.bmbo-forbid {
+		@include sliderColor(--bmbo-forbid);
+	}
+
+	&.bmbo-transparent,
+	&.bmbo-transparent.bmbo-disabled {
+		.bmbo-slider-range {
+			background: transparent;
+		}
+	}
+}

@@ -6,14 +6,18 @@ import {
 	Form, Input, Radio, Checkbox,
 } from '../../../components';
 
+import { toString } from '../../utils/propsUtil';
+
 class ButtonPage extends React.Component {
 	constructor() {
 		super();
 		this.state = {
 			form: {
-				type: 'default',
+				text: '你的测试按钮',
+				type: '',
 				disabled: false,
-				size: 'md',
+				size: '',
+				transparent: false,
 			},
 		};
 	}
@@ -21,6 +25,13 @@ class ButtonPage extends React.Component {
 	onNavClick = (path) => {
 		const { history } = this.props;
 		history.push(path);
+	};
+
+	getSampleCode = () => {
+		const { text, ...form } = this.state.form;
+		return `<Button${toString(form)}>
+   ${text}
+</Button>`;
 	};
 
 	render() {
@@ -76,41 +87,50 @@ class ButtonPage extends React.Component {
 					</div>
 
 					<h2>试一试</h2>
-					<div className="preview">
-						<Button
-							type={form.type}
-							disabled={form.disabled}
-							size={form.size}
-						>
-							你的测试按钮
-						</Button>
-					</div>
+					<div className="measurement">
+						<div className="preview">
+							<Button
+								type={form.type}
+								disabled={form.disabled}
+								size={form.size}
+								transparent={form.transparent}
+							>
+								{form.text}
+							</Button>
+						</div>
 
-					<div className="preview">
-						<Form instance={this} path="form">
-							<Form.Field name="type" title="Type">
-								<Radio value="default">default</Radio>
-								<Radio value="primary">primary</Radio>
-								<Radio value="info">info</Radio>
-								<Radio value="success">success</Radio>
-								<Radio value="warning">warning</Radio>
-								<Radio value="danger">danger</Radio>
-								<Radio value="forbid">forbid</Radio>
-							</Form.Field>
-							<Form.Field name="disabled" title="Disabled">
-								<Checkbox>Disabled</Checkbox>
-							</Form.Field>
-							<Form.Field name="size" title="Size">
-								<Radio value="xs">xs</Radio>
-								<Radio value="sm">sm</Radio>
-								<Radio value="md">md</Radio>
-								<Radio value="lg">lg</Radio>
-							</Form.Field>
-						</Form>
+						<div className="form">
+							<Form instance={this} path="form">
+								<Form.Field name="text" title="Text">
+									<Input />
+								</Form.Field>
+								<Form.Field name="type" title="Type">
+									<Radio value="">(default)</Radio>
+									<Radio value="primary">primary</Radio>
+									<Radio value="info">info</Radio>
+									<Radio value="success">success</Radio>
+									<Radio value="warning">warning</Radio>
+									<Radio value="danger">danger</Radio>
+									<Radio value="forbid">forbid</Radio>
+								</Form.Field>
+								<Form.Field name="disabled" title="Disabled">
+									<Checkbox>disabled</Checkbox>
+								</Form.Field>
+								<Form.Field name="size" title="Size">
+									<Radio value="xs">xs</Radio>
+									<Radio value="sm">sm</Radio>
+									<Radio value="">(default)</Radio>
+									<Radio value="lg">lg</Radio>
+								</Form.Field>
+								<Form.Field name="transparent" title="Transparent">
+									<Checkbox>transparent</Checkbox>
+								</Form.Field>
+							</Form>
+						</div>
+						<pre>
+							{this.getSampleCode()}
+						</pre>
 					</div>
-					<pre>
-						test
-					</pre>
 				</Col>
 			</Row>
 		);

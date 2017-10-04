@@ -13,7 +13,7 @@ function getMatch(numerator, denominator, total) {
 }
 
 function getName(val) {
-	const match = val.match(REGEX);
+	const match = Array.isArray(val) ? [null, ...val] : val.match(REGEX);
 
 	// Return full row if not match
 	if (!match) return '10-10';
@@ -44,11 +44,11 @@ const Col = ({ xs, sm, md, lg, xl, children }, { rowGutter }) => {
 };
 
 Col.propTypes = {
-	xs: PropTypes.string,
-	sm: PropTypes.string,
-	md: PropTypes.string,
-	lg: PropTypes.string,
-	xl: PropTypes.string,
+	xs: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+	sm: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+	md: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+	lg: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+	xl: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 	children: PropTypes.node,
 };
 

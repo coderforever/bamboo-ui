@@ -1,6 +1,7 @@
 @charset "UTF-8";
 
 @mixin buttonColor($color) {
+	// Type
 	background: var($color);
 
 	&:not(.bmbo-disabled):hover {
@@ -10,27 +11,51 @@
 	&:not(.bmbo-disabled):active {
 		background: var(#{$color}-dark);
 	}
+
+	// Disabled
+	&.bmbo-disabled {
+		cursor: not-allowed;
+		background: var(#{$color}-disabled);
+	}
+
+	// Transparent
+	&.bmbo-transparent {
+		background: transparent;
+
+		border-color: var(#{$color});
+		color: var(#{$color});
+
+		&:not(.bmbo-disabled):hover {
+			background: transparent;
+			border-color: var(#{$color}-light);
+			color: var(#{$color}-light);
+		}
+
+		&:not(.bmbo-disabled):active {
+			background: transparent;
+			border-color: var(#{$color}-dark);
+			color: var(#{$color}-dark);
+		}
+
+		&.bmbo-disabled {
+			color: var(#{$color}-disabled);
+			border-color: var(#{$color}-disabled);
+		}
+	}
 }
 
 .bmbo-button {
 	color: var(--bmbo-color-light);
-	border: 0;
 	border-radius: 3px;
 	padding: 5px 12px;
 	font-size: var(--bmbo-font-size);
+	border: 1px solid transparent;
 
 	cursor: pointer;
 
-	transition: background var(--bmbo-duration),
-	font-size var(--bmbo-duration),
-	padding var(--bmbo-duration),
-	opacity var(--bmbo-duration);
+	transition: all var(--bmbo-duration-fast);
 
-	&.bmbo-disabled {
-		opacity: 0.5;
-		cursor: not-allowed;
-	}
-
+	// Size
 	&.bmbo-xs {
 		font-size: var(--bmbo-font-size-small);
 		padding: 0 5px;
@@ -45,6 +70,7 @@
 		padding: 10px 20px;
 	}
 
+	// Type & Transparent
 	@include buttonColor(--bmbo-default);
 
 	&.bmbo-primary {

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { BAMBOO_FORM_RADIO } from './Radio';
 import { BAMBOO_FORM_CHECKBOX } from './Checkbox';
+import { BAMBOO_FORM_INPUT } from './Input';
 
 import { mapChildrenForNode } from '../utils/componentUtil';
 import { getValue, updateValue } from '../utils/pathUtil';
@@ -43,10 +44,10 @@ class Field extends React.Component {
 		const myValue = this.getValue();
 
 		return mapChildrenForNode(children, (node) => {
+			const { props = {} } = node;
+
 			if (node.type[BAMBOO_FORM_RADIO] === BAMBOO_FORM_RADIO) {
 				// ==================== Radio ====================
-				const { props = {} } = node;
-
 				return React.cloneElement(node, {
 					onClick: (...args) => {
 						if (props.onClick) props.onClick(...args);
@@ -63,8 +64,6 @@ class Field extends React.Component {
 				});
 			} else if (node.type[BAMBOO_FORM_CHECKBOX] === BAMBOO_FORM_CHECKBOX) {
 				// ================== Check Box ==================
-				const { props = {} } = node;
-
 				return React.cloneElement(node, {
 					onClick: (...args) => {
 						if (props.onClick) props.onClick(...args);
@@ -79,8 +78,43 @@ class Field extends React.Component {
 					},
 					checked: myValue,
 				});
+			} else if (node.type[BAMBOO_FORM_INPUT] === BAMBOO_FORM_INPUT) {
+				// ==================== Input ====================
+				return React.cloneElement(node, {
+					value: myValue,
+					onChange: (...args) => {
+						if (props.onChange) props.onChange(...args);
+
+						const newVal = args[0].target.value;
+
+						if (formInstance) {
+							formInstance.setState(preState => (
+								updateValue(preState, this.getPath(), () => newVal)
+							));
+						} else {
+							this.setState({ value: newVal });
+						}
+					},
+				});
 			}
-			return node;
+
+			// ==================== Rest =====================
+			return React.cloneElement(node, {
+				value: myValue,
+				onChange: (...args) => {
+					if (props.onChange) props.onChange(...args);
+
+					const newVal = args[0].target.value;
+
+					if (formInstance) {
+						formInstance.setState(preState => (
+							updateValue(preState, this.getPath(), () => newVal)
+						));
+					} else {
+						this.setState({ value: newVal });
+					}
+				},
+			});
 		});
 	};
 

@@ -6,7 +6,9 @@ import { connect } from 'react-redux';
 import cssModules from 'react-css-modules';
 
 import Home from '../Home';
-import ButtonPage from '../ButtonPage';
+import GridPage from '../Components/GridPage';
+import ButtonPage from '../Components/ButtonPage';
+import SliderPage from '../Components/SliderPage';
 
 import Navigation from '../../../components/Navigation';
 
@@ -37,12 +39,12 @@ class Main extends React.Component {
 		return (
 			<div>
 				<Navigation active={1} type={type}>
-					<Navigation.Item onClick={() => { this.goPage('/'); }}>Main</Navigation.Item>
+					<Navigation.Item onClick={() => { this.goPage('/'); }}>Home</Navigation.Item>
 					<Navigation.Item>
 						Components
+						<Navigation.Item onClick={() => { this.goPage('/grid'); }}>Grid</Navigation.Item>
 						<Navigation.Item onClick={() => { this.goPage('/button'); }}>Button</Navigation.Item>
-						<Navigation.Item>Good 2 Good Good</Navigation.Item>
-						<Navigation.Item>Good 3</Navigation.Item>
+						<Navigation.Item onClick={() => { this.goPage('/slider'); }}>Slider</Navigation.Item>
 					</Navigation.Item>
 					<Navigation.Item>
 						Set Type
@@ -52,8 +54,12 @@ class Main extends React.Component {
 					</Navigation.Item>
 				</Navigation>
 
-				<Route exact path="/" component={Home} />
-				<Route path="/button" component={ButtonPage} />
+				<div id="content">
+					<Route exact path="/" component={Home} />
+					<Route path="/grid" component={GridPage} />
+					<Route path="/button" component={ButtonPage} />
+					<Route path="/slider" component={SliderPage} />
+				</div>
 			</div>
 		);
 	}

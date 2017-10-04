@@ -3,20 +3,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import cssModules from 'react-css-modules';
 
-class Input extends React.Component {
-	constructor() {
-		super();
-		this.state = {};
-	}
+export const BAMBOO_FORM_INPUT = 'BAMBOO_FORM_INPUT';
 
-	render() {
-		return (
-			<input className="bmbo-form-control" />
-		);
-	}
-}
+const Input = props => (
+	<input
+		className="bmbo-form-control"
+		{...props}
+	/>
+);
 
-Input.propTypes = {
-};
+Input.propTypes = {};
+
+Input[BAMBOO_FORM_INPUT] = BAMBOO_FORM_INPUT;
 
 export default Input;
