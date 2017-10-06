@@ -25,6 +25,10 @@ function getLeft(value, min, max) {
 	return `${(offset / len) * 100}%`;
 }
 
+function valueSort(a, b) {
+	return a - b;
+}
+
 if (canUseDOM) {
 	window.addEventListener('mousemove', (event) => {
 		if (!currentSlider) return;
@@ -36,44 +40,102 @@ if (canUseDOM) {
 	});
 
 	window.addEventListener('mouseup', () => {
-		if (currentSlider) currentSlider = null;
+		if (currentSlider) {
+			currentSlider.pinIndex = undefined;
+			currentSlider.finishUpdate();
+			currentSlider = null;
+		}
 	});
 }
+
+class Pin extends React.Component {
+	onMouseDown = (event) => {
+		const { onMouseDown, index } = this.props;
+		onMouseDown(event, index);
+	};
+
+	setRef = (ele) => {
+		const { setRef, index } = this.props;
+		setRef(ele, index);
+	};
+
+	render() {
+		const { left, index } = this.props;
+
+		return (
+			<div
+				className="bmbo-slider-pin"
+				onMouseDown={this.onMouseDown}
+				style={{ left }}
+				role="button"
+				tabIndex={-1}
+				ref={this.setRef}
+				data-index={index}
+			/>
+		);
+	}
+}
+
+Pin.propTypes = {
+	setRef: PropTypes.func,
+	left: PropTypes.string,
+	index: PropTypes.number,
+	onMouseDown: PropTypes.func,
+};
 
 class Slider extends React.Component {
 	constructor() {
 		super();
-		this.state = {};
+		this.$pins = {};
+		this.state = {
+			value: null, // Component handle value when user is operating
+		};
 	}
 
 	onBarMouseDown = (...args) => {
-		const { disabled, onMouseDown } = this.props;
-		if (disabled) return;
+		const { disabled, onMouseDown, value } = this.props;
+		if (disabled || this.getPinCount() > 1) return;
 
 		if (onMouseDown) onMouseDown(...args);
 
-		const event = args[0];
-		currentSlider = this;
-		this.setValuePtg(getEventPercentage(this.$pinHolder, event), event);
+		const event = args[0].nativeEvent;
+
+		this.setState({
+			value,
+		}, () => {
+			this.pinIndex = 0;
+			currentSlider = this;
+			this.setValuePtg(getEventPercentage(this.$pinHolder, event), event);
+		});
 	};
 
-	onPinMouseDown = () => {
-		const { disabled } = this.props;
+	onPinMouseDown = (event, index) => {
+		const { disabled, value } = this.props;
 		if (disabled) return;
 
-		currentSlider = this;
+		this.setState({
+			value,
+		}, () => {
+			this.pinIndex = index;
+			currentSlider = this;
+		});
+
+		event.stopPropagation();
+	};
+
+	setPinRef = (ele, index) => {
+		this.$pins[index] = ele;
 	};
 
 	setPinHolderRef = (ele) => {
 		this.$pinHolder = ele;
 	};
 
-	setPinRef = (ele) => {
-		this.$pin = ele;
-	};
-
 	setValuePtg = (ptg, event) => {
+		if (this.pinIndex === undefined) return;
+
 		const { onChange } = this.props;
+		const value = this.getValue();
 		let { min = 0, max = 100, step = 1 } = this.props;
 
 		min = Number(min);
@@ -82,35 +144,134 @@ class Slider extends React.Component {
 
 		const len = max - min;
 		const offset = Math.round((len * ptg) / step) * step;
-		const value = offset + min;
-		const newEvent = wrapperEventValue(event, this.$pin, value);
+		const pinValue = offset + min;
+
+		let newValue;
+		if (Array.isArray(value)) {
+			newValue = value.concat();
+			newValue[this.pinIndex] = pinValue;
+		} else if (this.getPinCount() === 1) {
+			newValue = pinValue;
+		} else {
+			newValue = [];
+			newValue[this.pinIndex] = pinValue;
+		}
+
+		let outputValue = newValue;
+
+		// Clean up empty value
+		if (Array.isArray(newValue)) {
+			for (let i = newValue.length - 1; i >= 0; i -= 1) {
+				const val = newValue[i];
+				if (val === null || val === undefined) {
+					newValue[i] = min;
+				}
+			}
+
+			outputValue = newValue.concat().sort(valueSort);
+		}
+
+		// Sync local value
+		this.setState({
+			value: newValue,
+		});
+
+		const newEvent = wrapperEventValue(
+			event,
+			this.$pins[this.pinIndex],
+			outputValue,
+		);
 
 		if (onChange) {
 			onChange(newEvent);
 		}
 	};
 
+	getPinCount = () => {
+		const { multi } = this.props;
+		if (!multi) return 1;
+		return multi === true ? 2 : Math.max(multi, 1);
+	};
+
 	getValue = () => {
-		let { value, min, max } = this.props;
+		if (this.isOperating()) {
+			return this.state.value;
+		}
+		return this.props.value;
+	};
+
+	getPinValue = (index) => {
+		const value = this.getValue();
+		let { min = 0, max = 100 } = this.props;
+		let current;
+
+		if (Array.isArray(value)) {
+			current = value[index];
+		} else if (this.getPinCount() === 1) {
+			current = value;
+		} else {
+			current = min;
+		}
 
 		min = Number(min);
 		max = Number(max);
-		value = Number(value);
+		current = Number(current);
 
-		if (value < min) value = min;
-		if (value > max) value = max;
+		if (current === null || current === undefined || isNaN(current) || current < min) current = min;
+		if (current > max) current = max;
 
-		return value;
+		return current;
+	};
+
+	isOperating = () => currentSlider === this;
+
+	finishUpdate = () => {
+		// Sync slider value with props value when user finish dragging
+		Promise.resolve().then(() => {
+			this.forceUpdate();
+		});
 	};
 
 	render() {
 		const { min = 0, max = 100, type, disabled, transparent } = this.props;
-		const left = getLeft(this.getValue(), min, max);
+
+		const pinCount = this.getPinCount();
+
+		const $pinList = [];
+		let rangeMin = Number.MAX_VALUE;
+		let rangeMax = Number.MIN_VALUE;
+
+		for (let i = 0; i < pinCount; i += 1) {
+			const value = this.getPinValue(i);
+
+			// Pin list
+			const left = getLeft(value, min, max);
+			$pinList.push(
+				<Pin
+					key={i}
+					index={i}
+					setRef={this.setPinRef}
+					onMouseDown={this.onPinMouseDown}
+					left={left}
+				/>,
+			);
+
+			if (pinCount > 1) {
+				rangeMin = Math.min(rangeMin, value);
+			} else {
+				rangeMin = min;
+			}
+			rangeMax = Math.max(rangeMax, value);
+		}
+
+		// Pin range
+		const rangeWidthPtg = (rangeMax - rangeMin) / (max - min);
 
 		return (
 			<div
 				className={classNames(
 					'bmbo-slider',
+					pinCount === 1 && 'bmbo-single',
 					type && `bmbo-${type}`,
 					disabled && 'bmbo-disabled',
 					transparent && 'bmbo-transparent',
@@ -122,30 +283,27 @@ class Slider extends React.Component {
 
 				<div
 					className="bmbo-slider-range"
-					style={{ width: left }}
+					style={{
+						left: getLeft(rangeMin, min, max),
+						width: `${rangeWidthPtg * 100}%`,
+					}}
 				/>
 
-				<div
-					className="bmbo-slider-pin"
-					ref={this.setPinRef}
-					onMouseDown={this.onPinMouseDown}
-					style={{ left }}
-					role="button"
-					tabIndex={-1}
-				/>
+				{$pinList}
 			</div>
 		);
 	}
 }
 
 Slider.propTypes = {
-	value: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.array]),
-	min: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-	max: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-	step: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+	value: PropTypes.oneOfType([PropTypes.number, PropTypes.array]),
+	min: PropTypes.number,
+	max: PropTypes.number,
+	step: PropTypes.number,
 	type: PropTypes.string,
 	transparent: PropTypes.bool,
 	disabled: PropTypes.bool,
+	multi: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
 
 	onMouseDown: PropTypes.func,
 	onChange: PropTypes.func,

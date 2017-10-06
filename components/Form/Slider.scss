@@ -35,9 +35,12 @@ $barSize: 6px;
 	height: $pinSize;
 	overflow: visible;
 	user-select: none;
-	cursor: pointer;
 
 	margin: 0 $pinSize / 2;
+
+	&.bmbo-single {
+		cursor: pointer;
+	}
 
 	.bmbo-slider-bar {
 		position: absolute;
@@ -88,9 +91,17 @@ $barSize: 6px;
 			}
 		}
 
-		.bmbo-slider-pin:hover {
-			width: $pinSizeLarge;
-			height: $pinSizeLarge;
+		.bmbo-slider-pin {
+			&:hover {
+				width: $pinSizeLarge;
+				height: $pinSizeLarge;
+			}
+
+			&:active {
+				width: $pinSize;
+				height: $pinSize;
+				box-shadow: none!important;
+			}
 		}
 	}
 

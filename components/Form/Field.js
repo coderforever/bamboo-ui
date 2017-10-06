@@ -29,8 +29,7 @@ class Field extends React.Component {
 	};
 
 	getValue = () => {
-		const { formInstance, formPath } = this.context;
-		const { name } = this.props;
+		const { formInstance } = this.context;
 
 		if (formInstance) {
 			return getValue(formInstance, ['state', ...this.getPath()]);
@@ -39,7 +38,7 @@ class Field extends React.Component {
 	};
 
 	getList = () => {
-		const { formInstance } = this.context;
+		const { formInstance, onFormChanged } = this.context;
 		const { children } = this.props;
 		const myValue = this.getValue();
 
@@ -55,9 +54,9 @@ class Field extends React.Component {
 						if (formInstance) {
 							formInstance.setState(preState => (
 								updateValue(preState, this.getPath(), () => props.value)
-							));
+							), onFormChanged);
 						} else {
-							this.setState({ value: props.value });
+							this.setState({ value: props.value }, onFormChanged);
 						}
 					},
 					checked: myValue === props.value,
@@ -71,9 +70,9 @@ class Field extends React.Component {
 						if (formInstance) {
 							formInstance.setState(preState => (
 								updateValue(preState, this.getPath(), value => !value)
-							));
+							), onFormChanged);
 						} else {
-							this.setState(({ value }) => ({ value: !value }));
+							this.setState(({ value }) => ({ value: !value }), onFormChanged);
 						}
 					},
 					checked: myValue,
@@ -81,18 +80,20 @@ class Field extends React.Component {
 			} else if (node.type[BAMBOO_FORM_INPUT] === BAMBOO_FORM_INPUT) {
 				// ==================== Input ====================
 				return React.cloneElement(node, {
-					value: myValue,
+					value: props.value !== undefined ? props.value : myValue,
 					onChange: (...args) => {
 						if (props.onChange) props.onChange(...args);
 
-						const newVal = args[0].target.value;
+						let newVal = args[0].target.value;
+
+						if (props.type === 'number') newVal = Number(newVal);
 
 						if (formInstance) {
 							formInstance.setState(preState => (
 								updateValue(preState, this.getPath(), () => newVal)
-							));
+							), onFormChanged);
 						} else {
-							this.setState({ value: newVal });
+							this.setState({ value: newVal }, onFormChanged);
 						}
 					},
 				});
@@ -109,9 +110,9 @@ class Field extends React.Component {
 					if (formInstance) {
 						formInstance.setState(preState => (
 							updateValue(preState, this.getPath(), () => newVal)
-						));
+						), onFormChanged);
 					} else {
-						this.setState({ value: newVal });
+						this.setState({ value: newVal }, onFormChanged);
 					}
 				},
 			});
@@ -146,6 +147,7 @@ Field.propTypes = {
 Field.contextTypes = {
 	formInstance: PropTypes.object,
 	formPath: PropTypes.array,
+	onFormChanged: PropTypes.func,
 };
 
 export default Field;

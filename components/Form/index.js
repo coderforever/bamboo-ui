@@ -15,8 +15,14 @@ class Form extends React.Component {
 		return {
 			formInstance: this.getInstance(),
 			formPath: Array.isArray(path) ? path : [path],
+			onFormChanged: this.onFormChanged,
 		};
 	}
+
+	onFormChanged = () => {
+		const { onChanged } = this.props;
+		if (onChanged) onChanged();
+	};
 
 	getInstance = () => this.props.instance || this;
 
@@ -36,11 +42,13 @@ Form.propTypes = {
 
 	instance: PropTypes.object,
 	path: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+	onChanged: PropTypes.func,
 };
 
 Form.childContextTypes = {
 	formInstance: PropTypes.object,
 	formPath: PropTypes.array,
+	onFormChanged: PropTypes.func,
 };
 
 Form.Field = Field;

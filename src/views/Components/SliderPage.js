@@ -19,11 +19,33 @@ class SliderPage extends React.Component {
 				value: 50,
 				min: 0,
 				max: 100,
+				multi: 1,
 				disabled: false,
 				transparent: false,
 			},
 		};
 	}
+
+	onFormChanged = () => {
+		const { form } = this.state;
+		const { value, multi } = form;
+
+		if (multi > 1 && !Array.isArray(value)) {
+			this.setState({
+				form: {
+					...form,
+					value: [value],
+				},
+			});
+		} else if (multi <= 1 && Array.isArray(value)) {
+			this.setState({
+				form: {
+					...form,
+					value: value[0],
+				},
+			});
+		}
+	};
 
 	render() {
 		const { form } = this.state;
@@ -39,14 +61,14 @@ class SliderPage extends React.Component {
 						提供了单值以及范围选取的功能。
 					</p>
 
-					<Form instance={this}>
+					{/* <Form instance={this}>
 						<Form.Field name="value">
 							<Slider type="primary" />
 						</Form.Field>
-					</Form>
+					</Form> */}
 
 					<h2>试一试</h2>
-					<Form instance={this} path="form">
+					<Form instance={this} path="form" onChanged={this.onFormChanged}>
 						<div className="measurement">
 							<div className="preview">
 								<Form.Field name="value">
@@ -54,11 +76,12 @@ class SliderPage extends React.Component {
 										type={form.type}
 										min={form.min}
 										max={form.max}
+										multi={form.multi}
 										disabled={form.disabled}
 										transparent={form.transparent}
 									/>
 								</Form.Field>
-								Current Value: {form.value}
+								Current Value: {JSON.stringify(form.value)}
 							</div>
 
 							<div className="form">
@@ -72,12 +95,16 @@ class SliderPage extends React.Component {
 									<Radio value="forbid">forbid</Radio>
 								</Form.Field>
 								<Form.Field name="value" title="Value">
-									<Input type="number" />
+									{form.multi <= 1 && <Input type="number" />}
+									{form.multi > 1 && <Input disabled value={JSON.stringify(form.value)} />}
 								</Form.Field>
 								<Form.Field name="min" title="Min">
 									<Input type="number" />
 								</Form.Field>
 								<Form.Field name="max" title="Max">
+									<Input type="number" />
+								</Form.Field>
+								<Form.Field name="multi" title="Multi ( >= 1)">
 									<Input type="number" />
 								</Form.Field>
 								<Form.Field name="disabled" title="Disabled">
