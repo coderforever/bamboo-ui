@@ -127,7 +127,7 @@ class ButtonPage extends React.Component {
 								</Form.Field>
 							</Form>
 						</div>
-						<pre>
+						<pre className="code">
 							{this.getSampleCode()}
 						</pre>
 					</div>

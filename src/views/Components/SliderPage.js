@@ -8,6 +8,12 @@ import {
 
 import { toString } from '../../utils/propsUtil';
 
+const MARKS_SAMPLE = {
+	60: '合格',
+	80: '良好',
+	100: '优秀',
+};
+
 class SliderPage extends React.Component {
 	constructor() {
 		super();
@@ -22,6 +28,8 @@ class SliderPage extends React.Component {
 				multi: 1,
 				disabled: false,
 				transparent: false,
+				// hasMarks: false,
+				hasMarks: true,
 			},
 		};
 	}
@@ -79,6 +87,7 @@ class SliderPage extends React.Component {
 										multi={form.multi}
 										disabled={form.disabled}
 										transparent={form.transparent}
+										marks={form.hasMarks ? MARKS_SAMPLE : undefined}
 									/>
 								</Form.Field>
 								Current Value: {JSON.stringify(form.value)}
@@ -112,6 +121,10 @@ class SliderPage extends React.Component {
 								</Form.Field>
 								<Form.Field name="transparent" title="Transparent">
 									<Checkbox>transparent</Checkbox>
+								</Form.Field>
+								<Form.Field name="hasMarks" title="Marks">
+									<Checkbox>marks</Checkbox>
+									<pre>{JSON.stringify(MARKS_SAMPLE, null, 3)}</pre>
 								</Form.Field>
 							</div>
 						</div>

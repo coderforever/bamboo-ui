@@ -51,20 +51,20 @@ if (canUseDOM) {
 class Pin extends React.Component {
 	onMouseDown = (event) => {
 		const { onMouseDown, index } = this.props;
-		onMouseDown(event, index);
+		if (onMouseDown) onMouseDown(event, index);
 	};
 
 	setRef = (ele) => {
 		const { setRef, index } = this.props;
-		setRef(ele, index);
+		if (setRef) setRef(ele, index);
 	};
 
 	render() {
-		const { left, index } = this.props;
+		const { left, index, isMark, isActive } = this.props;
 
 		return (
 			<div
-				className="bmbo-slider-pin"
+				className={classNames('bmbo-slider-pin', isMark && 'bmbo-mark', isActive && 'bmbo-active')}
 				onMouseDown={this.onMouseDown}
 				style={{ left }}
 				role="button"
@@ -81,6 +81,8 @@ Pin.propTypes = {
 	left: PropTypes.string,
 	index: PropTypes.number,
 	onMouseDown: PropTypes.func,
+	isMark: PropTypes.bool,
+	isActive: PropTypes.bool,
 };
 
 class Slider extends React.Component {
@@ -233,7 +235,7 @@ class Slider extends React.Component {
 	};
 
 	render() {
-		const { min = 0, max = 100, type, disabled, transparent } = this.props;
+		const { min = 0, max = 100, type, disabled, transparent, marks = {} } = this.props;
 
 		const pinCount = this.getPinCount();
 
@@ -256,6 +258,7 @@ class Slider extends React.Component {
 				/>,
 			);
 
+			// Get limitation
 			if (pinCount > 1) {
 				rangeMin = Math.min(rangeMin, value);
 			} else {
@@ -266,6 +269,26 @@ class Slider extends React.Component {
 
 		// Pin range
 		const rangeWidthPtg = (rangeMax - rangeMin) / (max - min);
+
+		// Marks
+		const $markList = Object.keys(marks).map((markValue) => {
+			const value = Number(markValue);
+			if (isNaN(value) || value < min || value > max) {
+				console.warn('[Bamboo - Slider] Mark is out of range:', markValue, `(Range: ${min} ~ ${max}`);
+				return null;
+			}
+
+			const left = getLeft(value, min, max);
+
+			return (
+				<Pin
+					key={`mark_${markValue}`}
+					left={left}
+					isMark
+					isActive={rangeMin <= value && value <= rangeMax}
+				/>
+			);
+		});
 
 		return (
 			<div
@@ -289,6 +312,8 @@ class Slider extends React.Component {
 					}}
 				/>
 
+				{$markList}
+
 				{$pinList}
 			</div>
 		);
@@ -304,6 +329,7 @@ Slider.propTypes = {
 	transparent: PropTypes.bool,
 	disabled: PropTypes.bool,
 	multi: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+	marks: PropTypes.object,
 
 	onMouseDown: PropTypes.func,
 	onChange: PropTypes.func,
