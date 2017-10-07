@@ -10,8 +10,12 @@ import { toString } from '../../utils/propsUtil';
 
 const MARKS_SAMPLE = {
 	60: '合格',
-	80: '良好',
-	100: '优秀',
+	75: '良好',
+	90: '优秀',
+	100: {
+		title: '粘附',
+		stick: 3,
+	},
 };
 
 class SliderPage extends React.Component {
@@ -25,7 +29,10 @@ class SliderPage extends React.Component {
 				value: 50,
 				min: 0,
 				max: 100,
+				step: 1,
+				hasStep: true,
 				multi: 1,
+				hasMulti: false,
 				disabled: false,
 				transparent: false,
 				// hasMarks: false,
@@ -82,9 +89,10 @@ class SliderPage extends React.Component {
 								<Form.Field name="value">
 									<Slider
 										type={form.type}
+										step={form.hasStep ? form.step : null}
 										min={form.min}
 										max={form.max}
-										multi={form.multi}
+										multi={form.hasMulti ? form.multi : false}
 										disabled={form.disabled}
 										transparent={form.transparent}
 										marks={form.hasMarks ? MARKS_SAMPLE : undefined}
@@ -113,9 +121,21 @@ class SliderPage extends React.Component {
 								<Form.Field name="max" title="Max">
 									<Input type="number" />
 								</Form.Field>
-								<Form.Field name="multi" title="Multi ( >= 1)">
-									<Input type="number" />
+
+								<Form.Field name="hasStep" title="Use Step">
+									<Checkbox>Use Step</Checkbox>
 								</Form.Field>
+								{form.hasStep && <Form.Field name="step" title="Step ( > 0)">
+									<Input type="number" />
+								</Form.Field>}
+
+								<Form.Field name="hasMulti" title="Use Multi">
+									<Checkbox>Use Multi</Checkbox>
+								</Form.Field>
+								{form.hasMulti && <Form.Field name="multi" title="Multi ( >= 1)">
+									<Input type="number" />
+								</Form.Field>}
+
 								<Form.Field name="disabled" title="Disabled">
 									<Checkbox>disabled</Checkbox>
 								</Form.Field>
@@ -124,7 +144,10 @@ class SliderPage extends React.Component {
 								</Form.Field>
 								<Form.Field name="hasMarks" title="Marks">
 									<Checkbox>marks</Checkbox>
-									<pre>{JSON.stringify(MARKS_SAMPLE, null, 3)}</pre>
+									{form.hasMarks && <pre>
+										{'Marks Sample:\n'}
+										{JSON.stringify(MARKS_SAMPLE, null, 3)}
+									</pre>}
 								</Form.Field>
 							</div>
 						</div>

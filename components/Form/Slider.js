@@ -140,13 +140,36 @@ class Slider extends React.Component {
 		const value = this.getValue();
 		let { min = 0, max = 100, step = 1 } = this.props;
 
+		// Format number
 		min = Number(min);
 		max = Number(max);
-		step = Number(step);
 
 		const len = max - min;
-		const offset = Math.round((len * ptg) / step) * step;
-		const pinValue = offset + min;
+		let offset;
+		let pinValue;
+
+		if (step !== null) {
+			step = Number(step);
+			offset = Math.round((len * ptg) / step) * step;
+			pinValue = offset + min;
+		} else {
+			pinValue = min + (len * ptg);
+			let match = false;
+			const markValues = this.getMarkValues();
+			for (let i = markValues.length - 1; i > 0; i -= 1) {
+				const cur = markValues[i].value;
+				const prev = markValues[i - 1].value;
+				if (pinValue >= prev) {
+					match = true;
+					pinValue = pinValue > (cur + prev) / 2 ? cur : prev;
+					break;
+				}
+			}
+
+			if (!match && markValues.length > 0) {
+				pinValue = markValues[0].value;
+			}
+		}
 
 		let newValue;
 		if (Array.isArray(value)) {
@@ -187,6 +210,25 @@ class Slider extends React.Component {
 		if (onChange) {
 			onChange(newEvent);
 		}
+	};
+
+	getMarkValues = () => {
+		const { min = 0, max = 100, marks = {} } = this.props;
+
+		// No need to sort since number key is always in order
+		return Object.keys(marks).map((markValue) => {
+			const value = Number(markValue);
+			if (isNaN(value) || value < min || value > max) {
+				console.warn('[Bamboo - Slider] Mark is out of range:', markValue, `(Range: ${min} ~ ${max}`);
+				return null;
+			}
+
+			const config = {
+				...marks[value],
+				value,
+			};
+			return config;
+		}).filter(n => n !== null);
 	};
 
 	getPinCount = () => {
@@ -271,24 +313,14 @@ class Slider extends React.Component {
 		const rangeWidthPtg = (rangeMax - rangeMin) / (max - min);
 
 		// Marks
-		const $markList = Object.keys(marks).map((markValue) => {
-			const value = Number(markValue);
-			if (isNaN(value) || value < min || value > max) {
-				console.warn('[Bamboo - Slider] Mark is out of range:', markValue, `(Range: ${min} ~ ${max}`);
-				return null;
-			}
-
-			const left = getLeft(value, min, max);
-
-			return (
-				<Pin
-					key={`mark_${markValue}`}
-					left={left}
-					isMark
-					isActive={rangeMin <= value && value <= rangeMax}
-				/>
-			);
-		});
+		const $markList = this.getMarkValues().map(({ value }) => (
+			<Pin
+				key={`mark_${value}`}
+				left={getLeft(value, min, max)}
+				isMark
+				isActive={rangeMin <= value && value <= rangeMax}
+			/>
+		));
 
 		return (
 			<div
