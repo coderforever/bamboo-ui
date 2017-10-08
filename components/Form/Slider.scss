@@ -1,5 +1,5 @@
 @charset "UTF-8";
-
+$gutter: 5px;
 $markSize: 10px;
 $pinSize: 14px;
 $pinSizeLarge: 16px;
@@ -36,17 +36,40 @@ $barSize: 6px;
 }
 
 .bmbo-slider {
-	position: relative;
-	height: $pinSize;
-	overflow: visible;
-	user-select: none;
-
-	margin: 0 $pinSize / 2;
+	margin: 0 $pinSize / 2 + $gutter;
 
 	&.bmbo-single {
 		cursor: pointer;
 	}
 
+	// Holder
+	.bmbo-slider-content {
+		position: relative;
+		height: $pinSize;
+		overflow: visible;
+		user-select: none;
+	}
+
+	.bmbo-slider-title {
+		position: relative;
+		pointer-events: none;
+
+		.bmbo-title-holder {
+			position: relative;
+			width: 0;
+			display: inline-block;
+			overflow: visible;
+
+			.bmbo-title {
+				white-space: nowrap;
+				width: 500px;
+				text-align: center;
+				transform: translate(-50%, 0);
+			}
+		}
+	}
+
+	// Content
 	.bmbo-slider-bar {
 		position: absolute;
 		height: $barSize;

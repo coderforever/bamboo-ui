@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import cssModules from 'react-css-modules';
+
+import Col from './Col';
 
 const DEFAULT_GUTTER = 15;
 
@@ -36,5 +36,7 @@ Row.propTypes = {
 Row.childContextTypes = {
 	rowGutter: PropTypes.number,
 };
+
+Row.Col = Col;
 
 export default Row;

@@ -9,6 +9,7 @@ import Home from '../Home';
 import GridPage from '../Components/GridPage';
 import ButtonPage from '../Components/ButtonPage';
 import SliderPage from '../Components/SliderPage';
+import MenuPage from '../Components/MenuPage';
 
 import Navigation from '../../../components/Navigation';
 
@@ -45,6 +46,7 @@ class Main extends React.Component {
 						<Navigation.Item onClick={() => { this.goPage('/grid'); }}>Grid</Navigation.Item>
 						<Navigation.Item onClick={() => { this.goPage('/button'); }}>Button</Navigation.Item>
 						<Navigation.Item onClick={() => { this.goPage('/slider'); }}>Slider</Navigation.Item>
+						<Navigation.Item onClick={() => { this.goPage('/menu'); }}>Menu</Navigation.Item>
 					</Navigation.Item>
 					<Navigation.Item>
 						Set Type
@@ -59,6 +61,7 @@ class Main extends React.Component {
 					<Route path="/grid" component={GridPage} />
 					<Route path="/button" component={ButtonPage} />
 					<Route path="/slider" component={SliderPage} />
+					<Route path="/menu" component={MenuPage} />
 				</div>
 			</div>
 		);

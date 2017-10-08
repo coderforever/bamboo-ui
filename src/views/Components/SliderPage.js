@@ -9,13 +9,13 @@ import {
 import { toString } from '../../utils/propsUtil';
 
 const MARKS_SAMPLE = {
-	60: '合格',
-	75: '良好',
-	90: '优秀',
-	100: {
+	20: {
 		title: '粘附',
 		stick: 3,
 	},
+	60: '合格',
+	75: '良好',
+	90: '优秀',
 };
 
 class SliderPage extends React.Component {
@@ -35,8 +35,7 @@ class SliderPage extends React.Component {
 				hasMulti: false,
 				disabled: false,
 				transparent: false,
-				// hasMarks: false,
-				hasMarks: true,
+				hasMarks: false,
 			},
 		};
 	}
@@ -76,11 +75,11 @@ class SliderPage extends React.Component {
 						提供了单值以及范围选取的功能。
 					</p>
 
-					{/* <Form instance={this}>
+					<Form instance={this}>
 						<Form.Field name="value">
 							<Slider type="primary" />
 						</Form.Field>
-					</Form> */}
+					</Form>
 
 					<h2>试一试</h2>
 					<Form instance={this} path="form" onChanged={this.onFormChanged}>

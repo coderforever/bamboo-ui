@@ -148,14 +148,27 @@ class Slider extends React.Component {
 		let offset;
 		let pinValue;
 
+		const markValues = this.getMarkValues();
+
 		if (step !== null) {
 			step = Number(step);
 			offset = Math.round((len * ptg) / step) * step;
 			pinValue = offset + min;
+
+			// Stick mark if needed
+			markValues.some(({ value: markValue, stick }) => {
+				if (!stick) return false;
+
+				if (markValue - stick <= pinValue && pinValue <= markValue + stick) {
+					pinValue = markValue;
+					return true;
+				}
+
+				return false;
+			});
 		} else {
 			pinValue = min + (len * ptg);
 			let match = false;
-			const markValues = this.getMarkValues();
 			for (let i = markValues.length - 1; i > 0; i -= 1) {
 				const cur = markValues[i].value;
 				const prev = markValues[i - 1].value;
@@ -223,11 +236,17 @@ class Slider extends React.Component {
 				return null;
 			}
 
-			const config = {
-				...marks[value],
+			let config = marks[value];
+			if (typeof config === 'string') {
+				config = {
+					title: config,
+				};
+			}
+
+			return {
+				...config,
 				value,
 			};
-			return config;
 		}).filter(n => n !== null);
 	};
 
@@ -290,9 +309,10 @@ class Slider extends React.Component {
 
 			// Pin list
 			const left = getLeft(value, min, max);
+
 			$pinList.push(
 				<Pin
-					key={i}
+					key={`pin_${i}`}
 					index={i}
 					setRef={this.setPinRef}
 					onMouseDown={this.onPinMouseDown}
@@ -313,14 +333,27 @@ class Slider extends React.Component {
 		const rangeWidthPtg = (rangeMax - rangeMin) / (max - min);
 
 		// Marks
-		const $markList = this.getMarkValues().map(({ value }) => (
-			<Pin
+		const $markList = [];
+		const $markTitleList = [];
+
+		this.getMarkValues().forEach(({ value, title }) => {
+			const left = getLeft(value, min, max);
+
+			// Mark
+			$markList.push(<Pin
 				key={`mark_${value}`}
-				left={getLeft(value, min, max)}
+				left={left}
 				isMark
 				isActive={rangeMin <= value && value <= rangeMax}
-			/>
-		));
+			/>);
+
+			// Title
+			$markTitleList.push(<div key={`title_${value}`} className="bmbo-title-holder" style={{ left }}>
+				<div className="bmbo-title">
+					{title}
+				</div>
+			</div>);
+		});
 
 		return (
 			<div
@@ -334,19 +367,24 @@ class Slider extends React.Component {
 
 				onMouseDown={this.onBarMouseDown}
 			>
-				<div className="bmbo-slider-bar" ref={this.setPinHolderRef} />
+				<div className="bmbo-slider-content">
+					<div className="bmbo-slider-bar" ref={this.setPinHolderRef} />
 
-				<div
-					className="bmbo-slider-range"
-					style={{
-						left: getLeft(rangeMin, min, max),
-						width: `${rangeWidthPtg * 100}%`,
-					}}
-				/>
+					<div
+						className="bmbo-slider-range"
+						style={{
+							left: getLeft(rangeMin, min, max),
+							width: `${rangeWidthPtg * 100}%`,
+						}}
+					/>
 
-				{$markList}
+					{$markList}
+					{$pinList}
+				</div>
 
-				{$pinList}
+				<div className="bmbo-slider-title">
+					{$markTitleList}
+				</div>
 			</div>
 		);
 	}

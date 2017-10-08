@@ -4,14 +4,21 @@ import cssModules from 'react-css-modules';
 
 import {
 	Navigation, Row, Col, Button,
-	Form, Input, Radio, Checkbox,
+	Form, Input, Radio, Checkbox, Slider,
 } from '../../../components';
 
 import { toString } from '../../utils/propsUtil';
 
 import styles from './GridPage.scss';
 
-const GRID_LIST = [3, 4, 5, 6, 10, 24];
+const GRID_LIST = [3, 5, 10, 24];
+
+const GRID_COUNT = [1, 2, 3, 4, 5, 6, 8, 10, 12, 24];
+const GRID_COUNT_MARKS = {};
+
+GRID_COUNT.forEach((count, index) => {
+	GRID_COUNT_MARKS[index] = String(count);
+});
 
 const toNumArray = (num) => {
 	const list = [];
@@ -26,12 +33,35 @@ class GridPage extends React.Component {
 		super();
 		this.state = {
 			form: {
-				count: 1,
+				countIndex: 1,
+				gutter: 15,
 			},
 		};
 	}
 
+	getSampleCode = () => {
+		const { form } = this.state;
+		let gutter = '';
+		if (form.gutter !== 15) {
+			gutter = ` gutter={${Math.max(0, form.gutter)}}`;
+		}
+
+		return `<Row${gutter}>
+   <Col xs="1/${GRID_COUNT[form.countIndex]}">Column</Col>
+</Row>`;
+	};
+
 	render() {
+		const { form } = this.state;
+		const $cols = [];
+
+		const sampleCount = GRID_COUNT[form.countIndex];
+		for (let i = 0; i < sampleCount; i += 1) {
+			$cols.push(<Col key={i} xs={[1, sampleCount]}>
+				<div styleName="col" />
+			</Col>);
+		}
+
 		return (
 			<Row>
 				<Col xs="1/3">
@@ -61,15 +91,27 @@ class GridPage extends React.Component {
 					<h2>试一试</h2>
 					<div className="measurement">
 						<div className="preview">
+							<div styleName="grid-preview">
+								<Row gutter={form.gutter}>
+									{$cols}
+								</Row>
+							</div>
 						</div>
 
 						<div className="form">
 							<Form instance={this} path="form">
-								<Form.Field name="count" title="Count">
-									<Input />
+								<Form.Field name="countIndex" title="Count">
+									<Slider marks={GRID_COUNT_MARKS} min={0} max={GRID_COUNT.length - 1} />
+								</Form.Field>
+								<Form.Field name="gutter" title="Gutter ( >= 0)">
+									<Input type="number" />
 								</Form.Field>
 							</Form>
 						</div>
+
+						<pre className="code">
+							{this.getSampleCode()}
+						</pre>
 					</div>
 				</Col>
 			</Row>

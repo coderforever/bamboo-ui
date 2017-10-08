@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import cssModules from 'react-css-modules';
 
 const REGEX = /^(\d+)\/(\d+)$/;
 
