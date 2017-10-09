@@ -3,10 +3,43 @@ import PropTypes from 'prop-types';
 
 import {
 	Navigation, Row, Col, Button,
-	Form, Input, Radio, Checkbox,
+	Form, Input, Radio, Checkbox, Menu,
 } from '../../../components';
 
-import { toString } from '../../utils/propsUtil';
+import { toString } from '../../utils/objectUtil';
+
+const MENU_SAMPLE = [
+	{
+		title: '默认选项',
+		onClick: () => {
+			// TODO: Change this to alert / dialog component
+			alert('Clicked!');
+		},
+	},
+	{
+		title: '禁用选项',
+		disabled: true,
+	},
+	{
+		separator: true,
+	},
+	{
+		title: '包含子菜单',
+		list: [
+			{
+				title: '子菜单 1',
+			},
+			{
+				title: '子菜单 2',
+				list: [
+					{
+						title: '子子菜单',
+					},
+				],
+			},
+		],
+	},
+];
 
 class MenuPage extends React.Component {
 	constructor() {
@@ -30,6 +63,18 @@ class MenuPage extends React.Component {
 					<p>
 						菜单提供了下拉和右击菜单功能。
 					</p>
+
+					<Menu menu={MENU_SAMPLE}>
+						<strong>[右击这段文字来实验一下]</strong>
+					</Menu>
+
+					<pre>
+						{`const menu = ${toString(MENU_SAMPLE)};
+
+<Menu menu={menu}>
+   <strong>[右击这段文字来实验一下]</strong>
+</Menu>`}
+					</pre>
 				</Col>
 			</Row>
 		);

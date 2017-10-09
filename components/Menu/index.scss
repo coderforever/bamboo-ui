@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+.bmbo-menu-wrapper {
+	display: inline;
+}
+
+.bmbo-menu-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	background: #FFF;
+	border: 1px solid var(--bmbo-border);
+	cursor: default;
+	color: var(--bmbo-color);
+	display: inline-block;
+	position: absolute;
+
+	.bmbo-menu-item {
+		position: relative;
+		padding: 5px 20px 5px 10px;
+		white-space: nowrap;
+
+		> .bmbo-caret {
+			position: absolute;
+			right: 3px;
+			top: 12px;
+		}
+
+		&.bmbo-active {
+			background: var(--bmbo-bac);
+		}
+
+		&.bmbo-disabled {
+			color: var(--bmbo-color-dim);
+		}
+	}
+
+	.bmbo-separator {
+		height: 0;
+		border-top: 1px solid var(--bmbo-border);
+	}
+}
