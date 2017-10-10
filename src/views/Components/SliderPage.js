@@ -31,11 +31,11 @@ class SliderPage extends React.Component {
 				max: 100,
 				step: 1,
 				hasStep: true,
-				multi: 1,
+				multi: 2,
 				hasMulti: false,
 				disabled: false,
 				transparent: false,
-				hasMarks: false,
+				hasMarks: true,
 			},
 		};
 	}

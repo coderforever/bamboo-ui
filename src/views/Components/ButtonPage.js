@@ -18,6 +18,7 @@ class ButtonPage extends React.Component {
 				disabled: false,
 				size: '',
 				transparent: false,
+				checked: false,
 			},
 		};
 	}
@@ -94,6 +95,7 @@ class ButtonPage extends React.Component {
 								disabled={form.disabled}
 								size={form.size}
 								transparent={form.transparent}
+								checked={form.checked}
 							>
 								{form.text}
 							</Button>
@@ -124,6 +126,9 @@ class ButtonPage extends React.Component {
 								</Form.Field>
 								<Form.Field name="transparent" title="Transparent">
 									<Checkbox>transparent</Checkbox>
+								</Form.Field>
+								<Form.Field name="checked" title="Checked">
+									<Checkbox>checked</Checkbox>
 								</Form.Field>
 							</Form>
 						</div>

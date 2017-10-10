@@ -1,23 +1,49 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-import { getEnablePosition } from '../utils/uiUtil';
+import { getEnablePosition, requestAnimationFrame } from '../utils/uiUtil';
 
 import MenuItem from './MenuItem';
+
+const ANIMATE_STATUS_INIT = 0;
+const ANIMATE_STATUS_SHOWING = 1;
+const ANIMATE_STATUS_SHOWN = 2;
 
 class MenuList extends React.Component {
 	constructor() {
 		super();
-		this.state = {};
+		this.state = {
+			animateStatus: ANIMATE_STATUS_INIT,
+		};
 	}
 
 	componentDidMount() {
 		const { x, y, width = 0, height = 0 } = this.props;
 		const rect = this.$list.getBoundingClientRect();
-		Promise.resolve().then(() => {
-			this.setState(getEnablePosition({ x, y, width, height }, rect, 'r'));
+
+		requestAnimationFrame(() => {
+			if (this._destroy) return;
+
+			this.setState({
+				...getEnablePosition({ x, y, width, height }, rect, 'r'),
+				animateStatus: ANIMATE_STATUS_SHOWING,
+			}, () => {
+				// Delay 2 frame to display animation
+				requestAnimationFrame(() => {
+					if (this._destroy) return;
+
+					this.setState({
+						animateStatus: ANIMATE_STATUS_SHOWN,
+					});
+				}, 2);
+			});
 		});
+	}
+
+	componentWillUnmount() {
+		this._destroy = true;
 	}
 
 	onMouseDown = (event) => {
@@ -34,12 +60,16 @@ class MenuList extends React.Component {
 
 		if (!menuHolder) return null;
 
-		const { x, y } = this.state;
+		const { x, y, animateStatus } = this.state;
 
 		return createPortal(
 			<ul
 				ref={this.setRef}
-				className="bmbo-menu-list" style={{ left: `${x}px`, top: `${y}px` }}
+				className={classNames('bmbo-menu-list', {
+					'bmbo-hidden': animateStatus === ANIMATE_STATUS_INIT,
+					'bmbo-showing': animateStatus === ANIMATE_STATUS_SHOWING,
+				})}
+				style={{ left: `${x}px`, top: `${y}px` }}
 				role="presentation"
 				tabIndex={-1}
 				onMouseDown={this.onMouseDown}

@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+$weak: #CCC;
 $default: #757575;
 $primary: #2B70E3;
 $info: #298185;
@@ -19,6 +20,7 @@ $border: #CCC;
 
 	--bmbo-component-spacing: 5px;
 
+	--bmbo-weak: $weak;
 	--bmbo-default: $default;
 	--bmbo-primary: $primary;
 	--bmbo-info: $info;
@@ -27,6 +29,7 @@ $border: #CCC;
 	--bmbo-danger: $danger;
 	--bmbo-forbid: $forbid;
 
+	--bmbo-weak-light: lighten($weak, 10%);
 	--bmbo-default-light: lighten($default, 10%);
 	--bmbo-primary-light: lighten($primary, 10%);
 	--bmbo-info-light: lighten($info, 10%);
@@ -35,6 +38,7 @@ $border: #CCC;
 	--bmbo-danger-light: lighten($danger, 10%);
 	--bmbo-forbid-light: lighten($forbid, 10%);
 
+	--bmbo-weak-dark: darken($weak, 10%);
 	--bmbo-default-dark: darken($default, 10%);
 	--bmbo-primary-dark: darken($primary, 10%);
 	--bmbo-info-dark: darken($info, 10%);
@@ -43,6 +47,7 @@ $border: #CCC;
 	--bmbo-danger-dark: darken($danger, 10%);
 	--bmbo-forbid-dark: darken($forbid, 10%);
 
+	--bmbo-weak-disabled: scale-color($weak, $saturation: -70%, $lightness: 50%);
 	--bmbo-default-disabled: scale-color($default, $saturation: -70%, $lightness: 50%);
 	--bmbo-primary-disabled: scale-color($primary, $saturation: -70%, $lightness: 50%);
 	--bmbo-info-disabled: scale-color($info, $saturation: -70%, $lightness: 50%);
@@ -57,10 +62,15 @@ $border: #CCC;
 	--bmbo-color: #333;
 	--bmbo-color-dim: #999;
 	--bmbo-color-light: #FFF;
+	--bmbo-color-weak: #666;
 
 	--bmbo-border: $border;
 	--bmbo-bac: #EEE;
 	--bmbo-bac-dark: #DDD;
+
+	--bmbo-shadow: 0 1px 3px rgba(#000, 0.1);
+
+	--bmbo-component-margin: 15px;
 }
 
 @mixin listNoStyle {

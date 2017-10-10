@@ -2,44 +2,89 @@
 
 @mixin buttonColor($color) {
 	// Type
-	background: var($color);
+	background: var(--bmbo-#{$color});
 
-	&:not(.bmbo-disabled):hover {
-		background: var(#{$color}-light);
+	&:not(.bmbo-checked):not(.bmbo-disabled):hover {
+		background: var(--bmbo-#{$color}-light);
 	}
 
-	&:not(.bmbo-disabled):active {
-		background: var(#{$color}-dark);
+	&:not(.bmbo-checked):not(.bmbo-disabled):active {
+		background: var(--bmbo-#{$color}-dark);
 	}
 
 	// Disabled
 	&.bmbo-disabled {
 		cursor: not-allowed;
-		background: var(#{$color}-disabled);
+		background: var(--bmbo-#{$color}-disabled);
 	}
 
 	// Transparent
 	&.bmbo-transparent {
 		background: transparent;
 
-		border-color: var(#{$color});
-		color: var(#{$color});
+		padding: 5px 12px;
+		border: 1px solid var(--bmbo-#{$color});
 
-		&:not(.bmbo-disabled):hover {
-			background: transparent;
-			border-color: var(#{$color}-light);
-			color: var(#{$color}-light);
+		@if $color == "weak" {
+			color: var(--bmbo-color-weak);
+		} @else {
+			color: var(--bmbo-#{$color});
 		}
 
-		&:not(.bmbo-disabled):active {
+		// Size
+		&.bmbo-xs {
+			font-size: var(--bmbo-font-size-small);
+			padding: 0 5px;
+		}
+
+		&.bmbo-sm {
+			padding: 2px 7px;
+		}
+
+		&.bmbo-lg {
+			font-size: var(--bmbo-font-size-large);
+			padding: 10px 20px;
+		}
+
+		&:not(.bmbo-checked):not(.bmbo-disabled):hover {
 			background: transparent;
-			border-color: var(#{$color}-dark);
-			color: var(#{$color}-dark);
+			border-color: var(--bmbo-#{$color}-dark);
+
+			@if $color == "weak" {
+				color: var(--bmbo-color-weak);
+			} @else {
+				color: var(--bmbo-#{$color}-dark);
+			}
+		}
+
+		&:not(.bmbo-checked):not(.bmbo-disabled):active {
+			background: transparent;
+			border-color: var(--bmbo-#{$color}-light);
+
+			@if $color == "weak" {
+				color: var(--bmbo-color-weak);
+			} @else {
+				color: var(--bmbo-#{$color}-light);
+			}
 		}
 
 		&.bmbo-disabled {
-			color: var(#{$color}-disabled);
-			border-color: var(#{$color}-disabled);
+			color: var(--bmbo-#{$color}-disabled);
+			border-color: var(--bmbo-#{$color}-disabled);
+		}
+	}
+
+	// Checked
+	&.bmbo-checked {
+		&:not(.bmbo-transparent) {
+			box-shadow: inset 0 0 2px rgba(#000, 0.2);
+			background: var(--bmbo-#{$color}-dark);
+		}
+
+		&.bmbo-transparent {
+			background: transparent;
+			color: var(--bmbo-#{$color}-dark);
+			border-color: var(--bmbo-#{$color}-dark);
 		}
 	}
 }
@@ -47,48 +92,55 @@
 .bmbo-button {
 	color: var(--bmbo-color-light);
 	border-radius: 3px;
-	padding: 5px 12px;
+	padding: 6px 13px;
 	font-size: var(--bmbo-font-size);
-	border: 1px solid transparent;
+	border: 0;
+	position: relative;
 
 	cursor: pointer;
 
-	transition: all var(--bmbo-duration-fast);
+	transition: background var(--bmbo-duration-fast),
+		color var(--bmbo-duration-fast),
+		box-shadow var(--bmbo-duration-fast),
+		border-color var(--bmbo-duration-fast);
 
 	// Size
 	&.bmbo-xs {
 		font-size: var(--bmbo-font-size-small);
-		padding: 0 5px;
+		padding: 1px 6px;
 	}
 
 	&.bmbo-sm {
-		padding: 2px 7px;
+		padding: 3px 8px;
 	}
 
 	&.bmbo-lg {
 		font-size: var(--bmbo-font-size-large);
-		padding: 10px 20px;
+		padding: 11px 21px;
 	}
 
 	// Type & Transparent
-	@include buttonColor(--bmbo-default);
+	@include buttonColor(default);
 
+	&.bmbo-weak {
+		@include buttonColor(weak);
+	}
 	&.bmbo-primary {
-		@include buttonColor(--bmbo-primary);
+		@include buttonColor(primary);
 	}
 	&.bmbo-info {
-		@include buttonColor(--bmbo-info);
+		@include buttonColor(info);
 	}
 	&.bmbo-success {
-		@include buttonColor(--bmbo-success);
+		@include buttonColor(success);
 	}
 	&.bmbo-warning {
-		@include buttonColor(--bmbo-warning);
+		@include buttonColor(warning);
 	}
 	&.bmbo-danger {
-		@include buttonColor(--bmbo-danger);
+		@include buttonColor(danger);
 	}
 	&.bmbo-forbid {
-		@include buttonColor(--bmbo-forbid);
+		@include buttonColor(forbid);
 	}
 }

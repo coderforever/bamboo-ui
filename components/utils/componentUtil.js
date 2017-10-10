@@ -19,6 +19,7 @@ export const mapChildrenByType = (children, type, func) => (
 	mapChildren(children, (node, index) => {
 		if (
 			React.isValidElement(node) &&
+			node.type &&
 			node.type[type] === type
 		) {
 			if (func) return func(node, index);
@@ -32,6 +33,7 @@ export const mapChildrenByNotType = (children, type, func) => (
 	mapChildren(children, (node, index) => {
 		if (
 			React.isValidElement(node) &&
+			node.type &&
 			node.type[type] === type
 		) {
 			return null;

@@ -4,25 +4,43 @@ import classNames from 'classnames';
 
 export const BAMBOO_FORM_RADIO = 'BAMBOO_FORM_RADIO';
 
-const Radio = ({ children, checked, onClick }) => (
-	<div
-		className={classNames('bmbo-radio', checked && 'bmbo-checked')}
-		role="button"
-		tabIndex={0}
-		onClick={onClick}
-	>
-		<input type="radio" checked={checked} readOnly />
-		<span className="bmbo-radio-check" />
+import { wrapperEventValue } from '../utils/componentUtil';
 
-		<div className="bmbo-radio-content">{children}</div>
-	</div>
-);
+class Radio extends React.Component {
+	onClick = (...args) => {
+		const { onClick, onChange, value } = this.props;
+		const event = args[0];
+
+		if (onClick) onClick(...args);
+		if (onChange) onChange(wrapperEventValue(event, event.target, value));
+	};
+
+	render() {
+		const { children, checked } = this.props;
+
+		return (
+			<div
+				className={classNames('bmbo-radio', checked && 'bmbo-checked')}
+				role="button"
+				tabIndex={0}
+				onClick={this.onClick}
+			>
+				<input type="radio" checked={checked} readOnly />
+				<span className="bmbo-radio-check" />
+
+				<div className="bmbo-radio-content">{children}</div>
+			</div>
+		);
+	}
+}
 
 Radio.propTypes = {
 	children: PropTypes.node,
 
 	checked: PropTypes.bool,
 	onClick: PropTypes.func,
+	onChange: PropTypes.func,
+	value: PropTypes.node,
 };
 
 Radio[BAMBOO_FORM_RADIO] = BAMBOO_FORM_RADIO;

@@ -45,8 +45,11 @@ h2 {
 	.preview {
 		border: 0;
 		border-radius: 0;
-		border-bottom: 1px solid #CCC;
 		overflow: hidden;
+	}
+
+	.form {
+		border-top: 1px solid #CCC;
 	}
 
 	pre.code {

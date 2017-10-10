@@ -10,6 +10,7 @@ import GridPage from '../Components/GridPage';
 import ButtonPage from '../Components/ButtonPage';
 import SliderPage from '../Components/SliderPage';
 import MenuPage from '../Components/MenuPage';
+import GroupPage from '../Components/GroupPage';
 
 import Navigation from '../../../components/Navigation';
 
@@ -47,6 +48,7 @@ class Main extends React.Component {
 						<Navigation.Item onClick={() => { this.goPage('/button'); }}>Button</Navigation.Item>
 						<Navigation.Item onClick={() => { this.goPage('/slider'); }}>Slider</Navigation.Item>
 						<Navigation.Item onClick={() => { this.goPage('/menu'); }}>Menu</Navigation.Item>
+						<Navigation.Item onClick={() => { this.goPage('/group'); }}>Group</Navigation.Item>
 					</Navigation.Item>
 					<Navigation.Item>
 						Set Type
@@ -62,6 +64,7 @@ class Main extends React.Component {
 					<Route path="/button" component={ButtonPage} />
 					<Route path="/slider" component={SliderPage} />
 					<Route path="/menu" component={MenuPage} />
+					<Route path="/group" component={GroupPage} />
 				</div>
 			</div>
 		);

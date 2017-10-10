@@ -22,12 +22,28 @@ export function getHolder() {
 
 export const ANIMATION_INTERVAL = 1000 / 60;
 
-export const requestAnimationFrame = (func) => {
+const delayByFrame = (func) => {
 	if (window.requestAnimationFrame) {
 		window.requestAnimationFrame(func);
 	} else {
 		setTimeout(func, ANIMATION_INTERVAL);
 	}
+};
+
+export const requestAnimationFrame = (func, delayFrame = 1) => {
+	let count = delayFrame;
+
+	function doAction() {
+		if (count <= 0) {
+			func();
+			return;
+		}
+
+		count -= 1;
+		delayByFrame(doAction);
+	}
+
+	doAction();
 };
 
 /**
