@@ -102,7 +102,7 @@ class GroupPage extends React.Component {
 								</Form.Field>
 
 								<Group>
-									<Input />
+									<Input aria-label="input" />
 									<Button type={type} transparent={transparent}>Go</Button>
 								</Group>
 							</div>
@@ -137,7 +137,7 @@ class GroupPage extends React.Component {
 						<div className="preview">
 							<Group>
 								<Group.Item width="100%">
-									<Input />
+									<Input aria-label="input" />
 								</Group.Item>
 								<Button type="primary">Go</Button>
 							</Group>

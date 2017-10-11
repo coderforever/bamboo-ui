@@ -63,7 +63,7 @@ class Item extends React.Component {
 Item.propTypes = {
 	children: PropTypes.node,
 	style: PropTypes.object,
-	width: PropTypes.number,
+	width: PropTypes.string,
 	isFirst: PropTypes.bool,
 	isLast: PropTypes.bool,
 	value: PropTypes.node,

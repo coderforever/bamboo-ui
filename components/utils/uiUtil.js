@@ -46,6 +46,35 @@ export const requestAnimationFrame = (func, delayFrame = 1) => {
 	doAction();
 };
 
+export class Waiter {
+	constructor() {
+		this.priority = -1;
+		this.callback = null;
+	}
+
+	next = (callback, priority = 0) => {
+		if (!this.callback || priority >= this.priority) {
+			this.priority = priority;
+			this.callback = callback;
+
+			this.doCheck();
+		}
+	};
+
+	destroy = () => {
+		this._destroy = true;
+	};
+
+	doCheck = () => {
+		requestAnimationFrame(() => {
+			if (!this.callback || this._destroy) return;
+
+			this.callback();
+			this.callback = null;
+		}, 2);
+	};
+}
+
 /**
  * Get Scroll bar size
  * @type {number}

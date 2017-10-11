@@ -3,11 +3,62 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { mapChildrenByType, mapChildrenByNotType } from '../utils/componentUtil';
+import { requestAnimationFrame, Waiter } from '../utils/uiUtil';
 
 import { BAMBOO_NAVIGATION_ITEM } from './FakeItem';
 import Item from './Item';
 
+const DRILL_DOWN_STATUS_NONE = 0;
+const DRILL_DOWN_STATUS_SHOW = 1;
+const DRILL_DOWN_STATUS_SHOWN = 2;
+
+// TODO: Update the logic to let drill down more make sense
+
 class HorizontalNavTitle extends React.Component {
+	constructor() {
+		super();
+		this.state = {
+			drillDownStatus: DRILL_DOWN_STATUS_NONE,
+		};
+
+		// Add waiter for mouse event handler
+		this.waiter = new Waiter();
+	}
+
+	componentWillUnmount() {
+		this.waiter.destroy();
+	}
+
+	onMouseEnter = () => {
+		this.waiter.next(() => {
+			if (this.state.drillDownStatus === DRILL_DOWN_STATUS_SHOWN) return;
+
+			this.setState({ drillDownStatus: DRILL_DOWN_STATUS_SHOW }, () => {
+				requestAnimationFrame(() => {
+					this.setState({ drillDownStatus: DRILL_DOWN_STATUS_SHOWN });
+				}, 2);
+			});
+		});
+	};
+
+	onMouseLeave = (event) => {
+		const rect = event.target.getBoundingClientRect();
+		if (
+			rect.left <= event.clientX && event.clientX <= rect.right &&
+			rect.top <= event.clientY && event.clientY <= rect.bottom
+		) {
+			/**
+			 * It seems react onMouseLeave event not correct trigger sometime.
+			 * Not sure why this happen. May need deep dive for source code.
+ 			 */
+			return;
+		}
+
+		this.waiter.next(() => {
+			this.setState({ drillDownStatus: DRILL_DOWN_STATUS_SHOW });
+		});
+	};
+
 	getTitle = () => {
 		const { children } = this.props;
 
@@ -24,8 +75,10 @@ class HorizontalNavTitle extends React.Component {
 
 	render() {
 		const { active, onClick } = this.props;
+		const { drillDownStatus } = this.state;
+
 		const title = this.getTitle();
-		const list = this.getList();
+		const list = drillDownStatus !== DRILL_DOWN_STATUS_NONE ? this.getList() : null;
 
 		const clickProps = onClick ? {
 			role: 'button',
@@ -35,14 +88,23 @@ class HorizontalNavTitle extends React.Component {
 
 		return (
 			<li className={classNames('bmbo-nav-head', active && 'bmbo-active')}>
-				<div className="bmbo-nav-head-title" {...clickProps}>
+				<div
+					className="bmbo-nav-head-title"
+					{...clickProps}
+					onMouseEnter={this.onMouseEnter}
+					onMouseLeave={this.onMouseLeave}
+				>
 					<div className="bmbo-nav-head-title-span">
 						{title}
 					</div>
 				</div>
-				<ul className="bmbo-nav-head-list">
+				{drillDownStatus !== DRILL_DOWN_STATUS_NONE && <ul
+					className={classNames('bmbo-nav-head-list', drillDownStatus === DRILL_DOWN_STATUS_SHOW && 'bmbo-showing')}
+					onMouseEnter={this.onMouseEnter}
+					onMouseLeave={this.onMouseLeave}
+				>
 					{list}
-				</ul>
+				</ul>}
 			</li>
 		);
 	}
