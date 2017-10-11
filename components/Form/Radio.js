@@ -8,11 +8,13 @@ import { wrapperEventValue } from '../utils/componentUtil';
 
 class Radio extends React.Component {
 	onClick = (...args) => {
-		const { onClick, onChange, value } = this.props;
+		const { onClick, onChange, value, children } = this.props;
 		const event = args[0];
 
 		if (onClick) onClick(...args);
-		if (onChange) onChange(wrapperEventValue(event, event.target, value));
+		if (onChange) {
+			onChange(wrapperEventValue(event, event.target, value !== undefined ? value : children));
+		}
 	};
 
 	render() {

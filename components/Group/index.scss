@@ -46,6 +46,7 @@
 				border-left: 0;
 			}
 
+			> .bmbo-button.bmbo-transparent:not(.bmbo-weak):before,
 			> .bmbo-button.bmbo-transparent.bmbo-checked:before {
 				content: '';
 				z-index: 1;
