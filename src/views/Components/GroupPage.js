@@ -8,7 +8,7 @@ import {
 
 import { toString } from '../../utils/objectUtil';
 
-const BUTTON_TYPES = ['(default)', 'primary', 'info', 'success', 'warning', 'danger', 'forbid'];
+const BUTTON_TYPES = ['default', 'primary', 'info', 'success', 'warning', 'danger', 'forbid'];
 
 class GroupPage extends React.Component {
 	constructor() {
@@ -23,7 +23,7 @@ class GroupPage extends React.Component {
 	getInlineSample = () => {
 		const { type, transparent, radio } = this.state;
 
-		const typeStr = type !== BUTTON_TYPES[0] ? ` type="${type}"` : '';
+		const typeStr = type !== BUTTON_TYPES[1] ? ` type="${type}"` : '';
 		const transparentStr = transparent ? ' transparent' : '';
 
 		return `

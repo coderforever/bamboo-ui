@@ -11,7 +11,11 @@ class Button extends React.Component {
 	};
 
 	render() {
-		const { children, type, disabled, size, transparent, checked } = this.props;
+		const { children, disabled, size, transparent, checked, ...props } = this.props;
+		const type = this.props.type || 'primary';
+
+		delete props.type;
+		delete props.onClick;
 
 		return (
 			<button
@@ -24,6 +28,8 @@ class Button extends React.Component {
 					checked && 'bmbo-checked',
 				)}
 				onClick={this.onClick}
+
+				{...props}
 			>
 				{children}
 			</button>

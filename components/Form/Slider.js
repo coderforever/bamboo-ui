@@ -296,7 +296,8 @@ class Slider extends React.Component {
 	};
 
 	render() {
-		const { min = 0, max = 100, type, disabled, transparent, marks = {} } = this.props;
+		const { min = 0, max = 100, disabled, transparent } = this.props;
+		const type = this.props.type || 'primary';
 
 		const pinCount = this.getPinCount();
 

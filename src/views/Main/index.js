@@ -11,6 +11,7 @@ import ButtonPage from '../Components/ButtonPage';
 import SliderPage from '../Components/SliderPage';
 import MenuPage from '../Components/MenuPage';
 import GroupPage from '../Components/GroupPage';
+import ModalPage from '../Components/ModalPage';
 
 import Navigation from '../../../components/Navigation';
 
@@ -49,6 +50,7 @@ class Main extends React.Component {
 						<Navigation.Item onClick={() => { this.goPage('/slider'); }}>Slider</Navigation.Item>
 						<Navigation.Item onClick={() => { this.goPage('/menu'); }}>Menu</Navigation.Item>
 						<Navigation.Item onClick={() => { this.goPage('/group'); }}>Group</Navigation.Item>
+						<Navigation.Item onClick={() => { this.goPage('/modal'); }}>Modal</Navigation.Item>
 					</Navigation.Item>
 					<Navigation.Item>
 						Set Type
@@ -65,6 +67,7 @@ class Main extends React.Component {
 					<Route path="/slider" component={SliderPage} />
 					<Route path="/menu" component={MenuPage} />
 					<Route path="/group" component={GroupPage} />
+					<Route path="/modal" component={ModalPage} />
 				</div>
 			</div>
 		);

@@ -65,10 +65,10 @@ class ButtonPage extends React.Component {
 					</p>
 					<div className="preview">
 						<span className="margin">
-							<Button>default</Button>
+							<Button type="default">default</Button>
 						</span>
 						<span className="margin">
-							<Button type="primary">primary</Button>
+							<Button>primary</Button>
 						</span>
 						<span className="margin">
 							<Button type="info">info</Button>
@@ -107,8 +107,8 @@ class ButtonPage extends React.Component {
 									<Input />
 								</Form.Field>
 								<Form.Field name="type" title="Type">
-									<Radio value="">(default)</Radio>
-									<Radio value="primary">primary</Radio>
+									<Radio value="default">default</Radio>
+									<Radio value="">primary</Radio>
 									<Radio value="info">info</Radio>
 									<Radio value="success">success</Radio>
 									<Radio value="warning">warning</Radio>

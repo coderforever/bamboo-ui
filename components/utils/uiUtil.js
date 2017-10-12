@@ -66,6 +66,7 @@ export class Waiter {
 	};
 
 	doCheck = () => {
+		// Wait 2 frames to make sure UI render refresh
 		requestAnimationFrame(() => {
 			if (!this.callback || this._destroy) return;
 

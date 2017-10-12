@@ -11,3 +11,4 @@ export Slider from './Form/Slider';
 export Menu from './Menu';
 export Group from './Group';
 export GroupItem from './Group/Item';
+export Modal from './Modal';

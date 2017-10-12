@@ -42,16 +42,16 @@ class SliderPage extends React.Component {
 
 	onFormChanged = () => {
 		const { form } = this.state;
-		const { value, multi } = form;
+		const { value, hasMulti, multi } = form;
 
-		if (multi > 1 && !Array.isArray(value)) {
+		if (hasMulti && multi > 1 && !Array.isArray(value)) {
 			this.setState({
 				form: {
 					...form,
 					value: [value],
 				},
 			});
-		} else if (multi <= 1 && Array.isArray(value)) {
+		} else if ((!hasMulti || multi <= 1) && Array.isArray(value)) {
 			this.setState({
 				form: {
 					...form,
@@ -102,8 +102,8 @@ class SliderPage extends React.Component {
 
 							<div className="form">
 								<Form.Field name="type" title="Type">
-									<Radio value="">(default)</Radio>
-									<Radio value="primary">primary</Radio>
+									<Radio value="default">default</Radio>
+									<Radio value="">primary</Radio>
 									<Radio value="info">info</Radio>
 									<Radio value="success">success</Radio>
 									<Radio value="warning">warning</Radio>
@@ -111,8 +111,9 @@ class SliderPage extends React.Component {
 									<Radio value="forbid">forbid</Radio>
 								</Form.Field>
 								<Form.Field name="value" title="Value">
-									{form.multi <= 1 && <Input type="number" />}
-									{form.multi > 1 && <Input disabled value={JSON.stringify(form.value)} />}
+									{(!form.hasMulti || form.multi <= 1) && <Input type="number" />}
+									{(form.hasMulti && form.multi > 1) &&
+										<Input disabled value={JSON.stringify(form.value)} />}
 								</Form.Field>
 								<Form.Field name="min" title="Min">
 									<Input type="number" />
