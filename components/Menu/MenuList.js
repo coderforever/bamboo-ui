@@ -3,19 +3,18 @@ import { createPortal } from 'react-dom';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-import { getEnablePosition, requestAnimationFrame } from '../utils/uiUtil';
+import {
+	ANIMATE_STATUS_NONE, ANIMATE_STATUS_SHOWING, ANIMATE_STATUS_SHOWN,
+	getEnablePosition, requestAnimationFrame,
+} from '../utils/uiUtil';
 
 import MenuItem from './MenuItem';
-
-const ANIMATE_STATUS_INIT = 0;
-const ANIMATE_STATUS_SHOWING = 1;
-const ANIMATE_STATUS_SHOWN = 2;
 
 class MenuList extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			animateStatus: ANIMATE_STATUS_INIT,
+			animateStatus: ANIMATE_STATUS_NONE,
 		};
 	}
 
@@ -66,7 +65,7 @@ class MenuList extends React.Component {
 			<ul
 				ref={this.setRef}
 				className={classNames('bmbo-menu-list', {
-					'bmbo-hidden': animateStatus === ANIMATE_STATUS_INIT,
+					'bmbo-hidden': animateStatus === ANIMATE_STATUS_NONE,
 					'bmbo-showing': animateStatus === ANIMATE_STATUS_SHOWING,
 				})}
 				style={{ left: `${x}px`, top: `${y}px` }}

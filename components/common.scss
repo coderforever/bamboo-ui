@@ -14,6 +14,8 @@ $border: #CCC;
 :root {
 	--bmbo-duration: 0.25s;
 	--bmbo-duration-fast: 0.15s;
+	--bmbo-duration-mid: 0.4s;
+	--bmbo-duration-slow: 1s;
 
 	--bmbo-lead: #374249;
 	--bmbo-lead-active: #45A7B9;
@@ -34,7 +36,7 @@ $border: #CCC;
 	--bmbo-primary-light: lighten($primary, 10%);
 	--bmbo-info-light: lighten($info, 10%);
 	--bmbo-success-light: lighten($success, 10%);
-	--bmbo-warning-light: lighten($warning, 10%);
+	--bmbo-warning-light: lighten($warning, 7%);
 	--bmbo-danger-light: lighten($danger, 10%);
 	--bmbo-forbid-light: lighten($forbid, 10%);
 
@@ -65,10 +67,12 @@ $border: #CCC;
 	--bmbo-color-weak: #666;
 
 	--bmbo-border: $border;
+	--bmbo-border-dim: lighten($border, 15%);
 	--bmbo-bac: #EEE;
 	--bmbo-bac-dark: #DDD;
 
-	--bmbo-padding: 15px;
+	--bmbo-gap: 15px;
+	--bmbo-gap-small: 10px;
 
 	--bmbo-shadow: 0 1px 3px rgba(#000, 0.1);
 

@@ -15,6 +15,7 @@ const compiler = webpack(config);
 app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath.replace(/^\./, '') }));
 app.use(webpackHotMiddleware(compiler));
 
+app.use('/assets', Express.static('assets'));
 app.use('/builds', Express.static('builds'));
 app.use('/scripts', Express.static('scripts'));
 

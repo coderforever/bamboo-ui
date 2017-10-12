@@ -5,7 +5,7 @@ import { BAMBOO_FORM_RADIO } from './Radio';
 import { BAMBOO_FORM_CHECKBOX } from './Checkbox';
 import { BAMBOO_FORM_INPUT } from './Input';
 
-import { mapChildrenForNode } from '../utils/componentUtil';
+import { mapChildrenForNode, BAMBOO_COMPONENT } from '../utils/componentUtil';
 import { getValue, updateValue } from '../utils/pathUtil';
 
 class Field extends React.Component {
@@ -45,7 +45,7 @@ class Field extends React.Component {
 		return mapChildrenForNode(children, (node) => {
 			const { props = {} } = node;
 
-			if (node.type[BAMBOO_FORM_RADIO] === BAMBOO_FORM_RADIO) {
+			if (node.type[BAMBOO_COMPONENT] === BAMBOO_FORM_RADIO) {
 				// ==================== Radio ====================
 				return React.cloneElement(node, {
 					onClick: (...args) => {
@@ -61,7 +61,7 @@ class Field extends React.Component {
 					},
 					checked: myValue === props.value,
 				});
-			} else if (node.type[BAMBOO_FORM_CHECKBOX] === BAMBOO_FORM_CHECKBOX) {
+			} else if (node.type[BAMBOO_COMPONENT] === BAMBOO_FORM_CHECKBOX) {
 				// ================== Check Box ==================
 				return React.cloneElement(node, {
 					onClick: (...args) => {
@@ -77,7 +77,7 @@ class Field extends React.Component {
 					},
 					checked: myValue,
 				});
-			} else if (node.type[BAMBOO_FORM_INPUT] === BAMBOO_FORM_INPUT) {
+			} else if (node.type[BAMBOO_COMPONENT] === BAMBOO_FORM_INPUT) {
 				// ==================== Input ====================
 				return React.cloneElement(node, {
 					value: props.value !== undefined ? props.value : myValue,

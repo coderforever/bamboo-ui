@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { BAMBOO_COMPONENT, wrapperEventValue } from '../utils/componentUtil';
 
 export const BAMBOO_FORM_RADIO = 'BAMBOO_FORM_RADIO';
 
-import { wrapperEventValue } from '../utils/componentUtil';
 
 class Radio extends React.Component {
 	onClick = (...args) => {
@@ -45,6 +45,6 @@ Radio.propTypes = {
 	value: PropTypes.node,
 };
 
-Radio[BAMBOO_FORM_RADIO] = BAMBOO_FORM_RADIO;
+Radio[BAMBOO_COMPONENT] = BAMBOO_FORM_RADIO;
 
 export default Radio;

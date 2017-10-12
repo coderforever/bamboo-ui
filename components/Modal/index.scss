@@ -1,5 +1,23 @@
 @charset "UTF-8";
 
+@mixin boxSize($name, $width) {
+	&.bmbo-#{$name} {
+		.bmbo-dialog-holder {
+			.bmbo-dialog {
+				width: $width;
+			}
+		}
+	}
+}
+
+@mixin boxType($type) {
+	&.bmbo-#{$type} {
+		.bmbo-dialog-holder {
+			border-top: 5px solid var(--bmbo-#{$type});
+		}
+	}
+}
+
 .bmbo-modal-lock {
 	overflow-y: hidden;
 }
@@ -11,19 +29,147 @@
 	top: 0;
 	bottom: 0;
 	overflow-y: auto;
-	background: rgba(#000, 0.3);
+	background: rgba(#000, 0.5);
+
+	perspective: 1000px;
+	transform-style: preserve-3d;
+
+	transition: background var(--bmbo-duration), opacity var(--bmbo-duration);
 
 	.bmbo-dialog-holder {
 		margin: 50px auto;
 		display: table;
+		box-shadow: var(--bmbo-shadow);
+		position: relative;
+
+		transition: margin var(--bmbo-duration-mid), transform var(--bmbo-duration-fast);
 
 		.bmbo-dialog {
 			background: #FFF;
 			width: 600px;
-			height: 1000px;
 			display: table-cell;
-			padding: var(--bmbo-padding);
+			vertical-align: top;
+			position: relative;
+
+			.bmbo-modal-title {
+				font-size: var(--bmbo-font-size-large);
+				padding: var(--bmbo-gap);
+				border-bottom: 1px solid var(--bmbo-border-dim);
+			}
+
+			.bmbo-modal-body {
+				padding: var(--bmbo-gap);
+			}
+
+			.bmbo-modal-footer {
+				text-align: right;
+				border-top: 1px solid var(--bmbo-border-dim);
+				padding: var(--bmbo-gap-small) var(--bmbo-gap);
+
+				> .bmbo-button:not(:first-child) {
+					margin-left: var(--bmbo-gap-small);
+				}
+			}
+		}
+
+		.bmbo-modal-preface {
+			display: table-cell;
+			vertical-align: top;
+			position: relative;
+
+			transition: width var(--bmbo-duration-mid) ease;
+
+			.bmbo-modal-preface-content {
+				position: absolute;
+				left: 0;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				background: var(--bmbo-bac);
+				overflow: hidden;
+
+				> img {
+					height: 100%;
+					width: auto;
+				}
+			}
+
+			&.bmbo-showing {
+				width: 10px;
+				transition: none!important;
+			}
+		}
+
+		.bmbo-modal-loading {
+			position: absolute;
+			min-width: 500px;
+			margin: 100px auto;
+			background: #FFF;
+			padding: var(--bmbo-gap);
 			box-shadow: var(--bmbo-shadow);
 		}
 	}
+
+	@include boxSize(xs, 300px);
+	@include boxSize(sm, 450px);
+	@include boxSize(lg, 900px);
+
+	@include boxType(default);
+	@include boxType(primary);
+	@include boxType(info);
+	@include boxType(success);
+	@include boxType(warning);
+	@include boxType(danger);
+	@include boxType(forbid);
+
+	&.bmbo-showing {
+		background: rgba(#000, 0);
+		opacity: 0;
+
+		transition: none!important;
+
+		.bmbo-dialog-holder {
+			margin-top: 30px;
+
+			transition: none!important;
+		}
+	}
+
+	&.bmbo-hidding {
+		opacity: 0;
+		pointer-events: none;
+
+		.bmbo-dialog-holder {
+			transform: scale(1.1, 1.1);
+		}
+	}
+
+	&.bmbo-loading {
+		.bmbo-dialog-holder {
+			animation: modal-loading-holder var(--bmbo-duration-slow);
+			animation-fill-mode: forwards;
+		}
+
+		.bmbo-modal-loading {
+			animation: modal-loading-tips var(--bmbo-duration-slow);
+			animation-fill-mode: forwards;
+		}
+	}
+
+	/* .bmbo-dialog-holder {
+		transform: rotateX(180deg);
+		//backface-visibility:hidden;
+	} */
+}
+
+@keyframes modal-loading-holder
+{
+	from	{transform: rotateY(0);}
+	to		{transform: rotateY(180deg);}
+}
+
+@keyframes modal-loading-tips
+{
+	from	{transform: rotateY(180deg);}
+	to		{transform: rotateY(0);}
 }

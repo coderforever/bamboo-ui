@@ -1,5 +1,7 @@
 import React from 'react';
 
+export const BAMBOO_COMPONENT = 'BAMBOO_COMPONENT';
+
 export const mapChildren = (children, func) => {
 	const list = React.Children
 		.map(children, (node, index) => func(node, index)) || [];
@@ -15,34 +17,38 @@ export const mapChildrenForNode = (children, func) => (
 	})
 );
 
-export const mapChildrenByType = (children, type, func) => (
-	mapChildren(children, (node, index) => {
+export const mapChildrenByType = (children, type, func) => {
+	const typeList = Array.isArray(type) ? type : [type];
+
+	return mapChildren(children, (node, index) => {
 		if (
 			React.isValidElement(node) &&
 			node.type &&
-			node.type[type] === type
+			typeList.includes(node.type[BAMBOO_COMPONENT])
 		) {
 			if (func) return func(node, index);
 			return node;
 		}
 		return null;
-	})
-);
+	});
+};
 
-export const mapChildrenByNotType = (children, type, func) => (
-	mapChildren(children, (node, index) => {
+export const mapChildrenByNotType = (children, type, func) => {
+	const typeList = Array.isArray(type) ? type : [type];
+
+	return mapChildren(children, (node, index) => {
 		if (
 			React.isValidElement(node) &&
 			node.type &&
-			node.type[type] === type
+			typeList.includes(node.type[BAMBOO_COMPONENT])
 		) {
 			return null;
 		}
 
 		if (func) return func(node, index);
 		return node;
-	})
-);
+	});
+};
 
 export const wrapperEventValue = (originEvent, target, value) => {
 	target.value = value; // eslint-disable-line no-param-reassign

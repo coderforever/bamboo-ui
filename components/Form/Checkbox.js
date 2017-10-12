@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { BAMBOO_COMPONENT } from '../utils/componentUtil';
 
 export const BAMBOO_FORM_CHECKBOX = 'BAMBOO_FORM_CHECKBOX';
 
@@ -25,6 +26,6 @@ Checkbox.propTypes = {
 	onClick: PropTypes.func,
 };
 
-Checkbox[BAMBOO_FORM_CHECKBOX] = BAMBOO_FORM_CHECKBOX;
+Checkbox[BAMBOO_COMPONENT] = BAMBOO_FORM_CHECKBOX;
 
 export default Checkbox;

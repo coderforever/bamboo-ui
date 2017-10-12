@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { mapChildrenByType, mapChildrenByNotType } from '../utils/componentUtil';
+import { BAMBOO_COMPONENT } from '../utils/componentUtil';
 
 export const BAMBOO_NAVIGATION_ITEM = 'BAMBOO_NAVIGATION_ITEM';
 
@@ -19,6 +20,6 @@ Item.contextTypes = {
 	navigationVertical: PropTypes.bool,
 };
 
-Item[BAMBOO_NAVIGATION_ITEM] = BAMBOO_NAVIGATION_ITEM;
+Item[BAMBOO_COMPONENT] = BAMBOO_NAVIGATION_ITEM;
 
 export default Item;

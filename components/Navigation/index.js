@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import HorizontalNav from './HorizontalNav';
 import VerticalNav from './VerticalNav';
-import FakeItem, { BAMBOO_NAVIGATION_ITEM } from './FakeItem';
+import FakeItem from './FakeItem';
 
 const Navigation = (props) => {
 	if (props.vertical) {

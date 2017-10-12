@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { wrapperEventValue } from '../utils/componentUtil';
+import { BAMBOO_COMPONENT, wrapperEventValue } from '../utils/componentUtil';
 
 import Button from '../Button';
 import { BAMBOO_FORM_RADIO } from '../Form/Radio';
@@ -24,7 +24,7 @@ class Item extends React.Component {
 		if (
 			React.isValidElement($child) &&
 			$child.type &&
-			$child.type[BAMBOO_FORM_RADIO] === BAMBOO_FORM_RADIO
+			$child.type[BAMBOO_COMPONENT] === BAMBOO_FORM_RADIO
 		) {
 			const { onClick, type, transparent, ...restProps } = $child.props;
 			const checked = restProps.value === value;
@@ -70,6 +70,6 @@ Item.propTypes = {
 	onChange: PropTypes.func,
 };
 
-Item[BAMBOO_GROUP_ITEM] = BAMBOO_GROUP_ITEM;
+Item[BAMBOO_COMPONENT] = BAMBOO_GROUP_ITEM;
 
 export default Item;

@@ -1,5 +1,10 @@
 import { canUseDOM } from './envUtil';
 
+export const ANIMATE_STATUS_NONE = 0;
+export const ANIMATE_STATUS_SHOWING = 1;
+export const ANIMATE_STATUS_SHOWN = 2;
+export const ANIMATE_STATUS_HIDING = 3;
+
 const BAMBOO_PORTALS_HOLDER = 'bmbo_portals_holder';
 let $bambooHolder;
 
@@ -46,18 +51,45 @@ export const requestAnimationFrame = (func, delayFrame = 1) => {
 	doAction();
 };
 
+function parseWaiterOption(priority = 0) {
+	return typeof priority !== 'object' ? {
+		priority,
+	} : {
+		priority: 0,
+		...priority,
+	};
+}
+
 export class Waiter {
 	constructor() {
 		this.priority = -1;
 		this.callback = null;
 	}
 
+	/**
+	 * Trigger callback after web frame render
+	 * @param callback
+	 * @param priority
+	 */
 	next = (callback, priority = 0) => {
-		if (!this.callback || priority >= this.priority) {
-			this.priority = priority;
-			this.callback = callback;
+		const opt = parseWaiterOption(priority);
+		if (this._occupy(callback, opt.priority)) {
+			if (!opt.delay) {
+				this._doCheck();
+			} else {
+				setTimeout(this._doCheck, opt.delay);
+			}
+		}
+	};
 
-			this.doCheck();
+	/**
+	 * Immediately trigger callback without delay
+	 * @param callback
+	 * @param priority
+	 */
+	immediate = (callback, priority = 0) => {
+		if (this._occupy(callback, priority)) {
+			this._doAction();
 		}
 	};
 
@@ -65,14 +97,29 @@ export class Waiter {
 		this._destroy = true;
 	};
 
-	doCheck = () => {
+	_occupy = (callback, priority = 0) => {
+		if (!this.callback || priority >= this.priority) {
+			this.priority = priority;
+			this.callback = callback;
+
+			return true;
+		}
+		return false;
+	};
+
+	_doAction = () => {
+		if (!this.callback || this._destroy) return;
+
+		const callback = this.callback;
+		this.callback = null;
+		callback();
+	};
+
+	_doCheck = (delay = 2) => {
 		// Wait 2 frames to make sure UI render refresh
 		requestAnimationFrame(() => {
-			if (!this.callback || this._destroy) return;
-
-			this.callback();
-			this.callback = null;
-		}, 2);
+			this._doAction();
+		}, delay);
 	};
 }
 
@@ -93,6 +140,18 @@ export function getScrollbarWidth() {
 	return scrollbarWidth;
 }
 
+export const hasHorizontalScroll = () => {
+	const winWidth = window.innerWidth;
+	const bodyWidth = window.document.body.scrollWidth;
+	return winWidth < bodyWidth;
+};
+
+export const hasVerticalScroll = () => {
+	const winHeight = window.innerHeight;
+	const bodyHeight = window.document.body.scrollHeight;
+	return winHeight < bodyHeight;
+};
+
 
 /**
  * Get enabled position for element.
@@ -109,13 +168,11 @@ export const getEnablePosition = (surroundRect, targetRect, position = 'dr') => 
 
 	let winWidth = window.innerWidth;
 	let winHeight = window.innerHeight;
-	const bodyWidth = window.document.body.clientWidth;
-	const bodyHeight = window.document.body.clientHeight;
 	const scrollX = window.scrollX;
 	const scrollY = window.scrollY;
 
-	if (winHeight < bodyHeight) winWidth -= getScrollbarWidth();
-	if (winWidth < bodyWidth) winHeight -= getScrollbarWidth();
+	if (hasVerticalScroll()) winWidth -= getScrollbarWidth();
+	if (hasHorizontalScroll()) winHeight -= getScrollbarWidth();
 
 	let targetX = sx + scrollX;
 	let targetY = sy + scrollY;

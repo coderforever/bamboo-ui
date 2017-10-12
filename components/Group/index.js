@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 
-import { mapChildrenForNode } from '../utils/componentUtil';
+import { BAMBOO_COMPONENT, mapChildrenForNode } from '../utils/componentUtil';
 import Item, { BAMBOO_GROUP_ITEM } from './Item';
 
 class Group extends React.Component {
@@ -12,12 +11,13 @@ class Group extends React.Component {
 	}
 
 	render() {
-		const { children, value, onChange } = this.props;
+		const { children, value, onChange, style = {}, width } = this.props;
+		if (width) style.width = width;
 
 		// Wrap component with Item
 		const itemList = mapChildrenForNode(children, (node) => {
 			let item = node;
-			if (!node.type || node.type[BAMBOO_GROUP_ITEM] !== BAMBOO_GROUP_ITEM) {
+			if (!node.type || node.type[BAMBOO_COMPONENT] !== BAMBOO_GROUP_ITEM) {
 				item = <Item>{node}</Item>;
 			}
 
@@ -36,7 +36,7 @@ class Group extends React.Component {
 		));
 
 		return (
-			<div className="bmbo-group">
+			<div className="bmbo-group" style={style}>
 				{$children}
 			</div>
 		);
@@ -47,6 +47,8 @@ Group.propTypes = {
 	children: PropTypes.node,
 	value: PropTypes.node,
 	onChange: PropTypes.func,
+	style: PropTypes.object,
+	width: PropTypes.string,
 };
 
 Group.Item = Item;
