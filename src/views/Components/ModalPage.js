@@ -149,7 +149,7 @@ class GroupPage extends React.Component {
 					<h2>确认对话框</h2>
 					<p>
 						当你设置<code>onConfirm</code>事件属性后，对话框将自动转换成确认对话框。
-						（确认对话框会禁止点击背景关闭功能）
+						（您可以通过添加<code>noMaskClose</code>属性来禁用点击背景关闭功能）
 					</p>
 
 					<div className="measurement">
@@ -174,19 +174,24 @@ class GroupPage extends React.Component {
 										confirmVisible: false,
 									});
 								}}
+								noMaskClose
 							>
 								Click confirm will popup another modal
 							</Modal>
 						</div>
 
-						<pre>
+						<pre className="code">
 							{`
-<Modal onConfirm={...} ...>
+<Modal onConfirm={...} noMaskClose ...>
    ...
 </Modal>
 `.trim()}
 						</pre>
 					</div>
+					<p>
+						同样，你也可以通过<code>cancelText</code>和<code>confirmText</code>
+						来自定义Cancel和Confirm按钮的文本内容。
+					</p>
 
 					<h2>等待对话框</h2>
 					<p>
@@ -210,22 +215,54 @@ class GroupPage extends React.Component {
 									});
 								}}
 								onConfirm={() => {
-									this.setState({
-										loading: true,
-									});
+									this.setState({ loading: true });
+									setTimeout(() => {
+										this.setState({ loading: false, loadingVisible: false });
+									}, 2000);
 								}}
 							>
 								Click confirm will display loading animation
 							</Modal>
 						</div>
 
-						<pre>
+						<pre className="code">
 							{`
 <Modal onConfirm={...} ...>
    ...
 </Modal>
 `.trim()}
 						</pre>
+					</div>
+
+					<h2>js调用</h2>
+					<p>
+						当然，有时候您会希望弹出框像使用<code>alert</code>一般，召之即来。这当然是可以的：
+					</p>
+					<div className="measurement">
+						<div className="preview">
+							<Button
+								onClick={() => {
+									Modal.showDialog({
+										title: 'Hello',
+										content: 'Bamboo UI',
+									});
+								}}
+							>弹出对话框</Button>
+
+							{' '}
+
+							<Button
+								onClick={() => {
+									Modal.showDialog({
+										title: 'Hello',
+										content: 'Bamboo UI',
+										onConfirm: () => {
+											console.log('Yes!');
+										},
+									});
+								}}
+							>弹出确认框</Button>
+						</div>
 					</div>
 				</Col>
 			</Row>

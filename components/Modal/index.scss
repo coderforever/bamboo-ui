@@ -31,9 +31,6 @@
 	overflow-y: auto;
 	background: rgba(#000, 0.5);
 
-	//perspective: 1000px;
-	//transform-style: preserve-3d;
-
 	transition: background var(--bmbo-duration), opacity var(--bmbo-duration);
 
 	.bmbo-dialog-holder {
@@ -102,6 +99,7 @@
 
 		.bmbo-modal-loading {
 			position: absolute;
+			pointer-events: none;
 			left: 0;
 			top: 0;
 			width: 100%;
@@ -109,10 +107,17 @@
 			background: rgba(#FFF, 0.6);
 			text-align: center;
 			padding: var(--bmbo-gap);
+			overflow: hidden;
 
 			opacity: 0;
-			transform: scaleY(0.5);
-			transform-origin: top;
+
+			.bmbo-default-loading {
+				font-size: var(--bmbo-font-size-huge);
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
 		}
 	}
 
@@ -147,44 +152,23 @@
 
 		.bmbo-dialog-holder {
 			transform: scale(1.1, 1.1);
+			// animation: bmbo-modal-holder-hide var(--bmbo-duration);
 		}
 	}
 
 	&.bmbo-loading {
 		.bmbo-modal-loading {
-			animation: modal-loading-to var(--bmbo-duration-mid);
+			animation: modal-loading-to var(--bmbo-duration);
 			animation-fill-mode: forwards;
+			pointer-events: auto;
 		}
-
-		/* .bmbo-dialog-holder {
-			animation: modal-loading-holder var(--bmbo-duration-slow);
-			animation-fill-mode: forwards;
-		}
-
-		.bmbo-modal-loading {
-			animation: modal-loading-tips var(--bmbo-duration-slow);
-			animation-fill-mode: forwards;
-		} */
 	}
+}
 
-	/* .bmbo-dialog-holder {
-		transform: rotateX(180deg);
-		//backface-visibility:hidden;
-	} */
+@keyframes bmbo-modal-holder-hide {
+	to { transform: scale(1.1, 1.1); }
 }
 
 @keyframes modal-loading-to {
-	to {transform: scaleY(1);opacity: 1;}
+	to { opacity: 1; }
 }
-
-/* @keyframes modal-loading-holder
-{
-	from	{transform: rotateY(0);}
-	to		{transform: rotateY(180deg);}
-}
-
-@keyframes modal-loading-tips
-{
-	from	{transform: rotateY(180deg);}
-	to		{transform: rotateY(0);}
-} */

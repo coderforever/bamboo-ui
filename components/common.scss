@@ -12,8 +12,8 @@ $forbid: #2B2423;
 $border: #CCC;
 
 :root {
-	--bmbo-duration: 0.25s;
 	--bmbo-duration-fast: 0.15s;
+	--bmbo-duration: 0.25s;
 	--bmbo-duration-mid: 0.4s;
 	--bmbo-duration-slow: 1s;
 	--bmbo-duration-turtle: 1.9s;
@@ -62,6 +62,7 @@ $border: #CCC;
 	--bmbo-font-size-small: 12px;
 	--bmbo-font-size: 14px;
 	--bmbo-font-size-large: 20px;
+	--bmbo-font-size-huge: 40px;
 	--bmbo-color: #333;
 	--bmbo-color-dim: #767676;
 	--bmbo-color-light: #FFF;
