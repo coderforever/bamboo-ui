@@ -63,7 +63,7 @@ class GroupPage extends React.Component {
 						为了防止您没有使用
 						<A href="http://fontawesome.io" target="_blank">Font Awesome</A>
 						图标而导致部分组件载入动画失效，
-						我们内置了一款载入图标。
+						我们内置了一些载入图标。
 						您可以通过<code>Icon.Loading</code>来使用。
 					</p>
 					<div className="measurement">
