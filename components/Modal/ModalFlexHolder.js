@@ -49,7 +49,7 @@ class ModalFlexHolder extends React.Component {
 			<div>
 				{list.map((dialog, index) => {
 					const { config, visible } = dialog;
-					const { onConfirm } = this.props;
+					const { onClose, onConfirm } = this.props;
 
 					return (
 						<Modal
