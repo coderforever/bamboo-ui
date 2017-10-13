@@ -194,6 +194,8 @@ class Modal extends React.Component {
 				{$title}
 				{$body}
 				{$footer}
+
+				{$loading}
 			</div>
 		);
 
@@ -219,8 +221,6 @@ class Modal extends React.Component {
 					{$preface}
 					{$modal}
 				</div>
-
-				{$loading}
 			</div>
 		, $holder);
 	}
@@ -231,7 +231,7 @@ Modal.propTypes = {
 	children: PropTypes.node,
 	size: PropTypes.string,
 	type: PropTypes.string,
-	loading: PropTypes.number,
+	loading: PropTypes.bool,
 
 	title: PropTypes.node,
 

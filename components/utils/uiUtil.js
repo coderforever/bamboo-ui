@@ -64,6 +64,11 @@ export class Waiter {
 	constructor() {
 		this.priority = -1;
 		this.callback = null;
+
+		// Only work in client side
+		if (!canUseDOM) {
+			this._destroy = true;
+		}
 	}
 
 	/**

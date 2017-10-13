@@ -2,6 +2,8 @@ export Navigation from './Navigation';
 export Row from './Grid/Row';
 export Col from './Grid/Col';
 export Button from './Button';
+export Icon from './Icon';
+export A from './A';
 export Form from './Form';
 export FormField from './Form/Field';
 export Input from './Form/Input';

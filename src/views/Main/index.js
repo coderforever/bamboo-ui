@@ -8,6 +8,7 @@ import cssModules from 'react-css-modules';
 import Home from '../Home';
 import GridPage from '../Components/GridPage';
 import ButtonPage from '../Components/ButtonPage';
+import IconPage from '../Components/IconPage';
 import SliderPage from '../Components/SliderPage';
 import MenuPage from '../Components/MenuPage';
 import GroupPage from '../Components/GroupPage';
@@ -47,6 +48,7 @@ class Main extends React.Component {
 						Components
 						<Navigation.Item onClick={() => { this.goPage('/grid'); }}>Grid</Navigation.Item>
 						<Navigation.Item onClick={() => { this.goPage('/button'); }}>Button</Navigation.Item>
+						<Navigation.Item onClick={() => { this.goPage('/icon'); }}>Icon</Navigation.Item>
 						<Navigation.Item onClick={() => { this.goPage('/slider'); }}>Slider</Navigation.Item>
 						<Navigation.Item onClick={() => { this.goPage('/menu'); }}>Menu</Navigation.Item>
 						<Navigation.Item onClick={() => { this.goPage('/group'); }}>Group</Navigation.Item>
@@ -64,6 +66,7 @@ class Main extends React.Component {
 					<Route exact path="/" component={Home} />
 					<Route path="/grid" component={GridPage} />
 					<Route path="/button" component={ButtonPage} />
+					<Route path="/icon" component={IconPage} />
 					<Route path="/slider" component={SliderPage} />
 					<Route path="/menu" component={MenuPage} />
 					<Route path="/group" component={GroupPage} />

@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+.bmbo-a {
+	color: var(--bmbo-primary);
+	text-decoration: none;
+
+	&:hover {
+		color: var(--bmbo-primary-light);
+	}
+
+	&:active {
+		color: var(--bmbo-primary-dark);
+	}
+}

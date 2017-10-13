@@ -1,0 +1,104 @@
+@charset "UTF-8";
+
+@mixin loadingContent {
+	display: inline-block;
+	box-sizing: border-box;
+	position: absolute;
+	content: '';
+	width: 1em;
+	height: 1em;
+	border: calc(1em / 6) solid;
+	border-radius: 50%;
+}
+
+.bmbo-icon {
+	&.bmbo-loading {
+		display: inline-block;
+		position: relative;
+
+		width: 1em;
+		height: 1em;
+		border: calc(1em / 6) solid;
+		border-radius: 50%;
+		border-color: currentColor transparent;
+		animation: bmbo-icon-loading var(--bmbo-duration-mid) linear infinite;
+
+		&.bmbo-loading-1 {
+			border-width: calc(1em / 2);
+			animation: bmbo-icon-loading-1 var(--bmbo-duration-slow) ease infinite;
+		}
+
+		&.bmbo-loading-2 {
+			border: 0;
+			animation: none;
+
+			&:before,
+			&:after {
+				@include loadingContent;
+				border-color: currentColor currentColor transparent transparent;
+			}
+
+			&:before {
+				animation: bmbo-icon-loading-2 var(--bmbo-duration-turtle) ease infinite;
+			}
+			&:after {
+				animation: bmbo-icon-loading-2 var(--bmbo-duration-slow) linear infinite;
+			}
+		}
+
+		&.bmbo-loading-3 {
+			border: 0;
+			animation: none;
+
+			&:before {
+				@include loadingContent;
+				border-color: currentColor;
+				opacity: 0.5;
+			}
+
+			&:after {
+				@include loadingContent;
+				border-color: currentColor transparent transparent transparent;
+				animation: bmbo-icon-loading-2 var(--bmbo-duration-mid) linear infinite;
+			}
+		}
+
+		&.bmbo-loading-4 {
+			border: 0;
+			animation: none;
+
+			&:before,
+			&:after {
+				@include loadingContent;
+				border-color: currentColor;
+			}
+
+			&:before {
+				animation: bmbo-icon-loading-expand var(--bmbo-duration-turtle) linear infinite;
+			}
+			&:after {
+				animation: bmbo-icon-loading-expand var(--bmbo-duration-turtle) var(--bmbo-duration-slow) linear infinite;
+			}
+		}
+	}
+}
+
+@keyframes bmbo-icon-loading {
+	0% { transform: rotateZ(0); }
+	100% { transform: rotateZ(180deg); }
+}
+
+@keyframes bmbo-icon-loading-1 {
+	0% { transform: rotateZ(0); }
+	100% { transform: rotateZ(720deg); }
+}
+
+@keyframes bmbo-icon-loading-2 {
+	0% { transform: rotateZ(0); }
+	100% { transform: rotateZ(360deg); }
+}
+
+@keyframes bmbo-icon-loading-expand {
+	0% { transform: scale(0, 0); }
+	100% { transform: scale(1.5, 1.5); opacity: 0; }
+}
