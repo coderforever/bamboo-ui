@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { BAMBOO_COMPONENT } from '../utils/componentUtil';
-import { ANIMATE_STATUS_NONE, ANIMATE_STATUS_SHOWING, ANIMATE_STATUS_SHOWN, Waiter } from '../utils/uiUtil';
+import { ANIMATE_STATUS_NONE, ANIMATE_STATUS_SHOWING, ANIMATE_STATUS_SHOWN } from '../utils/uiUtil';
+import Sequence from '../utils/Sequence';
 
 export const BAMBOO_MODAL_PREFACE = 'BAMBOO_MODAL_PREFACE';
 
@@ -13,7 +14,7 @@ class ModalPreface extends React.Component {
 			animateStatus: ANIMATE_STATUS_NONE,
 			contentWidth: 0,
 		};
-		this.waiter = new Waiter();
+		this.seq = new Sequence();
 	}
 
 	componentWillMount() {
@@ -25,7 +26,7 @@ class ModalPreface extends React.Component {
 	}
 
 	componentWillUnmount() {
-		this.waiter.destroy();
+		this.seq.destroy();
 	}
 
 	setContentRef = (ele) => {
@@ -35,28 +36,26 @@ class ModalPreface extends React.Component {
 	checkUpdate = (preProps, nextProps) => {
 		if (!preProps.visible !== !nextProps.visible) {
 			if (nextProps.visible) {
+				const { delay = 400 } = nextProps;
+
 				// Show preface
-				this.waiter.immediate(() => {
+				this.seq.next(() => {
 					this.setState({
 						animateStatus: ANIMATE_STATUS_SHOWING,
 						contentWidth: 0,
-					}, () => {
-						const { delay = 400 } = this.props;
-
-						this.waiter.next(() => {
-							const newState = { animateStatus: ANIMATE_STATUS_SHOWN };
-
-							if (this.$content) {
-								newState.contentWidth = this.$content.scrollWidth;
-							}
-
-							this.setState(newState);
-						}, { delay });
 					});
-				});
+				}).next(() => {
+					const newState = { animateStatus: ANIMATE_STATUS_SHOWN };
+
+					if (this.$content) {
+						newState.contentWidth = this.$content.scrollWidth;
+					}
+
+					this.setState(newState);
+				}, { delay });
 			} else {
 				// Hide preface
-				this.waiter.immediate(() => {
+				this.seq.next(() => {
 					this.setState({
 						animateStatus: ANIMATE_STATUS_NONE,
 					});

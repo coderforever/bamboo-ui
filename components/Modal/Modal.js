@@ -5,10 +5,11 @@ import classNames from 'classnames';
 
 import {
 	ANIMATE_STATUS_NONE, ANIMATE_STATUS_SHOWING, ANIMATE_STATUS_SHOWN, ANIMATE_STATUS_HIDING,
-	getHolder, Waiter, getScrollbarWidth, hasVerticalScroll, getTransitionEndName,
+	getHolder, getScrollbarWidth, hasVerticalScroll, getTransitionEndName,
 } from '../utils/uiUtil';
 import { canUseDOM } from '../utils/envUtil';
 import { mapChildrenByType, mapChildrenByNotType } from '../utils/componentUtil';
+import Sequence from '../utils/Sequence';
 
 import ModalTitle, { BAMBOO_MODAL_TITLE } from './ModalTitle';
 import ModalBody, { BAMBOO_MODAL_BODY } from './ModalBody';
@@ -50,8 +51,8 @@ class Modal extends React.Component {
 			animateStatus: ANIMATE_STATUS_NONE,
 		};
 
-		this.waiter = new Waiter();
-		this.closeWaiter = new Waiter();
+		this.seq = new Sequence();
+		this.closeSeq = new Sequence();
 	}
 
 	componentWillMount() {
@@ -64,7 +65,7 @@ class Modal extends React.Component {
 	}
 
 	componentWillUnmount() {
-		this.waiter.destroy();
+		this.seq.destroy();
 		modalList = modalList.filter(mdl => mdl !== this);
 		refreshWinScrollBar();
 	}
@@ -74,7 +75,7 @@ class Modal extends React.Component {
 		if (noMaskClose) return;
 
 		// Put close request in next frame
-		this.closeWaiter.next(() => {
+		this.closeSeq.next(() => {
 			const { onClose } = this.props;
 			if (onClose) onClose();
 		});
@@ -82,7 +83,7 @@ class Modal extends React.Component {
 
 	onHolderClick = () => {
 		// Occupy the close request if is holder click
-		this.closeWaiter.next(() => {}, 1);
+		this.closeSeq.next(() => {}, { priority: 1 });
 	};
 
 	onAnimationEnd = (event) => {
@@ -173,33 +174,28 @@ class Modal extends React.Component {
 		if (!prevProps.visible !== !nextProps.visible) {
 			if (nextProps.visible) {
 				// Show modal
-				this.waiter.immediate(() => {
+				this.seq.next(() => {
 					this.setState({
 						animateStatus: ANIMATE_STATUS_SHOWING,
-					}, () => {
-						refreshWinScrollBar();
-						this.waiter.next(() => {
-							this.setState({ animateStatus: ANIMATE_STATUS_SHOWN });
-						});
-					});
+					}, refreshWinScrollBar);
+				}).next(() => {
+					this.setState({ animateStatus: ANIMATE_STATUS_SHOWN });
 				});
 			} else {
 				// Hide modal
-				this.waiter.immediate(() => {
+				this.seq.next(() => {
 					this.setState({
 						animateStatus: ANIMATE_STATUS_HIDING,
-					}, () => {
-						this.waiter.next(() => {
-							const { onClosed } = this.props;
-							this.setState({ animateStatus: ANIMATE_STATUS_NONE }, refreshWinScrollBar);
-
-							// Mock trigger onClick event when not support transition event
-							if (onClosed && !getTransitionEndName()) {
-								onClosed();
-							}
-						}, { delay: 500 });
 					});
-				});
+				}).next(() => {
+					const { onClosed } = this.props;
+					this.setState({ animateStatus: ANIMATE_STATUS_NONE }, refreshWinScrollBar);
+
+					// Mock trigger onClick event when not support transition event
+					if (onClosed && !getTransitionEndName()) {
+						onClosed();
+					}
+				}, { delay: 500 });
 			}
 		}
 	};

@@ -2,7 +2,6 @@ import React from 'react';
 import { render } from 'react-dom';
 
 import { canUseDOM } from '../utils/envUtil';
-import { getHolder } from '../utils/uiUtil';
 
 import ModalFlexHolder from './ModalFlexHolder';
 
@@ -18,10 +17,8 @@ if (canUseDOM) {
 	});
 
 	// Set up menu holder
-	const $holder = getHolder();
 	const $flexHolder = window.document.createElement('div');
 	$flexHolder.id = BAMBOO_MODAL_FLEX_HOLDER;
-	$holder.appendChild($flexHolder);
 
 	render(
 		<ModalFlexHolder

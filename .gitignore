@@ -6,4 +6,3 @@ builds/
 dist/
 process.pid
 version.tmp
-_*

@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { mapChildrenByType, mapChildrenByNotType } from '../utils/componentUtil';
-import { requestAnimationFrame, Waiter } from '../utils/uiUtil';
+import { requestAnimationFrame } from '../utils/uiUtil';
+import Sequence from '../utils/Sequence';
 
 import { BAMBOO_NAVIGATION_ITEM } from './FakeItem';
 import Item from './Item';
@@ -22,15 +23,15 @@ class HorizontalNavTitle extends React.Component {
 		};
 
 		// Add waiter for mouse event handler
-		this.waiter = new Waiter();
+		this.seq = new Sequence();
 	}
 
 	componentWillUnmount() {
-		this.waiter.destroy();
+		this.seq.destroy();
 	}
 
 	onMouseEnter = () => {
-		this.waiter.next(() => {
+		this.seq.next(() => {
 			if (this.state.drillDownStatus === DRILL_DOWN_STATUS_SHOWN) return;
 
 			this.setState({ drillDownStatus: DRILL_DOWN_STATUS_SHOW }, () => {
@@ -54,7 +55,7 @@ class HorizontalNavTitle extends React.Component {
 			return;
 		}
 
-		this.waiter.next(() => {
+		this.seq.next(() => {
 			this.setState({ drillDownStatus: DRILL_DOWN_STATUS_SHOW });
 		});
 	};

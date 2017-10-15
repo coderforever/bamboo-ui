@@ -4,8 +4,6 @@ import classNames from 'classnames';
 
 import MenuList from './MenuList';
 
-import { requestAnimationFrame } from '../utils/uiUtil';
-
 class MenuItem extends React.Component {
 	constructor() {
 		super();
@@ -61,7 +59,7 @@ class MenuItem extends React.Component {
 
 	render() {
 		const { item: { separator, title, disabled, list } } = this.props;
-		const { drillDown, rect: { x, y, width, height } = {}, active } = this.state;
+		const { drillDown, rect: { left, top, width, height } = {}, active } = this.state;
 
 		if (separator) {
 			return <li className="bmbo-separator" />;
@@ -80,7 +78,13 @@ class MenuItem extends React.Component {
 			>
 				{title}
 				{list && <span className="bmbo-caret" />}
-				{drillDown && <MenuList list={drillDown} x={x} y={y - 1} width={width} height={height} />}
+				{drillDown && <MenuList
+					list={drillDown}
+					x={left}
+					y={top - 1}
+					width={width}
+					height={height}
+				/>}
 			</li>
 		);
 	}

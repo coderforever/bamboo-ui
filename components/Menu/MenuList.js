@@ -7,6 +7,7 @@ import {
 	ANIMATE_STATUS_NONE, ANIMATE_STATUS_SHOWING, ANIMATE_STATUS_SHOWN,
 	getEnablePosition, requestAnimationFrame,
 } from '../utils/uiUtil';
+import Sequence from '../utils/Sequence';
 
 import MenuItem from './MenuItem';
 
@@ -16,33 +17,27 @@ class MenuList extends React.Component {
 		this.state = {
 			animateStatus: ANIMATE_STATUS_NONE,
 		};
+		this.seq = new Sequence();
 	}
 
 	componentDidMount() {
 		const { x, y, width = 0, height = 0 } = this.props;
 		const rect = this.$list.getBoundingClientRect();
 
-		requestAnimationFrame(() => {
-			if (this._destroy) return;
-
+		this.seq.next(() => {
 			this.setState({
 				...getEnablePosition({ x, y, width, height }, rect, 'r'),
 				animateStatus: ANIMATE_STATUS_SHOWING,
-			}, () => {
-				// Delay 2 frame to display animation
-				requestAnimationFrame(() => {
-					if (this._destroy) return;
-
-					this.setState({
-						animateStatus: ANIMATE_STATUS_SHOWN,
-					});
-				}, 2);
+			});
+		}).next(() => {
+			this.setState({
+				animateStatus: ANIMATE_STATUS_SHOWN,
 			});
 		});
 	}
 
 	componentWillUnmount() {
-		this._destroy = true;
+		this.seq.destroy();
 	}
 
 	onMouseDown = (event) => {

@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "React base UI component library",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "eslint": "eslint src components",
     "eslintFix": "eslint --fix src components",
     "vendor": "webpack --config vendor.webpack.config.js",
@@ -66,6 +66,7 @@
     "grunt-contrib-sass": "^1.0.0",
     "highcharts": "^5.0.14",
     "immutable": "^3.8.1",
+    "jest": "^21.2.1",
     "jquery": "^3.1.1",
     "moment": "^2.18.1",
     "node-sass": "^4.5.3",
