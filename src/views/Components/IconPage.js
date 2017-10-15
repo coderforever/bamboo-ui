@@ -24,7 +24,7 @@ class GroupPage extends React.Component {
 				<Col xs="2/3">
 					<h1>图标</h1>
 					<p>
-						我们默认使用来自
+						我们封装了来自
 						<A href="http://fontawesome.io" target="_blank">Font Awesome</A>
 						的图标，当然如果你有偏好也可以来使用自己的字体图标（例如
 							<A href="http://iconfont.cn/" target="_blank">iconfont</A>

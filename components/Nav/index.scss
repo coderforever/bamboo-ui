@@ -1,0 +1,69 @@
+@mixin navColor($color) {
+	&.bmbo-#{$color} {
+		background: var(--bmbo-#{$color});
+	}
+}
+
+.bmbo-horizontal-nav {
+	padding: 0;
+	margin: 0;
+	color: #FFF;
+
+	@include navColor(default);
+	@include navColor(primary);
+	@include navColor(info);
+	@include navColor(success);
+	@include navColor(warning);
+	@include navColor(danger);
+	@include navColor(forbid);
+
+	// Navigation first level
+	> .bmbo-nav-item {
+		display: inline;
+
+		> a {
+			display: inline-block;
+			position: relative;
+			padding: 15px 20px;
+			cursor: pointer;
+
+			&:after {
+				content: '';
+				position: absolute;
+				bottom: 8px;
+				height: 3px;
+				left: 15px;
+				right: 15px;
+				background: #FFF;
+
+				opacity: 0;
+				transform: scaleX(0);
+
+				transition: transform var(--bmbo-duration), opacity var(--bmbo-duration);
+			}
+		}
+
+		&.bmbo-hover {
+			> a {
+				&:after {
+					opacity: 1;
+					transform: scaleX(1);
+				}
+			}
+		}
+	}
+}
+
+.bmbo-nav-list {
+	position: absolute;
+	background: red;
+	user-select: none;
+
+	transition: margin-top var(--bmbo-duration), opacity var(--bmbo-duration), transform var(--bmbo-duration);
+
+	&.bmbo-showing {
+		margin-top: -10px;
+		opacity: 0;
+		transform: scaleY(0.5);
+	}
+}

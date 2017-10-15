@@ -18,6 +18,7 @@ if (canUseDOM) {
 	$bambooHolder = window.document.createElement('div');
 	$bambooHolder.id = BAMBOO_PORTALS_HOLDER;
 	$bambooHolder.className = 'bmbo-portals-holder';
+	$bambooHolder.dataset.timestamp = Date.now();
 	window.document.body.appendChild($bambooHolder);
 }
 export function getHolder() {
@@ -91,7 +92,10 @@ export const hasVerticalScroll = () => {
 export const getEnablePosition = (surroundRect, targetRect, position = 'dr') => {
 	if (typeof window === 'undefined') return { x: 0, y: 0 };
 
-	const { x: sx, y: sy, width: sw = 0, height: sh = 0 } = surroundRect;
+	// TODO: use left & top only
+	const { width: sw = 0, height: sh = 0 } = surroundRect;
+	const sx = surroundRect.left || surroundRect.x;
+	const sy = surroundRect.top || surroundRect.y;
 	const { width: tw = 0, height: th = 0 } = targetRect;
 
 	let winWidth = window.innerWidth;

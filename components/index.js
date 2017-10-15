@@ -1,4 +1,5 @@
-export Navigation from './Navigation';
+export Navigation1 from './Navigation';
+export Navigation from './Nav';
 export Row from './Grid/Row';
 export Col from './Grid/Col';
 export Button from './Button';
