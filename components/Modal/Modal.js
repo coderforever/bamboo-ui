@@ -12,7 +12,7 @@ import { mapChildrenByType, mapChildrenByNotType } from '../utils/componentUtil'
 import Sequence from '../utils/Sequence';
 
 import ModalTitle, { BAMBOO_MODAL_TITLE } from './ModalTitle';
-import ModalBody, { BAMBOO_MODAL_BODY } from './ModalBody';
+import ModalContent, { BAMBOO_MODAL_CONTENT } from './ModalContent';
 import ModalFooter, { BAMBOO_MODAL_FOOTER } from './ModalFooter';
 import ModalPreface, { BAMBOO_MODAL_PREFACE } from './ModalPreface';
 import ModalLoading, { BAMBOO_MODAL_LOADING } from './ModalLoading';
@@ -92,7 +92,12 @@ class Modal extends React.Component {
 
 		if (event.target === this.$holder && animateStatus === ANIMATE_STATUS_HIDING) {
 			if (onClosed) onClosed(event);
-			Promise.resolve().then(refreshWinScrollBar);
+
+			this.seq.next(() => {
+				this.setState({
+					animateStatus: ANIMATE_STATUS_NONE,
+				}, refreshWinScrollBar);
+			});
 		}
 	};
 
@@ -116,25 +121,25 @@ class Modal extends React.Component {
 	getBody = () => {
 		const { children, content } = this.props;
 
-		if (content) return <ModalBody>{content}</ModalBody>;
+		if (content) return <ModalContent>{content}</ModalContent>;
 
-		const $children = mapChildrenByType(children, BAMBOO_MODAL_BODY);
+		const $children = mapChildrenByType(children, BAMBOO_MODAL_CONTENT);
 		if ($children.length) return $children;
 
 		return (
-			<ModalBody>
+			<ModalContent>
 				{mapChildrenByNotType(children, [
 					BAMBOO_MODAL_TITLE,
 					BAMBOO_MODAL_FOOTER,
 					BAMBOO_MODAL_PREFACE,
 					BAMBOO_MODAL_LOADING,
 				])}
-			</ModalBody>
+			</ModalContent>
 		);
 	};
 
 	getFooter = () => {
-		const { children, footer, onClose, onConfirm, closeText = 'Close', confirmText = 'Confirm' } = this.props;
+		const { children, footer, onClose, onConfirm, closeText = 'Close', confirmText = 'Confirm', lock } = this.props;
 
 		if (footer) return <ModalFooter>{footer}</ModalFooter>;
 
@@ -143,8 +148,8 @@ class Modal extends React.Component {
 
 		return (
 			<ModalFooter>
-				<Button type="weak" onClick={onClose} transparent>{closeText}</Button>
-				{onConfirm && <Button onClick={onConfirm}>
+				<Button type="weak" onClick={onClose} disabled={lock} transparent>{closeText}</Button>
+				{onConfirm && <Button onClick={onConfirm} disabled={lock}>
 					{confirmText}
 				</Button>}
 			</ModalFooter>
@@ -188,14 +193,12 @@ class Modal extends React.Component {
 						animateStatus: ANIMATE_STATUS_HIDING,
 					});
 				}).next(() => {
+					// Clean up when browser not support transitionEnd event
 					const { onClosed } = this.props;
 					this.setState({ animateStatus: ANIMATE_STATUS_NONE }, refreshWinScrollBar);
 
-					// Mock trigger onClick event when not support transition event
-					if (onClosed && !getTransitionEndName()) {
-						onClosed();
-					}
-				}, { delay: 500 });
+					if (onClosed) onClosed();
+				}, { delay: 750 });
 			}
 		}
 	};
@@ -256,6 +259,7 @@ Modal.propTypes = {
 	size: PropTypes.string,
 	type: PropTypes.string,
 	loading: PropTypes.bool,
+	lock: PropTypes.bool,
 
 	title: PropTypes.node,
 	content: PropTypes.node,
@@ -272,7 +276,7 @@ Modal.propTypes = {
 };
 
 Modal.Title = ModalTitle;
-Modal.Body = ModalBody;
+Modal.Content = ModalContent;
 Modal.Footer = ModalFooter;
 Modal.Preface = ModalPreface;
 Modal.Loading = ModalLoading;

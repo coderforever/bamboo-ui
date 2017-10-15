@@ -2,18 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { BAMBOO_COMPONENT } from '../utils/componentUtil';
 
-export const BAMBOO_MODAL_BODY = 'BAMBOO_MODAL_BODY';
+export const BAMBOO_MODAL_CONTENT = 'BAMBOO_MODAL_CONTENT';
 
-const ModalBody = ({ children }) => (
+const ModalContent = ({ children }) => (
 	<div className="bmbo-modal-body">
 		{children}
 	</div>
 );
 
-ModalBody.propTypes = {
+ModalContent.propTypes = {
 	children: PropTypes.node,
 };
 
-ModalBody[BAMBOO_COMPONENT] = BAMBOO_MODAL_BODY;
+ModalContent[BAMBOO_COMPONENT] = BAMBOO_MODAL_CONTENT;
 
-export default ModalBody;
+export default ModalContent;
