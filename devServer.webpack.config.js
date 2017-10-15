@@ -52,6 +52,18 @@ module.exports = {
 	module: {
 		loaders: [
 			{
+				test: /\.ts$/,
+				loaders: ['ts'],
+				exclude: /node_modules/,
+				include: __dirname,
+			},
+			{
+				test: /\.tsx$/,
+				loaders: ['babel', 'ts'],
+				exclude: /node_modules/,
+				include: __dirname,
+			},
+			{
 				test: /\.js$/,
 				loaders: ['babel'],
 				exclude: /node_modules/,
@@ -92,7 +104,7 @@ module.exports = {
 				test: /\.(png|gif|jpe?g|svg)$/i,
 				loader: 'file?prefix=img/',
 			},
-		]
+		],
 	},
 
 	resolve: {

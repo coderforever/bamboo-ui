@@ -9,6 +9,7 @@ import {
 } from '../utils/uiUtil';
 import { canUseDOM } from '../utils/envUtil';
 import { mapChildrenByType, mapChildrenByNotType } from '../utils/componentUtil';
+import Sequence from '../utils/Sequence.ts';
 
 import ModalTitle, { BAMBOO_MODAL_TITLE } from './ModalTitle';
 import ModalBody, { BAMBOO_MODAL_BODY } from './ModalBody';
@@ -52,6 +53,8 @@ class Modal extends React.Component {
 
 		this.waiter = new Waiter();
 		this.closeWaiter = new Waiter();
+
+		this.seq = new Sequence();
 	}
 
 	componentWillMount() {
