@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import Col from './Col';
 
@@ -15,11 +16,11 @@ class Row extends React.PureComponent {
 	}
 
 	render() {
-		const { gutter = DEFAULT_GUTTER, children } = this.props;
+		const { gutter = DEFAULT_GUTTER, children, className } = this.props;
 		const hg = gutter / 2;
 
 		return (
-			<div className="bmbo-row">
+			<div className={classNames('bmbo-row', className)}>
 				<div style={{ marginLeft: `-${hg}px`, marginRight: `-${hg}px` }}>
 					{children}
 				</div>
@@ -31,6 +32,7 @@ class Row extends React.PureComponent {
 Row.propTypes = {
 	gutter: PropTypes.number,
 	children: PropTypes.node,
+	className: PropTypes.string,
 };
 
 Row.childContextTypes = {

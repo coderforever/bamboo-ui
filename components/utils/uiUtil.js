@@ -116,16 +116,19 @@ export const getEnablePosition = (surroundRect, targetRect, position = 'dr') => 
 		direct: '',
 	};
 
-	if (isR) target.x = sx + sw;
-	if (isB) target.y = sy + sh;
+	if (isR) target.x = sx + sw + scrollX;
+	if (isB) target.y = sy + sh + scrollY;
 
 	// Bottom out of the window
 	if ((target.y - scrollY) + th > winHeight) {
 		if (isR) {
 			target.y = (winHeight - th) + scrollY;
 		} else {
-			target.y = sy - th;
-			target.direct = 'up';
+			const ty = (sy + scrollY) - th;
+			if (ty >= 0) {
+				target.y = (sy + scrollY) - th;
+				target.direct = 'up';
+			}
 		}
 	}
 

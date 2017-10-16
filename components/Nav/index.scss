@@ -8,10 +8,12 @@
 	@include navBacColor($color);
 
 	@if $activeLineColor != '' {
-		> .bmbo-nav-group,
-		> .bmbo-nav-item {
-			&:after {
-				background: var(--bmbo-#{$activeLineColor});
+		&.bmbo-#{$color} {
+			> .bmbo-nav-group,
+			> .bmbo-nav-item {
+				&:after {
+					background: var(--bmbo-#{$activeLineColor});
+				}
 			}
 		}
 	}
@@ -69,6 +71,11 @@
 				opacity: 1;
 				transform: scaleX(1);
 			}
+		}
+
+		&.bmbo-disabled {
+			pointer-events: none;
+			opacity: 0.5;
 		}
 	}
 

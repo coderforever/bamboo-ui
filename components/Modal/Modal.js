@@ -55,7 +55,7 @@ class Modal extends React.Component {
 		this.closeSeq = new Sequence();
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		modalList.push(this);
 		this.checkUpdate({}, this.props);
 	}

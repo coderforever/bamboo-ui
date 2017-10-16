@@ -8,18 +8,47 @@ import {
 } from '../../../components';
 
 import { TYPE_LIST } from '../../utils/enum';
+import { toString } from '../../utils/propsUtil';
 
 class NavPage extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			type: '',
-			active: -1,
+			form: {
+				type: '',
+				active: -1,
+			},
 		};
 	}
 
+	getSampleCode = () => {
+		const { active, ...form } = this.state.form;
+
+		return `
+<Navigation${toString(form)}>
+   <Navigation.Group title="Group 1"${active === 0 ? ' active' : ''}>
+      <Navigation.Item>Item 1</Navigation.Item>
+      <Navigation.Item>Item 2</Navigation.Item>
+      <Navigation.Item>Item 3</Navigation.Item>
+   </Navigation.Group>
+   <Navigation.Item${active === 1 ? ' active' : ''}>
+      <a
+         href="https://github.com/zombieJ/bamboo-ui"
+         target="_blank"
+         rel="noopener noreferrer"
+      >
+         Item 1
+      </a>
+   </Navigation.Item>
+   <Navigation.Item${active === 1 ? ' active' : ''} disabled>
+      Disabled
+   </Navigation.Item>
+</Navigation>
+`.trim();
+	};
+
 	render() {
-		const { type, active } = this.state;
+		const { form } = this.state;
 
 		return (
 			<Row>
@@ -32,13 +61,13 @@ class NavPage extends React.Component {
 					<h2>试一试</h2>
 					<div className="measurement">
 						<div className="preview">
-							<Navigation type={type}>
-								<Navigation.Group title="Group 1" active={active === 0}>
+							<Navigation type={form.type}>
+								<Navigation.Group title="Group 1" active={form.active === 0}>
 									<Navigation.Item>Item 1</Navigation.Item>
 									<Navigation.Item>Item 2</Navigation.Item>
 									<Navigation.Item>Item 3</Navigation.Item>
 								</Navigation.Group>
-								<Navigation.Item active={active === 1}>
+								<Navigation.Item active={form.active === 1}>
 									<a
 										href="https://github.com/zombieJ/bamboo-ui"
 										target="_blank"
@@ -47,12 +76,15 @@ class NavPage extends React.Component {
 										Item 1
 									</a>
 								</Navigation.Item>
+								<Navigation.Item active={form.active === 2} disabled>
+									Disabled
+								</Navigation.Item>
 							</Navigation>
 						</div>
 						<div className="form">
-							<Form instance={this}>
+							<Form instance={this} path="form">
 								<Form.Field name="type" title="Type">
-									<Radio value="">(default)</Radio>
+									<Radio value="">(empty)</Radio>
 									{TYPE_LIST.map(({ name }) => (
 										<Radio key={name} value={name}>{name}</Radio>
 									))}
@@ -61,13 +93,12 @@ class NavPage extends React.Component {
 									<Radio value={-1}>(none)</Radio>
 									<Radio value={0}>No.1</Radio>
 									<Radio value={1}>No.2</Radio>
+									<Radio value={2}>No.3</Radio>
 								</Form.Field>
 							</Form>
 						</div>
 						<pre className="code">
-							{`
-
-`.trim()}
+							{this.getSampleCode()}
 						</pre>
 					</div>
 				</Col>

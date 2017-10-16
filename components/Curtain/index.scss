@@ -1,0 +1,49 @@
+@charset "UTF-8";
+
+.bmbo-curtain {
+	position: fixed;
+	background: rgba(#000, 0.8);
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+
+	transition: background var(--bmbo-duration-mid) ease, opacity var(--bmbo-duration-mid) ease;
+
+	> .bmbo-curtain-content-holder {
+		width: 100%;
+		height: 100%;
+		background: #FFF;
+
+		transition: transform var(--bmbo-duration-mid) ease, opacity var(--bmbo-duration-mid) linear;
+
+		> .bmbo-curtain-content {
+			width: 100%;
+			height: 100%;
+			overflow-y: auto;
+			transition: transform var(--bmbo-duration) ease var(--bmbo-duration-mid), opacity var(--bmbo-duration) linear var(--bmbo-duration-mid);
+		}
+	}
+
+	&.bmbo-showing {
+		background: rgba(#000, 0);
+		transition: none;
+
+		> .bmbo-curtain-content-holder {
+			opacity: 0;
+			transform: translate(0, -60%);
+
+			transition: none;
+
+			> .bmbo-curtain-content {
+				opacity: 0;
+				transform: translate(0, -20px);
+			}
+		}
+	}
+
+	&.bmbo-hiding {
+		opacity: 0;
+		pointer-events: none;
+	}
+}

@@ -44,12 +44,17 @@ class NavGroup extends React.Component {
 	};
 
 	render() {
-		const { title, children, active } = this.props;
+		const { title, children, active, disabled } = this.props;
 		const { hover, rect } = this.state;
 
 		return (
 			<li
-				className={classNames('bmbo-nav-group', hover && 'bmbo-hover', active && 'bmbo-active')}
+				className={classNames(
+					'bmbo-nav-group',
+					hover && 'bmbo-hover',
+					active && 'bmbo-active',
+					disabled && 'bmbo-disabled',
+				)}
 				ref={this.setItemRef}
 				onMouseEnter={this.onMouseEnter}
 				onMouseLeave={this.onMouseLeave}
@@ -76,6 +81,7 @@ NavGroup.propTypes = {
 	title: PropTypes.node,
 	children: PropTypes.node,
 	active: PropTypes.bool,
+	disabled: PropTypes.bool,
 };
 
 export default NavGroup;

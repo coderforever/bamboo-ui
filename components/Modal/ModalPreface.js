@@ -17,7 +17,7 @@ class ModalPreface extends React.Component {
 		this.seq = new Sequence();
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		this.checkUpdate({}, this.props);
 	}
 
