@@ -5,48 +5,23 @@ import classNames from 'classnames';
 import NavList from './NavList';
 
 class NavItem extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			hover: false,
-			rect: null,
-		};
-	}
-
-	onMouseEnter = () => {
-		const rect = this.$title.getBoundingClientRect();
-		this.setState({ hover: true, rect });
-	};
-	onMouseLeave = () => {
-		this.setState({ hover: false });
-	};
-
-	setTitleRef = (ele) => {
-		this.$title = ele;
-	};
-
 	render() {
-		const { title } = this.props;
-		const { hover, rect } = this.state;
+		const { children } = this.props;
 
 		return (
 			<li
-				className={classNames('bmbo-nav-item', hover && 'bmbo-hover')}
-				onMouseEnter={this.onMouseEnter}
-				onMouseLeave={this.onMouseLeave}
+				className={classNames('bmbo-nav-item')}
 			>
-				<a ref={this.setTitleRef}>
-					{title}
+				<a>
+					{children}
 				</a>
-
-				<NavList visible={hover} rect={rect} />
 			</li>
 		);
 	}
 }
 
 NavItem.propTypes = {
-	title: PropTypes.node,
+	children: PropTypes.node,
 };
 
 export default NavItem;

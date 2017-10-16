@@ -4,6 +4,12 @@
 	}
 }
 
+@mixin navListColor($color) {
+	&.bmbo-#{$color} {
+		background: var(--bmbo-#{$color});
+	}
+}
+
 .bmbo-horizontal-nav {
 	padding: 0;
 	margin: 0;
@@ -18,6 +24,7 @@
 	@include navColor(forbid);
 
 	// Navigation first level
+	> .bmbo-nav-group,
 	> .bmbo-nav-item {
 		display: inline;
 
@@ -43,7 +50,8 @@
 			}
 		}
 
-		&.bmbo-hover {
+		&.bmbo-hover,
+		&:hover {
 			> a {
 				&:after {
 					opacity: 1;
@@ -55,15 +63,62 @@
 }
 
 .bmbo-nav-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
 	position: absolute;
-	background: red;
 	user-select: none;
+	transform-origin: top;
+	color: #FFF;
 
-	transition: margin-top var(--bmbo-duration), opacity var(--bmbo-duration), transform var(--bmbo-duration);
+	transition: opacity var(--bmbo-duration) ease, transform var(--bmbo-duration) ease;
+
+	&.bmbo-up {
+		transform-origin: bottom;
+	}
 
 	&.bmbo-showing {
-		margin-top: -10px;
 		opacity: 0;
-		transform: scaleY(0.5);
+		transform: scaleY(0.8);
+
+		transition: none;
+	}
+
+	@include navColor(default);
+	@include navColor(primary);
+	@include navColor(info);
+	@include navColor(success);
+	@include navColor(warning);
+	@include navColor(danger);
+	@include navColor(forbid);
+
+	> li {
+		> a {
+			display: block;
+			padding: 10px 15px;
+			white-space: nowrap;
+			position: relative;
+
+			&:after {
+				content: '';
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(#FFF, 0.1);
+				transform: scaleX(0.3);
+				opacity: 0;
+
+				transition: all var(--bmbo-duration-mid);
+			}
+
+			&:hover {
+				&:after {
+					opacity: 1;
+					transform: scaleX(1);
+				}
+			}
+		}
 	}
 }

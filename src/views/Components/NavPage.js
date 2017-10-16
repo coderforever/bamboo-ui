@@ -27,7 +27,12 @@ class NavPage extends React.Component {
 					<div className="measurement">
 						<div className="preview">
 							<Navigation type="forbid">
-								<Navigation.Item title="ASD" />
+								<Navigation.Group title="Group 1">
+									<Navigation.Item>Item 1</Navigation.Item>
+									<Navigation.Item>Item 2</Navigation.Item>
+									<Navigation.Item>Item 3</Navigation.Item>
+								</Navigation.Group>
+								<Navigation.Item>Item 1</Navigation.Item>
 							</Navigation>
 						</div>
 					</div>

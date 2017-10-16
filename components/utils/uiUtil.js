@@ -1,9 +1,10 @@
 import { canUseDOM } from './envUtil';
 
 export const ANIMATE_STATUS_NONE = 0;
-export const ANIMATE_STATUS_SHOWING = 1;
-export const ANIMATE_STATUS_SHOWN = 2;
-export const ANIMATE_STATUS_HIDING = 3;
+export const ANIMATE_STATUS_INIT = 1;
+export const ANIMATE_STATUS_SHOWING = 2;
+export const ANIMATE_STATUS_SHOWN = 3;
+export const ANIMATE_STATUS_HIDING = 4;
 
 const BAMBOO_PORTALS_HOLDER = 'bmbo_portals_holder';
 let $bambooHolder;
@@ -106,26 +107,34 @@ export const getEnablePosition = (surroundRect, targetRect, position = 'dr') => 
 	if (hasVerticalScroll()) winWidth -= getScrollbarWidth();
 	if (hasHorizontalScroll()) winHeight -= getScrollbarWidth();
 
-	let targetX = sx + scrollX;
-	let targetY = sy + scrollY;
+	const isR = position.includes('r');
+	const isB = position.includes('b');
 
-	if (position.includes('r')) targetX = sx + sw;
-	if (position.includes('b')) targetY = sy + sh;
+	const target = {
+		x: sx + scrollX,
+		y: sy + scrollY,
+		direct: '',
+	};
+
+	if (isR) target.x = sx + sw;
+	if (isB) target.y = sy + sh;
 
 	// Bottom out of the window
-	if ((targetY - scrollY) + th > winHeight) {
-		targetY = (winHeight - th) + scrollY;
+	if ((target.y - scrollY) + th > winHeight) {
+		if (isR) {
+			target.y = (winHeight - th) + scrollY;
+		} else {
+			target.y = sy - th;
+			target.direct = 'up';
+		}
 	}
 
 	// Right out of the window
-	if ((targetX - scrollX) + tw > winWidth) {
-		targetX = sx - tw;
+	if ((target.x - scrollX) + tw > winWidth) {
+		target.x = sx - tw;
 	}
 
-	return {
-		x: targetX,
-		y: targetY,
-	};
+	return target;
 };
 
 let transitionEndName;
