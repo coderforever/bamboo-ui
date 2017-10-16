@@ -32,7 +32,15 @@ class NavPage extends React.Component {
 									<Navigation.Item>Item 2</Navigation.Item>
 									<Navigation.Item>Item 3</Navigation.Item>
 								</Navigation.Group>
-								<Navigation.Item>Item 1</Navigation.Item>
+								<Navigation.Item>
+									<a
+										href="https://github.com/zombieJ/bamboo-ui"
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										Item 1
+									</a>
+								</Navigation.Item>
 							</Navigation>
 						</div>
 					</div>

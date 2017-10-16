@@ -34,10 +34,11 @@ class NavGroup extends React.Component {
 				className={classNames('bmbo-nav-group', hover && 'bmbo-hover')}
 				onMouseEnter={this.onMouseEnter}
 				onMouseLeave={this.onMouseLeave}
+				ref={this.setTitleRef}
 			>
-				<a ref={this.setTitleRef}>
+				<div className="bmbo-nav-title">
 					{title}
-				</a>
+				</div>
 
 				<NavList visible={hover} rect={rect}>
 					{children}

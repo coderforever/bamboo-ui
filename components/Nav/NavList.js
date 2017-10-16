@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import {
 	ANIMATE_STATUS_NONE, ANIMATE_STATUS_INIT,
 	ANIMATE_STATUS_SHOWING, ANIMATE_STATUS_SHOWN, ANIMATE_STATUS_HIDING,
-	getHolder, getEnablePosition,
+	getHolder, getEnablePosition, getTransitionEndName,
 } from '../utils/uiUtil';
 import Sequence from '../utils/Sequence';
 
@@ -40,7 +40,11 @@ class NavList extends React.Component {
 
 		if (nextProps.visible) {
 			this.seq.next(() => {
-				this.setState({ animateStatus: ANIMATE_STATUS_INIT });
+				this.setState({
+					animateStatus: ANIMATE_STATUS_INIT,
+					x: 0,
+					y: 0,
+				});
 			}).next(() => {
 				const { rect } = this.props;
 				const listRect = this.$list.getBoundingClientRect();
@@ -54,14 +58,15 @@ class NavList extends React.Component {
 			});
 		} else {
 			this.seq.next(() => {
+				const { animateStatus } = this.state;
+				if (animateStatus === ANIMATE_STATUS_NONE || animateStatus === ANIMATE_STATUS_INIT) {
+					return false;
+				}
 				this.setState({ animateStatus: ANIMATE_STATUS_HIDING });
+				return true;
 			}).next(() => {
-				this.setState({
-					animateStatus: ANIMATE_STATUS_NONE,
-					x: 0,
-					y: 0,
-				});
-			});
+				this.setState({ animateStatus: ANIMATE_STATUS_NONE });
+			}, { delay: 1000 });
 		}
 	};
 
@@ -77,7 +82,7 @@ class NavList extends React.Component {
 				className={classNames('bmbo-nav-list', {
 					'bmbo-hidden': animateStatus === ANIMATE_STATUS_INIT,
 					'bmbo-showing': animateStatus === ANIMATE_STATUS_SHOWING,
-					// 'bmbo-showing': animateStatus === ANIMATE_STATUS_SHOWN,
+					'bmbo-hiding': animateStatus === ANIMATE_STATUS_HIDING,
 				},
 				`bmbo-${navType || 'default'}`,
 				direct && `bmbo-${direct}`,

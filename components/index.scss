@@ -19,6 +19,11 @@
 	&[role="button"] {
 		cursor: pointer;
 	}
+
+	a {
+		text-decoration: none;
+		color: inherit;
+	}
 }
 
 .bmbo-portals-holder {
@@ -45,4 +50,5 @@
 
 .bmbo-hidden {
 	opacity: 0;
+	transition: none!important;
 }

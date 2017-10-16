@@ -62,7 +62,11 @@ class Sequence {
 				const exec = () => {
 					try {
 						if (this.taskHolder !== taskHolder || this._destroy) return;
-						task.callback();
+						if (task.callback() === false) {
+							this.taskHolder = null;
+							resolve();
+							return;
+						}
 						taskHolder.nextStep();
 						step();
 					} catch (err) {

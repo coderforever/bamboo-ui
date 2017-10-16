@@ -15,8 +15,7 @@ import GroupPage from '../Components/GroupPage';
 import ModalPage from '../Components/ModalPage';
 import NavPage from '../Components/NavPage';
 
-import Navigation from '../../../components/Navigation';
-import Navigation1 from '../../../components/Navigation';
+import Navigation from '../../../components/Nav';
 
 import styles from './index.scss';
 
@@ -26,7 +25,7 @@ class Main extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			type: '',
+			type: 'forbid',
 		};
 	}
 
@@ -44,26 +43,24 @@ class Main extends React.Component {
 
 		return (
 			<div>
-				<Navigation1 active={1} type={type}>
-					<Navigation1.Item onClick={() => { this.goPage('/'); }}>Home</Navigation1.Item>
-					<Navigation1.Item>
-						Components
-						<Navigation1.Item onClick={() => { this.goPage('/grid'); }}>Grid</Navigation1.Item>
-						<Navigation1.Item onClick={() => { this.goPage('/button'); }}>Button</Navigation1.Item>
-						<Navigation1.Item onClick={() => { this.goPage('/icon'); }}>Icon</Navigation1.Item>
-						<Navigation1.Item onClick={() => { this.goPage('/slider'); }}>Slider</Navigation1.Item>
-						<Navigation1.Item onClick={() => { this.goPage('/menu'); }}>Menu</Navigation1.Item>
-						<Navigation1.Item onClick={() => { this.goPage('/group'); }}>Group</Navigation1.Item>
-						<Navigation1.Item onClick={() => { this.goPage('/modal'); }}>Modal</Navigation1.Item>
-						<Navigation1.Item onClick={() => { this.goPage('/nav'); }}>Navigation</Navigation1.Item>
-					</Navigation1.Item>
-					<Navigation1.Item>
-						Set Type
-						<Navigation1.Item onClick={() => { this.setType(''); }}>Default</Navigation1.Item>
-						<Navigation1.Item onClick={() => { this.setType('primary'); }}>Primary</Navigation1.Item>
-						<Navigation1.Item onClick={() => { this.setType('danger'); }}>Danger</Navigation1.Item>
-					</Navigation1.Item>
-				</Navigation1>
+				<Navigation active={1} type={type}>
+					<Navigation.Item onClick={() => { this.goPage('/'); }}>Home</Navigation.Item>
+					<Navigation.Group title="Components">
+						<Navigation.Item onClick={() => { this.goPage('/grid'); }}>Grid</Navigation.Item>
+						<Navigation.Item onClick={() => { this.goPage('/button'); }}>Button</Navigation.Item>
+						<Navigation.Item onClick={() => { this.goPage('/icon'); }}>Icon</Navigation.Item>
+						<Navigation.Item onClick={() => { this.goPage('/slider'); }}>Slider</Navigation.Item>
+						<Navigation.Item onClick={() => { this.goPage('/menu'); }}>Menu</Navigation.Item>
+						<Navigation.Item onClick={() => { this.goPage('/group'); }}>Group</Navigation.Item>
+						<Navigation.Item onClick={() => { this.goPage('/modal'); }}>Modal</Navigation.Item>
+						<Navigation.Item onClick={() => { this.goPage('/nav'); }}>Navigation</Navigation.Item>
+					</Navigation.Group>
+					<Navigation.Group title="Set Type">
+						<Navigation.Item onClick={() => { this.setType(''); }}>Default</Navigation.Item>
+						<Navigation.Item onClick={() => { this.setType('primary'); }}>Primary</Navigation.Item>
+						<Navigation.Item onClick={() => { this.setType('danger'); }}>Danger</Navigation.Item>
+					</Navigation.Group>
+				</Navigation>
 
 				<div id="content">
 					<Route exact path="/" component={Home} />
