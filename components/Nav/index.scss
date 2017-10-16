@@ -4,6 +4,19 @@
 	}
 }
 
+@mixin navBarColor($color, $activeLineColor: '') {
+	@include navBacColor($color);
+
+	@if $activeLineColor != '' {
+		> .bmbo-nav-group,
+		> .bmbo-nav-item {
+			&:after {
+				background: var(--bmbo-#{$activeLineColor});
+			}
+		}
+	}
+}
+
 @mixin navItem() {
 	display: inline-block;
 	position: relative;
@@ -19,19 +32,12 @@
 
 	transition: background var(--bmbo-duration);
 
-	@include navBacColor(default);
-	@include navBacColor(primary);
-	@include navBacColor(info);
-	@include navBacColor(success);
-	@include navBacColor(warning);
-	@include navBacColor(danger);
-	@include navBacColor(forbid);
-
 	// Navigation first level
 	> .bmbo-nav-group,
 	> .bmbo-nav-item {
 		@include navItem;
 
+		.bmbo-nav-title:before,
 		a:before {
 			content: '';
 			position: absolute;
@@ -44,7 +50,7 @@
 		&:after {
 			content: '';
 			position: absolute;
-			bottom: 8px;
+			bottom: 5px;
 			height: 3px;
 			left: 10px;
 			right: 10px;
@@ -57,13 +63,23 @@
 		}
 
 		&.bmbo-hover,
-		&:hover {
+		&:hover,
+		&.bmbo-active {
 			&:after {
 				opacity: 1;
 				transform: scaleX(1);
 			}
 		}
 	}
+
+	@include navBarColor(lead, lead-active);
+	@include navBarColor(default);
+	@include navBarColor(primary);
+	@include navBarColor(info);
+	@include navBarColor(success);
+	@include navBarColor(warning);
+	@include navBarColor(danger);
+	@include navBarColor(forbid);
 }
 
 .bmbo-nav-list {
@@ -96,6 +112,7 @@
 		transform: scaleY(0.8);
 	}
 
+	@include navBacColor(lead);
 	@include navBacColor(default);
 	@include navBacColor(primary);
 	@include navBacColor(info);

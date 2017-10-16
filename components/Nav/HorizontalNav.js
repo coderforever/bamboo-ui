@@ -11,7 +11,7 @@ class HorizontalNav extends React.Component {
 		return (
 			<ul
 				className={classNames('bmbo-horizontal-nav',
-					`bmbo-${type || 'default'}`,
+					`bmbo-${type || 'lead'}`,
 				)}
 			>
 				{children}

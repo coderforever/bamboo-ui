@@ -25,7 +25,7 @@ class Main extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			type: 'forbid',
+			type: '',
 		};
 	}
 
@@ -58,7 +58,11 @@ class Main extends React.Component {
 					<Navigation.Group title="Set Type">
 						<Navigation.Item onClick={() => { this.setType(''); }}>Default</Navigation.Item>
 						<Navigation.Item onClick={() => { this.setType('primary'); }}>Primary</Navigation.Item>
+						<Navigation.Item onClick={() => { this.setType('info'); }}>Info</Navigation.Item>
+						<Navigation.Item onClick={() => { this.setType('success'); }}>Success</Navigation.Item>
+						<Navigation.Item onClick={() => { this.setType('warning'); }}>Warning</Navigation.Item>
 						<Navigation.Item onClick={() => { this.setType('danger'); }}>Danger</Navigation.Item>
+						<Navigation.Item onClick={() => { this.setType('forbid'); }}>Forbid</Navigation.Item>
 					</Navigation.Group>
 				</Navigation>
 

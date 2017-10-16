@@ -6,11 +6,11 @@ import NavList from './NavList';
 
 class NavItem extends React.Component {
 	render() {
-		const { children, onClick } = this.props;
+		const { children, onClick, active } = this.props;
 
 		return (
 			<li
-				className={classNames('bmbo-nav-item')}
+				className={classNames('bmbo-nav-item', active && 'bmbo-active')}
 				role="button"
 				tabIndex={-1}
 				onClick={onClick}
@@ -24,6 +24,8 @@ class NavItem extends React.Component {
 NavItem.propTypes = {
 	children: PropTypes.node,
 	onClick: PropTypes.func,
+
+	active: PropTypes.bool,
 };
 
 export default NavItem;

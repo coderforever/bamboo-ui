@@ -32,7 +32,9 @@ class NavList extends React.Component {
 	}
 
 	setListRef = (ele) => {
+		const { setRef } = this.props;
 		this.$list = ele;
+		setRef(ele);
 	};
 
 	checkUpdate = (prevProps, nextProps) => {
@@ -84,7 +86,7 @@ class NavList extends React.Component {
 					'bmbo-showing': animateStatus === ANIMATE_STATUS_SHOWING,
 					'bmbo-hiding': animateStatus === ANIMATE_STATUS_HIDING,
 				},
-				`bmbo-${navType || 'default'}`,
+				`bmbo-${navType || 'lead'}`,
 				direct && `bmbo-${direct}`,
 				)}
 				ref={this.setListRef}
@@ -99,6 +101,8 @@ class NavList extends React.Component {
 NavList.propTypes = {
 	visible: PropTypes.bool,
 	rect: PropTypes.object,
+
+	setRef: PropTypes.func,
 
 	children: PropTypes.node,
 };

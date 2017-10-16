@@ -47,19 +47,21 @@ class Field extends React.Component {
 
 			if (node.type[BAMBOO_COMPONENT] === BAMBOO_FORM_RADIO) {
 				// ==================== Radio ====================
+				const nodeValue = props.value !== undefined ? props.value : props.children;
+
 				return React.cloneElement(node, {
 					onClick: (...args) => {
 						if (props.onClick) props.onClick(...args);
 
 						if (formInstance) {
 							formInstance.setState(preState => (
-								updateValue(preState, this.getPath(), () => props.value)
+								updateValue(preState, this.getPath(), () => nodeValue)
 							), onFormChanged);
 						} else {
-							this.setState({ value: props.value }, onFormChanged);
+							this.setState({ value: nodeValue }, onFormChanged);
 						}
 					},
-					checked: myValue === props.value,
+					checked: myValue === nodeValue,
 				});
 			} else if (node.type[BAMBOO_COMPONENT] === BAMBOO_FORM_CHECKBOX) {
 				// ================== Check Box ==================

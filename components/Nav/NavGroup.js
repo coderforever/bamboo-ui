@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import { isInRect } from '../utils/uiUtil';
 import NavList from './NavList';
 
 class NavGroup extends React.Component {
@@ -14,33 +15,56 @@ class NavGroup extends React.Component {
 	}
 
 	onMouseEnter = () => {
-		const rect = this.$title.getBoundingClientRect();
+		const rect = this.$item.getBoundingClientRect();
 		this.setState({ hover: true, rect });
 	};
-	onMouseLeave = () => {
+	onMouseLeave = (event) => {
+		const { clientX, clientY } = event;
+
+		if (this.$list) {
+			const rect = this.$list.getBoundingClientRect();
+
+			// Chrome has the bug of click event will trigger mouse leave event
+			// ref: https://stackoverflow.com/questions/45266854/mouseleave-triggered-by-click
+			if (isInRect(clientX, clientY, rect)) {
+				console.log('Fake leave!');
+				return;
+			}
+		}
+
 		this.setState({ hover: false });
 	};
 
-	setTitleRef = (ele) => {
-		this.$title = ele;
+	setItemRef = (ele) => {
+		this.$item = ele;
+	};
+
+	setListRef = (ele) => {
+		this.$list = ele;
 	};
 
 	render() {
-		const { title, children } = this.props;
+		const { title, children, active } = this.props;
 		const { hover, rect } = this.state;
 
 		return (
 			<li
-				className={classNames('bmbo-nav-group', hover && 'bmbo-hover')}
+				className={classNames('bmbo-nav-group', hover && 'bmbo-hover', active && 'bmbo-active')}
+				ref={this.setItemRef}
 				onMouseEnter={this.onMouseEnter}
 				onMouseLeave={this.onMouseLeave}
-				ref={this.setTitleRef}
 			>
-				<div className="bmbo-nav-title">
+				<div
+					className="bmbo-nav-title"
+				>
 					{title}
 				</div>
 
-				<NavList visible={hover} rect={rect}>
+				<NavList
+					visible={hover}
+					rect={rect}
+					setRef={this.setListRef}
+				>
 					{children}
 				</NavList>
 			</li>
@@ -51,6 +75,7 @@ class NavGroup extends React.Component {
 NavGroup.propTypes = {
 	title: PropTypes.node,
 	children: PropTypes.node,
+	active: PropTypes.bool,
 };
 
 export default NavGroup;
