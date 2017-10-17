@@ -6,31 +6,19 @@ $pinSizeLarge: 16px;
 $barSize: 6px;
 
 @mixin sliderColor($color) {
-	.bmbo-slider-range {
-		background: var(#{$color});
-	}
-
-	.bmbo-slider-pin {
-		border: 2px solid var(#{$color});
-
-		&.bmbo-mark:not(.bmbo-active) {
-			border-color: var(--bmbo-default-disabled);
-		}
-	}
-
-	&:not(.bmbo-disabled) {
-		.bmbo-slider-pin:hover {
-			box-shadow: 0 0 5px var(#{$color});
-		}
-	}
-
-	&.bmbo-disabled {
+	&.bmbo-#{$color} {
 		.bmbo-slider-range {
-			background: var(#{$color}-disabled);
+			background: var(--bmbo-#{$color});
 		}
 
 		.bmbo-slider-pin {
-			border-color: var(#{$color}-disabled);
+			border: 2px solid var(--bmbo-#{$color});
+		}
+
+		&:not(.bmbo-disabled) {
+			.bmbo-slider-pin:hover {
+				box-shadow: 0 0 5px var(--bmbo-#{$color});
+			}
 		}
 	}
 }
@@ -117,6 +105,10 @@ $barSize: 6px;
 			height: $markSize;
 
 			transition: none;
+
+			&:not(.bmbo-active) {
+				border-color: var(--bmbo-bac-dark);
+			}
 		}
 	}
 
@@ -141,33 +133,29 @@ $barSize: 6px;
 		}
 	}
 
+	@include sliderColor(deprecated);
+	@include sliderColor(primary);
+	@include sliderColor(info);
+	@include sliderColor(success);
+	@include sliderColor(warning);
+	@include sliderColor(danger);
+	@include sliderColor(forbid);
+
 	&.bmbo-disabled {
 		cursor: not-allowed;
 
 		.bmbo-slider-pin {
 			cursor: not-allowed;
 		}
-	}
 
-	@include sliderColor(--bmbo-default);
+		.bmbo-slider-range {
+			background: var(--bmbo-weak);
+		}
 
-	&.bmbo-primary {
-		@include sliderColor(--bmbo-primary);
-	}
-	&.bmbo-info {
-		@include sliderColor(--bmbo-info);
-	}
-	&.bmbo-success {
-		@include sliderColor(--bmbo-success);
-	}
-	&.bmbo-warning {
-		@include sliderColor(--bmbo-warning);
-	}
-	&.bmbo-danger {
-		@include sliderColor(--bmbo-danger);
-	}
-	&.bmbo-forbid {
-		@include sliderColor(--bmbo-forbid);
+		.bmbo-slider-pin:not(.bmbo-mark),
+		.bmbo-slider-pin.bmbo-mark.bmbo-active {
+			border-color: var(--bmbo-weak);
+		}
 	}
 
 	&.bmbo-transparent,

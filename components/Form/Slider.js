@@ -361,7 +361,7 @@ class Slider extends React.Component {
 				className={classNames(
 					'bmbo-slider',
 					pinCount === 1 && 'bmbo-single',
-					type && `bmbo-${type}`,
+					`bmbo-${type || 'primary'}`,
 					disabled && 'bmbo-disabled',
 					transparent && 'bmbo-transparent',
 				)}

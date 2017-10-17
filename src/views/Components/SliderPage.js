@@ -6,6 +6,7 @@ import {
 	Form, Input, Radio, Checkbox, Slider,
 } from '../../../components';
 
+import { TYPE_LIST, SIZE_LIST } from '../../utils/enum';
 import { toString } from '../../utils/propsUtil';
 
 const MARKS_SAMPLE = {
@@ -25,7 +26,7 @@ class SliderPage extends React.Component {
 			value: 0,
 
 			form: {
-				type: '',
+				type: 'primary',
 				value: 50,
 				min: 0,
 				max: 100,
@@ -102,13 +103,12 @@ class SliderPage extends React.Component {
 
 							<div className="form">
 								<Form.Field name="type" title="Type">
-									<Radio value="default">default</Radio>
-									<Radio value="">primary</Radio>
-									<Radio value="info">info</Radio>
-									<Radio value="success">success</Radio>
-									<Radio value="warning">warning</Radio>
-									<Radio value="danger">danger</Radio>
-									<Radio value="forbid">forbid</Radio>
+									{TYPE_LIST.map(({ name, isDefault }) => (
+										<Radio key={name} value={name}>
+											{name}
+											{isDefault && ' (default)'}
+										</Radio>
+									))}
 								</Form.Field>
 								<Form.Field name="value" title="Value">
 									{(!form.hasMulti || form.multi <= 1) && <Input type="number" />}
