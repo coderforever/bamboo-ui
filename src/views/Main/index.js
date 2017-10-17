@@ -51,7 +51,7 @@ class Main extends React.Component {
 						<Navigation.Item onClick={() => { this.goPage('/nav'); }}>Navigation</Navigation.Item>
 						<Navigation.Item onClick={() => { this.goPage('/curtain'); }}>Curtain</Navigation.Item>
 						<Navigation.Item onClick={() => { this.goPage('/progress'); }}>Progress</Navigation.Item>
-						<Navigation.Item onClick={() => { this.goPage('/tooltip'); }}>Tooltip</Navigation.Item>
+						{/*<Navigation.Item onClick={() => { this.goPage('/tooltip'); }}>Tooltip</Navigation.Item>*/}
 					</Navigation.Group>
 				</Navigation>
 

@@ -95,8 +95,8 @@ export const getEnablePosition = (surroundRect, targetRect, position = 'dr') => 
 
 	// TODO: use left & top only
 	const { width: sw = 0, height: sh = 0 } = surroundRect;
-	const sx = surroundRect.left || surroundRect.x;
-	const sy = surroundRect.top || surroundRect.y;
+	const sx = surroundRect.left || surroundRect.x || 0;
+	const sy = surroundRect.top || surroundRect.y || 0;
 	const { width: tw = 0, height: th = 0 } = targetRect;
 
 	let winWidth = window.innerWidth;
