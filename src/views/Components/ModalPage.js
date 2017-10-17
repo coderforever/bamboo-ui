@@ -130,7 +130,7 @@ class GroupPage extends React.Component {
 							}}
 						>
 							<Modal.Preface>
-								<img src="./assets/light.jpg" alt="Light" />
+								<img src="./assets/light.min.jpg" alt="Light" />
 							</Modal.Preface>
 							<Modal.Content>
 								<p>This is a Modal with Preface:</p>

@@ -47,7 +47,7 @@ class CurtainPage extends React.Component {
 
 							<Curtain visible={visible} styleName="curtain-sample">
 								<h1>你好，幕布</h1>
-								<img src="./assets/light.jpg" alt="Light" />
+								<img src="./assets/light.min.jpg" alt="Light" />
 								<Button
 									onClick={() => {
 										this.setState({ visible: false });

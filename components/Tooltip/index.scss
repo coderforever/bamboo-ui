@@ -1,5 +1,8 @@
 @charset "UTF-8";
 
-.bmbo-tooltip {
+.bmbo-tooltip-holder {
 	display: inline;
+
+	.bmbo-tooltip {
+	}
 }

@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import cssModules from 'react-css-modules';
+
+import Tooltip from './Tooltip';
 
 class TooltipHolder extends React.Component {
 	constructor() {
@@ -21,14 +22,16 @@ class TooltipHolder extends React.Component {
 
 	render() {
 		const { children } = this.props;
+		const { hover } = this.state;
 
 		return (
 			<div
-				className="bmbo-tooltip"
+				className="bmbo-tooltip-holder"
 				onMouseEnter={this.onMouseEnter}
 				onMouseLeave={this.onMouseLeave}
 			>
 				{children}
+				<Tooltip visible={hover} />
 			</div>
 		);
 	}
