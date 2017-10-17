@@ -38,6 +38,7 @@ $barSize: 6px;
 		user-select: none;
 	}
 
+	// Marks
 	.bmbo-slider-title {
 		position: relative;
 		pointer-events: none;
@@ -47,12 +48,15 @@ $barSize: 6px;
 			width: 0;
 			display: inline-block;
 			overflow: visible;
+			vertical-align: top;
 
 			.bmbo-title {
 				white-space: nowrap;
 				width: 500px;
 				text-align: center;
 				transform: translate(-50%, 0);
+
+				transition: all var(--bmbo-duration);
 			}
 		}
 	}

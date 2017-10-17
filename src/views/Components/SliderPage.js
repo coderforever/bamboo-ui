@@ -27,6 +27,7 @@ class SliderPage extends React.Component {
 
 			form: {
 				type: 'primary',
+				size: 'md',
 				value: 50,
 				min: 0,
 				max: 100,
@@ -89,6 +90,7 @@ class SliderPage extends React.Component {
 								<Form.Field name="value">
 									<Slider
 										type={form.type}
+										size={form.size}
 										step={form.hasStep ? form.step : null}
 										min={form.min}
 										max={form.max}
@@ -106,6 +108,14 @@ class SliderPage extends React.Component {
 									{TYPE_LIST.map(({ name, isDefault }) => (
 										<Radio key={name} value={name}>
 											{name}
+											{isDefault && ' (default)'}
+										</Radio>
+									))}
+								</Form.Field>
+								<Form.Field name="size" title="Size">
+									{SIZE_LIST.map(({ name, displayName, isDefault }) => (
+										<Radio key={name} value={name}>
+											{displayName}
 											{isDefault && ' (default)'}
 										</Radio>
 									))}

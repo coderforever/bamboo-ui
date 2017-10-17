@@ -296,8 +296,7 @@ class Slider extends React.Component {
 	};
 
 	render() {
-		const { min = 0, max = 100, disabled, transparent } = this.props;
-		const type = this.props.type || 'primary';
+		const { min = 0, max = 100, disabled, transparent, type, size } = this.props;
 
 		const pinCount = this.getPinCount();
 
@@ -362,6 +361,7 @@ class Slider extends React.Component {
 					'bmbo-slider',
 					pinCount === 1 && 'bmbo-single',
 					`bmbo-${type || 'primary'}`,
+					`bmbo-${size || 'md'}`,
 					disabled && 'bmbo-disabled',
 					transparent && 'bmbo-transparent',
 				)}
@@ -397,6 +397,7 @@ Slider.propTypes = {
 	max: PropTypes.number,
 	step: PropTypes.number,
 	type: PropTypes.string,
+	size: PropTypes.string,
 	transparent: PropTypes.bool,
 	disabled: PropTypes.bool,
 	multi: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
