@@ -83,6 +83,18 @@ export const hasVerticalScroll = () => {
 };
 
 
+export const getWinWidth = () => {
+	let winWidth = window.innerWidth;
+	if (hasVerticalScroll()) winWidth -= getScrollbarWidth();
+	return winWidth;
+};
+
+export const getWinHeight = () => {
+	let winHeight = window.innerHeight;
+	if (hasHorizontalScroll()) winHeight -= getScrollbarWidth();
+	return winHeight;
+};
+
 /**
  * Get enabled position for element.
  * @param surroundRect
@@ -99,13 +111,10 @@ export const getEnablePosition = (surroundRect, targetRect, position = 'dr') => 
 	const sy = surroundRect.top || surroundRect.y || 0;
 	const { width: tw = 0, height: th = 0 } = targetRect;
 
-	let winWidth = window.innerWidth;
-	let winHeight = window.innerHeight;
+	const winWidth = getWinWidth();
+	const winHeight = getWinHeight();
 	const scrollX = window.scrollX;
 	const scrollY = window.scrollY;
-
-	if (hasVerticalScroll()) winWidth -= getScrollbarWidth();
-	if (hasHorizontalScroll()) winHeight -= getScrollbarWidth();
 
 	const isR = position.includes('r');
 	const isB = position.includes('b');

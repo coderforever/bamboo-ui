@@ -13,31 +13,40 @@ class TooltipHolder extends React.Component {
 	}
 
 	onMouseEnter = () => {
-		this.setState({ hover: true });
+		const rect = this.$holder.getBoundingClientRect();
+		this.setState({ hover: true, rect });
 	};
 
 	onMouseLeave = () => {
 		this.setState({ hover: false });
 	};
 
+	setHolderRef = (ele) => {
+		this.$holder = ele;
+	};
+
 	render() {
-		const { children } = this.props;
-		const { hover } = this.state;
+		const { title, children } = this.props;
+		const { hover, rect } = this.state;
 
 		return (
 			<div
 				className="bmbo-tooltip-holder"
 				onMouseEnter={this.onMouseEnter}
 				onMouseLeave={this.onMouseLeave}
+				ref={this.setHolderRef}
 			>
 				{children}
-				<Tooltip visible={hover} />
+				<Tooltip visible={hover} rect={rect}>
+					{title}
+				</Tooltip>
 			</div>
 		);
 	}
 }
 
 TooltipHolder.propTypes = {
+	title: PropTypes.string,
 	children: PropTypes.node,
 };
 

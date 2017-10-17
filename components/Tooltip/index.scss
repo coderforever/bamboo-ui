@@ -2,7 +2,16 @@
 
 .bmbo-tooltip-holder {
 	display: inline;
+}
 
-	.bmbo-tooltip {
+.bmbo-tooltip {
+	position: absolute;
+
+	.bmbo-tooltip-title {
+		color: #FFF;
+		background: rgba(#000, 0.8);
+		padding: var(--bmbo-padding-md);
+		border-radius: 2px;
+		max-width: 500px;
 	}
 }

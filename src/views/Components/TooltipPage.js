@@ -32,7 +32,7 @@ class ButtonPage extends React.Component {
 
 					<div className="measurement">
 						<div className="preview">
-							<Tooltip>
+							<Tooltip title="hi, Bamboo UI!">
 								鼠标悬浮我试试~
 							</Tooltip>
 						</div>
