@@ -1,9 +1,5 @@
 @charset "UTF-8";
-$gutter: 5px;
 $markSize: 10px;
-$pinSize: 14px;
-$pinSizeLarge: 16px;
-$barSize: 6px;
 
 @mixin sliderColor($color) {
 	&.bmbo-#{$color} {
@@ -24,7 +20,7 @@ $barSize: 6px;
 }
 
 .bmbo-slider {
-	margin: 0 $pinSize / 2 + $gutter;
+	margin: 0 0.5em;
 
 	&.bmbo-single {
 		cursor: pointer;
@@ -33,9 +29,11 @@ $barSize: 6px;
 	// Holder
 	.bmbo-slider-content {
 		position: relative;
-		height: $pinSize;
+		height: 1em;
 		overflow: visible;
 		user-select: none;
+
+		transition: height var(--bmbo-duration);
 	}
 
 	// Marks
@@ -64,7 +62,7 @@ $barSize: 6px;
 	// Content
 	.bmbo-slider-bar {
 		position: absolute;
-		height: $barSize;
+		height: 0.4em;
 		left: 0;
 		width: 100%;
 		top: 50%;
@@ -80,7 +78,7 @@ $barSize: 6px;
 		top: 50%;
 		transform: translate(0, -50%);
 		width: 100px;
-		height: $barSize;
+		height: 0.4em;
 		pointer-events: none;
 
 		transition: background var(--bmbo-duration);
@@ -92,8 +90,8 @@ $barSize: 6px;
 		top: 50%;
 		transform: translate(-50%, -50%);
 
-		width: $pinSize;
-		height: $pinSize;
+		width: 1em;
+		height: 1em;
 		border-radius: 100%;
 		background: #FFF;
 		border: 2px solid transparent;
@@ -105,8 +103,8 @@ $barSize: 6px;
 
 		&.bmbo-mark {
 			pointer-events: none;
-			width: $markSize;
-			height: $markSize;
+			width: 0.65em;
+			height: 0.65em;
 
 			transition: none;
 
@@ -125,13 +123,13 @@ $barSize: 6px;
 
 		.bmbo-slider-pin {
 			&:hover {
-				width: $pinSizeLarge;
-				height: $pinSizeLarge;
+				width: 1.2em;
+				height: 1.2em;
 			}
 
 			&:active {
-				width: $pinSize;
-				height: $pinSize;
+				width: 1em;
+				height: 1em;
 				box-shadow: none!important;
 			}
 		}
