@@ -1,9 +1,10 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import {
-	ANIMATE_STATUS_NONE, ANIMATE_STATUS_INIT,
+	ANIMATE_STATUS_NONE,
 	ANIMATE_STATUS_SHOWING, ANIMATE_STATUS_SHOWN, ANIMATE_STATUS_HIDING,
 } from '../utils/uiUtil';
 import Sequence from '../utils/Sequence';

@@ -15,6 +15,7 @@ import GroupPage from '../Components/GroupPage';
 import ModalPage from '../Components/ModalPage';
 import NavPage from '../Components/NavPage';
 import CurtainPage from '../Components/CurtainPage';
+import ProgressPage from '../Components/ProgressPage';
 
 import Navigation from '../../../components/Nav';
 
@@ -56,6 +57,7 @@ class Main extends React.Component {
 						<Navigation.Item onClick={() => { this.goPage('/modal'); }}>Modal</Navigation.Item>
 						<Navigation.Item onClick={() => { this.goPage('/nav'); }}>Navigation</Navigation.Item>
 						<Navigation.Item onClick={() => { this.goPage('/curtain'); }}>Curtain</Navigation.Item>
+						<Navigation.Item onClick={() => { this.goPage('/progress'); }}>Progress</Navigation.Item>
 					</Navigation.Group>
 					<Navigation.Group title="Set Type">
 						<Navigation.Item onClick={() => { this.setType(''); }}>Default</Navigation.Item>
@@ -79,6 +81,7 @@ class Main extends React.Component {
 					<Route path="/modal" component={ModalPage} />
 					<Route path="/nav" component={NavPage} />
 					<Route path="/curtain" component={CurtainPage} />
+					<Route path="/progress" component={ProgressPage} />
 				</div>
 			</div>
 		);

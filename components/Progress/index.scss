@@ -1,0 +1,78 @@
+@charset "UTF-8";
+
+@mixin progressColor($color) {
+	&.bmbo-#{$color} {
+		> .bmbo-progress-bar {
+			background: var(--bmbo-#{$color});
+		}
+	}
+}
+
+@mixin progressHeight($size) {
+	&.bmbo-#{$size} {
+		height: var(--bmbo-height-#{$size});
+	}
+}
+
+.bmbo-progress {
+	height: 1em;
+	background: var(--bmbo-bac);
+	border-radius: 10em;
+	overflow: hidden;
+
+	transition: all var(--bmbo-duration-mid) ease;
+
+	> .bmbo-progress-bar {
+		height: 100%;
+		background: var(--bmbo-weak);
+		border-radius: 10em;
+		position: relative;
+		overflow: hidden;
+
+		transition: all var(--bmbo-duration-mid) ease;
+
+		> .bmbo-mark {
+			color: #FFF;
+			position: absolute;
+			right: 0.5em;
+			font-size: 0.8em;
+			top: 50%;
+			transform: translate(0, -50%);
+		}
+	}
+
+	&.bmbo-active {
+		> .bmbo-progress-bar {
+			&:after {
+				content: '';
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 200px;
+				height: 100%;
+				background: linear-gradient(90deg, rgba(#FFF, 0), rgba(#FFF, 0.3));
+
+				animation: bmbo-progress-animation var(--bmbo-duration-turtle) linear infinite;
+			}
+		}
+	}
+
+	@include progressColor(default);
+	@include progressColor(primary);
+	@include progressColor(info);
+	@include progressColor(success);
+	@include progressColor(warning);
+	@include progressColor(danger);
+	@include progressColor(forbid);
+
+	@include progressHeight(xs);
+	@include progressHeight(sm);
+	@include progressHeight(md);
+	@include progressHeight(lg);
+	@include progressHeight(xl);
+}
+
+@keyframes bmbo-progress-animation {
+	from { left: 0; transform: translate(-100%, 0); }
+	to { left: 100%; }
+}

@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 $weak: #CCC;
-$default: #757575;
+$deprecated: #757575;
 $primary: #2B70E3;
 $info: #298185;
 $success: #3F8310;
@@ -16,7 +16,8 @@ $border: #CCC;
 	--bmbo-duration: 0.25s;
 	--bmbo-duration-mid: 0.4s;
 	--bmbo-duration-slow: 1s;
-	--bmbo-duration-turtle: 1.9s;
+	--bmbo-duration-slow-db: 2s;
+	--bmbo-duration-turtle: 3s;
 
 	--bmbo-lead: #374249;
 	--bmbo-lead-active: #45A7B9;
@@ -24,7 +25,7 @@ $border: #CCC;
 	--bmbo-component-spacing: 5px;
 
 	--bmbo-weak: $weak;
-	--bmbo-default: $default;
+	--bmbo-deprecated: $deprecated;
 	--bmbo-primary: $primary;
 	--bmbo-info: $info;
 	--bmbo-success: $success;
@@ -33,7 +34,7 @@ $border: #CCC;
 	--bmbo-forbid: $forbid;
 
 	--bmbo-weak-light: lighten($weak, 10%);
-	--bmbo-default-light: lighten($default, 10%);
+	--bmbo-deprecated-light: lighten($deprecated, 10%);
 	--bmbo-primary-light: lighten($primary, 10%);
 	--bmbo-info-light: lighten($info, 10%);
 	--bmbo-success-light: lighten($success, 10%);
@@ -42,7 +43,7 @@ $border: #CCC;
 	--bmbo-forbid-light: lighten($forbid, 10%);
 
 	--bmbo-weak-dark: darken($weak, 10%);
-	--bmbo-default-dark: darken($default, 10%);
+	--bmbo-deprecated-dark: darken($deprecated, 10%);
 	--bmbo-primary-dark: darken($primary, 10%);
 	--bmbo-info-dark: darken($info, 10%);
 	--bmbo-success-dark: darken($success, 10%);
@@ -50,8 +51,11 @@ $border: #CCC;
 	--bmbo-danger-dark: darken($danger, 10%);
 	--bmbo-forbid-dark: darken($forbid, 10%);
 
+	--bmbo-disabled-opacity: 0.5;
+
+	// TODO: Need this?
 	--bmbo-weak-disabled: scale-color($weak, $saturation: -70%, $lightness: 50%);
-	--bmbo-default-disabled: scale-color($default, $saturation: -70%, $lightness: 50%);
+	--bmbo-deprecated-disabled: scale-color($deprecated, $saturation: -70%, $lightness: 50%);
 	--bmbo-primary-disabled: scale-color($primary, $saturation: -70%, $lightness: 50%);
 	--bmbo-info-disabled: scale-color($info, $saturation: -70%, $lightness: 50%);
 	--bmbo-success-disabled: scale-color($success, $saturation: -70%, $lightness: 50%);
@@ -59,10 +63,31 @@ $border: #CCC;
 	--bmbo-danger-disabled: scale-color($danger, $saturation: -40%, $lightness: 50%);
 	--bmbo-forbid-disabled: scale-color($forbid, $saturation: -70%, $lightness: 50%);
 
+	--bmbo-xs: 12px;
+	--bmbo-sm: 12px;
+	--bmbo-md: 14px;
+	--bmbo-lg: 18px;
+	--bmbo-xl: 25px;
+
+	--bmbo-padding-xs: 0 0.3em;
+	--bmbo-padding-sm: 0.2em 0.6em;
+	--bmbo-padding-md: 0.3em 0.8em;
+	--bmbo-padding-lg: 0.3em 1em;
+	--bmbo-padding-xl: 0.3em 2em;
+
+	// TODO: Need this?
+	--bmbo-height-xs: 1em;
+	--bmbo-height-sm: 1.4em;
+	--bmbo-height-md: 1.6em;
+	--bmbo-height-lg: 1.6em;
+	--bmbo-height-xl: 1.6em;
+
+	// TODO: Need this?
 	--bmbo-font-size-small: 12px;
 	--bmbo-font-size: 14px;
 	--bmbo-font-size-large: 20px;
 	--bmbo-font-size-huge: 40px;
+
 	--bmbo-color: #333;
 	--bmbo-color-dim: #767676;
 	--bmbo-color-light: #FFF;

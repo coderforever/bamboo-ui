@@ -6,6 +6,7 @@ import {
 	Form, Input, Radio, Checkbox,
 } from '../../../components';
 
+import { TYPE_LIST, SIZE_LIST } from '../../utils/enum';
 import { toString } from '../../utils/propsUtil';
 
 class ButtonPage extends React.Component {
@@ -14,9 +15,9 @@ class ButtonPage extends React.Component {
 		this.state = {
 			form: {
 				text: '你的测试按钮',
-				type: '',
+				type: 'primary',
 				disabled: false,
-				size: '',
+				size: 'md',
 				transparent: false,
 				checked: false,
 			},
@@ -65,7 +66,7 @@ class ButtonPage extends React.Component {
 					</p>
 					<div className="preview">
 						<span className="margin">
-							<Button type="default">default</Button>
+							<Button type="deprecated">deprecated</Button>
 						</span>
 						<span className="margin">
 							<Button>primary</Button>
@@ -107,22 +108,23 @@ class ButtonPage extends React.Component {
 									<Input />
 								</Form.Field>
 								<Form.Field name="type" title="Type">
-									<Radio value="default">default</Radio>
-									<Radio value="">primary</Radio>
-									<Radio value="info">info</Radio>
-									<Radio value="success">success</Radio>
-									<Radio value="warning">warning</Radio>
-									<Radio value="danger">danger</Radio>
-									<Radio value="forbid">forbid</Radio>
+									{TYPE_LIST.map(({ name, isDefault }) => (
+										<Radio key={name} value={name}>
+											{name}
+											{isDefault && ' (default)'}
+										</Radio>
+									))}
 								</Form.Field>
 								<Form.Field name="disabled" title="Disabled">
 									<Checkbox>disabled</Checkbox>
 								</Form.Field>
 								<Form.Field name="size" title="Size">
-									<Radio value="xs">xs</Radio>
-									<Radio value="sm">sm</Radio>
-									<Radio value="">(default)</Radio>
-									<Radio value="lg">lg</Radio>
+									{SIZE_LIST.map(({ name, displayName, isDefault }) => (
+										<Radio key={name} value={name}>
+											{displayName}
+											{isDefault && ' (default)'}
+										</Radio>
+									))}
 								</Form.Field>
 								<Form.Field name="transparent" title="Transparent">
 									<Checkbox>transparent</Checkbox>

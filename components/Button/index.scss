@@ -1,90 +1,74 @@
 @charset "UTF-8";
 
 @mixin buttonColor($color) {
-	// Type
-	background: var(--bmbo-#{$color});
-
-	&:not(.bmbo-checked):not(.bmbo-disabled):hover {
-		background: var(--bmbo-#{$color}-light);
-	}
-
-	&:not(.bmbo-checked):not(.bmbo-disabled):active {
-		background: var(--bmbo-#{$color}-dark);
-	}
-
-	// Disabled
-	&.bmbo-disabled {
-		cursor: not-allowed;
-		background: var(--bmbo-#{$color}-disabled);
-	}
-
-	// Transparent
-	&.bmbo-transparent {
-		background: transparent;
-
-		padding: 5px 12px;
-		border: 1px solid var(--bmbo-#{$color});
-
-		@if $color == "weak" {
-			color: var(--bmbo-color-weak);
-		} @else {
-			color: var(--bmbo-#{$color});
-		}
-
-		// Size
-		&.bmbo-xs {
-			font-size: var(--bmbo-font-size-small);
-			padding: 0 5px;
-		}
-
-		&.bmbo-sm {
-			padding: 2px 7px;
-		}
-
-		&.bmbo-lg {
-			font-size: var(--bmbo-font-size-large);
-			padding: 10px 20px;
-		}
+	&.bmbo-#{$color} {
+		// Type
+		border-color: var(--bmbo-#{$color});
+		background: var(--bmbo-#{$color});
 
 		&:not(.bmbo-checked):not(.bmbo-disabled):hover {
-			background: transparent;
-			border-color: var(--bmbo-#{$color}-dark);
-
-			@if $color == "weak" {
-				color: var(--bmbo-color-weak);
-			} @else {
-				color: var(--bmbo-#{$color}-dark);
-			}
+			border-color: var(--bmbo-#{$color}-light);
+			background: var(--bmbo-#{$color}-light);
 		}
 
 		&:not(.bmbo-checked):not(.bmbo-disabled):active {
+			border-color: var(--bmbo-#{$color}-dark);
+			background: var(--bmbo-#{$color}-dark);
+		}
+
+		// Disabled
+		&.bmbo-disabled {
+			cursor: not-allowed;
+			opacity: var(--bmbo-disabled-opacity);
+		}
+
+		// Transparent
+		&.bmbo-transparent {
 			background: transparent;
-			border-color: var(--bmbo-#{$color}-light);
+
+			border: 1px solid var(--bmbo-#{$color});
 
 			@if $color == "weak" {
 				color: var(--bmbo-color-weak);
 			} @else {
-				color: var(--bmbo-#{$color}-light);
+				color: var(--bmbo-#{$color});
+			}
+
+			&:not(.bmbo-checked):not(.bmbo-disabled):hover {
+				background: transparent;
+				border-color: var(--bmbo-#{$color}-dark);
+
+				@if $color == "weak" {
+					color: var(--bmbo-color-weak);
+				} @else {
+					color: var(--bmbo-#{$color}-dark);
+				}
+			}
+
+			&:not(.bmbo-checked):not(.bmbo-disabled):active {
+				background: transparent;
+				border-color: var(--bmbo-#{$color}-light);
+
+				@if $color == "weak" {
+					color: var(--bmbo-color-weak);
+				} @else {
+					color: var(--bmbo-#{$color}-light);
+				}
 			}
 		}
 
-		&.bmbo-disabled {
-			color: var(--bmbo-#{$color}-disabled);
-			border-color: var(--bmbo-#{$color}-disabled);
-		}
-	}
+		// Checked
+		&.bmbo-checked {
+			&:not(.bmbo-transparent) {
+				box-shadow: inset 0 0 2px rgba(#000, 0.2);
+				background: var(--bmbo-#{$color}-dark);
+			}
 
-	// Checked
-	&.bmbo-checked {
-		&:not(.bmbo-transparent) {
-			box-shadow: inset 0 0 2px rgba(#000, 0.2);
-			background: var(--bmbo-#{$color}-dark);
-		}
-
-		&.bmbo-transparent {
-			background: transparent;
-			color: var(--bmbo-#{$color}-dark);
-			border-color: var(--bmbo-#{$color}-dark);
+			&.bmbo-transparent {
+				background: transparent;
+				color: var(--bmbo-#{$color}-dark);
+				border-color: var(--bmbo-#{$color}-dark);
+			}
 		}
 	}
 }
@@ -92,55 +76,40 @@
 .bmbo-button {
 	color: var(--bmbo-color-light);
 	border-radius: 3px;
-	padding: 6px 13px;
+	//padding: 6px 13px;
 	font-size: var(--bmbo-font-size);
-	border: 0;
+	border: 1px solid transparent;
 	position: relative;
+	line-height: normal;
 
 	cursor: pointer;
 
-	transition: background var(--bmbo-duration-fast),
-		color var(--bmbo-duration-fast),
-		box-shadow var(--bmbo-duration-fast),
-		border-color var(--bmbo-duration-fast);
+	transition: all var(--bmbo-duration-fast);
 
 	// Size
 	&.bmbo-xs {
-		font-size: var(--bmbo-font-size-small);
-		padding: 1px 6px;
+		padding: var(--bmbo-padding-xs);
 	}
-
 	&.bmbo-sm {
-		padding: 3px 8px;
+		padding: var(--bmbo-padding-sm);
 	}
-
+	&.bmbo-md {
+		padding: var(--bmbo-padding-md);
+	}
 	&.bmbo-lg {
-		font-size: var(--bmbo-font-size-large);
-		padding: 11px 21px;
+		padding: var(--bmbo-padding-lg);
+	}
+	&.bmbo-xl {
+		padding: var(--bmbo-padding-xl);
 	}
 
 	// Type & Transparent
-	@include buttonColor(default);
-
-	&.bmbo-weak {
-		@include buttonColor(weak);
-	}
-	&.bmbo-primary {
-		@include buttonColor(primary);
-	}
-	&.bmbo-info {
-		@include buttonColor(info);
-	}
-	&.bmbo-success {
-		@include buttonColor(success);
-	}
-	&.bmbo-warning {
-		@include buttonColor(warning);
-	}
-	&.bmbo-danger {
-		@include buttonColor(danger);
-	}
-	&.bmbo-forbid {
-		@include buttonColor(forbid);
-	}
+	@include buttonColor(weak);
+	@include buttonColor(deprecated);
+	@include buttonColor(primary);
+	@include buttonColor(info);
+	@include buttonColor(success);
+	@include buttonColor(warning);
+	@include buttonColor(danger);
+	@include buttonColor(forbid);
 }

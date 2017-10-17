@@ -15,3 +15,4 @@ export Group from './Group';
 export GroupItem from './Group/Item';
 export Modal from './Modal';
 export Curtain from './Curtain';
+export Progress from './Progress';

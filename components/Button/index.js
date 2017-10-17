@@ -23,7 +23,7 @@ class Button extends React.Component {
 					'bmbo-button',
 					type && `bmbo-${type}`,
 					disabled && 'bmbo-disabled',
-					size && `bmbo-${size}`,
+					`bmbo-${size || 'md'}`,
 					transparent && 'bmbo-transparent',
 					checked && 'bmbo-checked',
 				)}
@@ -41,9 +41,9 @@ Button.propTypes = {
 	children: PropTypes.node,
 
 	type: PropTypes.string,
+	size: PropTypes.string,
 	disabled: PropTypes.bool,
 	onClick: PropTypes.func,
-	size: PropTypes.string,
 	transparent: PropTypes.bool,
 	checked: PropTypes.bool,
 };

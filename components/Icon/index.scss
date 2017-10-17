@@ -39,7 +39,7 @@
 			}
 
 			&:before {
-				animation: bmbo-icon-loading-2 var(--bmbo-duration-turtle) ease infinite;
+				animation: bmbo-icon-loading-2 var(--bmbo-duration-turtle) linear infinite;
 			}
 			&:after {
 				animation: bmbo-icon-loading-2 var(--bmbo-duration-slow) linear infinite;
@@ -74,10 +74,10 @@
 			}
 
 			&:before {
-				animation: bmbo-icon-loading-expand var(--bmbo-duration-turtle) linear infinite;
+				animation: bmbo-icon-loading-expand var(--bmbo-duration-slow-db) linear infinite;
 			}
 			&:after {
-				animation: bmbo-icon-loading-expand var(--bmbo-duration-turtle) var(--bmbo-duration-slow) linear infinite;
+				animation: bmbo-icon-loading-expand var(--bmbo-duration-slow-db) var(--bmbo-duration-slow) linear infinite;
 			}
 		}
 	}

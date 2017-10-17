@@ -11,6 +11,7 @@
 @import "./Modal/index";
 @import "./A/index";
 @import "./Curtain/index";
+@import "./Progress/index";
 
 *[class^='bmbo-'], *[class*=' bmbo-'] {
 	box-sizing: border-box;
@@ -52,3 +53,15 @@
 	opacity: 0;
 	transition: none!important;
 }
+
+@mixin size($size) {
+	.bmbo-#{$size} {
+		font-size: var(--bmbo-#{$size});
+	}
+}
+
+@include size(xs);
+@include size(sm);
+@include size(md);
+@include size(lg);
+@include size(xl);

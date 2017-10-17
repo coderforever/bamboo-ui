@@ -16,6 +16,7 @@
 	position: absolute;
 	transform-origin: left top;
 	box-shadow: var(--bmbo-shadow);
+	z-index: 101;
 
 	transition: opacity var(--bmbo-duration-fast), transform var(--bmbo-duration-fast), margin var(--bmbo-duration-fast);
 

@@ -30,6 +30,7 @@
 	bottom: 0;
 	overflow-y: auto;
 	background: rgba(#000, 0.5);
+	z-index: 100;
 
 	transition: background var(--bmbo-duration), opacity var(--bmbo-duration);
 
