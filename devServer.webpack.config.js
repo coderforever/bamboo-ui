@@ -9,7 +9,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
-	devtool: 'cheap-eval-source-map',
+	devtool: isProd ? 'source-map' : 'cheap-eval-source-map',
 
 	entry: {
 		app: [
@@ -35,6 +35,7 @@ module.exports = {
 		new webpack.DefinePlugin({
 			'process.env': {
 				NODE_ENV: JSON.stringify(isProd ? 'production' : 'development'),
+				__VERSION__: JSON.stringify(Date.now()),
 			},
 		}),
 
@@ -47,6 +48,20 @@ module.exports = {
 			context: __dirname,
 			manifest: require('./builds/manifest.json'),
 		}),
+
+		isProd ? new webpack.optimize.UglifyJsPlugin({
+			beautify: false,
+			minimize: true,
+			sourceMap: true,
+			mangle: {
+				screw_ie8: true,
+				keep_fnames: true,
+			},
+			compress: {
+				screw_ie8: true,
+			},
+			comments: false,
+		}) : null,
 	],
 
 	module: {

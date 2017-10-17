@@ -6,6 +6,8 @@ var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+const isProd = process.env.NODE_ENV === 'production';
+
 module.exports = {
 	devtool: 'source-map',
 
@@ -39,7 +41,10 @@ module.exports = {
 
 	plugins: [
 		new webpack.DefinePlugin({
-			'process.env': JSON.stringify('development'),
+			'process.env': {
+				NODE_ENV: JSON.stringify(isProd ? 'production' : 'development'),
+				__VERSION__: JSON.stringify(Date.now()),
+			},
 		}),
 
 		new webpack.ProvidePlugin({
@@ -50,9 +55,23 @@ module.exports = {
 		new webpack.DllPlugin({
 			context: __dirname,
 			path: path.join(__dirname, 'builds', 'manifest.json'),
-			name: '[name]'
+			name: '[name]',
 		}),
 		new ExtractTextPlugin('style.css', { allChunks: true }),
+
+		isProd ? new webpack.optimize.UglifyJsPlugin({
+			beautify: false,
+			minimize: true,
+			sourceMap: true,
+			mangle: {
+				screw_ie8: true,
+				keep_fnames: true,
+			},
+			compress: {
+				screw_ie8: true,
+			},
+			comments: false,
+		}) : null,
 	],
 
 	module: {

@@ -3,6 +3,6 @@
  */
 
 var config = require('./devServer.webpack.config');
-config.output.publicPath = '/BigDataPortal/BDPComponent/builds/';
+config.output.publicPath = '/bamboo-ui/builds/';
 
 module.exports = config;

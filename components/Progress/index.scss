@@ -23,7 +23,7 @@
 		position: relative;
 		overflow: hidden;
 
-		transition: width var(--bmbo-duration-mid) ease;
+		transition: width var(--bmbo-duration-mid) ease, background var(--bmbo-duration-mid);
 
 		> .bmbo-mark {
 			color: #FFF;
