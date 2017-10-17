@@ -2,7 +2,15 @@ export const toString = (props, defaultProps = {}) => {
 	const str = Object.keys(props)
 		.map((key) => {
 			const value = props[key];
-			if (!value || defaultProps[key] === value) return null;
+			if (value === undefined || defaultProps[key] === value) return null;
+
+			if (value === null) {
+				return `${key}={null}`;
+			}
+
+			if (Array.isArray(value)) {
+				return `${key}={${JSON.stringify(value)}}`;
+			}
 
 			switch (typeof value) {
 				case 'string':
@@ -10,7 +18,7 @@ export const toString = (props, defaultProps = {}) => {
 				case 'number':
 					return `${key}={${value}}`;
 				case 'boolean':
-					return `${key}`;
+					return value ? `${key}` : '';
 			}
 
 			console.warn('Unknown type of ', key, value);

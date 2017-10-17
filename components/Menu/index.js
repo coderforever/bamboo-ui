@@ -32,6 +32,7 @@ class Menu extends React.Component {
 		return {
 			hideMenu: this.hideMenu,
 			menuHolder: $menuHolder,
+			menuSize: this.props.size,
 		};
 	}
 
@@ -70,11 +71,13 @@ class Menu extends React.Component {
 Menu.propTypes = {
 	children: PropTypes.node,
 	menu: PropTypes.array,
+	size: PropTypes.string,
 };
 
 Menu.childContextTypes = {
 	hideMenu: PropTypes.func,
 	menuHolder: PropTypes.object,
+	menuSize: PropTypes.string,
 };
 
 export default Menu;

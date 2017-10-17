@@ -75,6 +75,10 @@ class MenuPage extends React.Component {
    <strong>[右击这段文字来实验一下]</strong>
 </Menu>`}
 					</pre>
+
+					<p>
+						* 同其他组件一样，你可以通过<code>size</code>属性来控制菜单大小。
+					</p>
 				</Col>
 			</Row>
 		);

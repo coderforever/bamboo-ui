@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import {
-	Navigation, Row, Col, Button,
+	Row, Col,
 	Form, Input, Radio, Checkbox, Slider,
 } from '../../../components';
 
@@ -61,6 +60,34 @@ class SliderPage extends React.Component {
 				},
 			});
 		}
+	};
+
+	getSampleCode = () => {
+		const form = { ...this.state.form };
+		form.min = Number(form.min);
+		form.max = Number(form.max);
+		form.step = Number(form.step);
+		form.multi = Number(form.multi);
+
+		if (!form.hasStep) form.step = null;
+		if (!form.hasMulti) delete form.multi;
+
+		const markStr = form.hasMarks ? ' marks={markList}' : '';
+
+		delete form.hasStep;
+		delete form.hasMulti;
+		delete form.hasMarks;
+
+		const defaultProps = {
+			type: 'primary',
+			size: 'md',
+			min: 0,
+			max: 100,
+			step: 1,
+		};
+
+		return `<Slider${toString(form, defaultProps)}${markStr} />`
+			.replace(/\t/g, '   ').trim();
 	};
 
 	render() {
@@ -156,10 +183,13 @@ class SliderPage extends React.Component {
 									<Checkbox>marks</Checkbox>
 									{form.hasMarks && <pre>
 										{'Marks Sample:\n'}
+										{'const markList = '}
 										{JSON.stringify(MARKS_SAMPLE, null, 3)}
 									</pre>}
 								</Form.Field>
 							</div>
+
+							<pre className="code">{this.getSampleCode()}</pre>
 						</div>
 					</Form>
 				</Col>

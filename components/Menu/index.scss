@@ -36,7 +36,8 @@
 		> .bmbo-caret {
 			position: absolute;
 			right: 3px;
-			top: 12px;
+			top: 50%;
+			margin-top: -4px;
 		}
 
 		&.bmbo-active {

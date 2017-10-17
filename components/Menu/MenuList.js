@@ -50,7 +50,7 @@ class MenuList extends React.Component {
 
 	render() {
 		const { list = [] } = this.props;
-		const { menuHolder } = this.context;
+		const { menuHolder, menuSize } = this.context;
 
 		if (!menuHolder) return null;
 
@@ -59,10 +59,13 @@ class MenuList extends React.Component {
 		return createPortal(
 			<ul
 				ref={this.setRef}
-				className={classNames('bmbo-menu-list', {
-					'bmbo-hidden': animateStatus === ANIMATE_STATUS_NONE,
-					'bmbo-showing': animateStatus === ANIMATE_STATUS_SHOWING,
-				})}
+				className={classNames(
+					'bmbo-menu-list', {
+						'bmbo-hidden': animateStatus === ANIMATE_STATUS_NONE,
+						'bmbo-showing': animateStatus === ANIMATE_STATUS_SHOWING,
+					},
+					`bmbo-${menuSize || 'md'}`,
+				)}
 				style={{ left: `${x}px`, top: `${y}px` }}
 				role="presentation"
 				tabIndex={-1}
@@ -87,6 +90,7 @@ MenuList.propTypes = {
 
 MenuList.contextTypes = {
 	menuHolder: PropTypes.object,
+	menuSize: PropTypes.string,
 };
 
 export default MenuList;
