@@ -40,7 +40,7 @@ class NavPage extends React.Component {
          Item 1
       </a>
    </Navigation.Item>
-   <Navigation.Item${active === 1 ? ' active' : ''} disabled>
+   <Navigation.Item${active === 2 ? ' active' : ''} disabled>
       Disabled
    </Navigation.Item>
 </Navigation>

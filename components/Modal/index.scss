@@ -4,7 +4,7 @@
 	&.bmbo-#{$name} {
 		.bmbo-dialog-holder {
 			.bmbo-dialog {
-				width: $width;
+				max-width: $width;
 			}
 		}
 	}
