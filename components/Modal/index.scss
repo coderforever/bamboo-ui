@@ -125,6 +125,7 @@
 	@include boxSize(xs, 300px);
 	@include boxSize(sm, 450px);
 	@include boxSize(lg, 900px);
+	@include boxSize(xl, 1200px);
 
 	@include boxType(default);
 	@include boxType(primary);

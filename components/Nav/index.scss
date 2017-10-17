@@ -80,7 +80,7 @@
 	}
 
 	@include navBarColor(lead, lead-active);
-	@include navBarColor(default);
+	@include navBarColor(deprecated);
 	@include navBarColor(primary);
 	@include navBarColor(info);
 	@include navBarColor(success);
@@ -121,7 +121,7 @@
 	}
 
 	@include navBacColor(lead);
-	@include navBacColor(default);
+	@include navBacColor(deprecated);
 	@include navBacColor(primary);
 	@include navBacColor(info);
 	@include navBacColor(success);

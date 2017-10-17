@@ -156,7 +156,7 @@ class GroupPage extends React.Component {
 								<Group.Item width="100%">
 									<Input aria-label="input" />
 								</Group.Item>
-								<Button type="primary">Go</Button>
+								<Button>Go</Button>
 							</Group>
 						</div>
 
@@ -165,7 +165,7 @@ class GroupPage extends React.Component {
    <Group.Item width="100%">
       <Input />
    </Group.Item>
-   <Button type="primary">Go</Button>
+   <Button>Go</Button>
 </Group>`}
 						</pre>
 					</div>

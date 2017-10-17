@@ -42,20 +42,6 @@ class ButtonPage extends React.Component {
 		return (
 			<Row>
 				<Col xs="1/3">
-					<Navigation vertical>
-						<Navigation.Item>
-							Type
-							<Navigation.Item onClick={() => { this.onNavClick('/button/default'); }}>
-								Default
-							</Navigation.Item>
-							<Navigation.Item onClick={() => { this.onNavClick('/button/primary'); }}>
-								Primary
-							</Navigation.Item>
-						</Navigation.Item>
-						<Navigation.Item>
-							Button 2
-						</Navigation.Item>
-					</Navigation>
 				</Col>
 
 				<Col xs="2/3">

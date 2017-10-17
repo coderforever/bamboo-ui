@@ -53,16 +53,6 @@ $border: #CCC;
 
 	--bmbo-disabled-opacity: 0.5;
 
-	// TODO: Need this?
-	--bmbo-weak-disabled: scale-color($weak, $saturation: -70%, $lightness: 50%);
-	--bmbo-deprecated-disabled: scale-color($deprecated, $saturation: -70%, $lightness: 50%);
-	--bmbo-primary-disabled: scale-color($primary, $saturation: -70%, $lightness: 50%);
-	--bmbo-info-disabled: scale-color($info, $saturation: -70%, $lightness: 50%);
-	--bmbo-success-disabled: scale-color($success, $saturation: -70%, $lightness: 50%);
-	--bmbo-warning-disabled: scale-color($warning, $saturation: -50%, $lightness: 50%);
-	--bmbo-danger-disabled: scale-color($danger, $saturation: -40%, $lightness: 50%);
-	--bmbo-forbid-disabled: scale-color($forbid, $saturation: -70%, $lightness: 50%);
-
 	--bmbo-xs: 12px;
 	--bmbo-sm: 13px;
 	--bmbo-md: 14px;

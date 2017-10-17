@@ -25,7 +25,7 @@ class NavPage extends React.Component {
 		const { active, ...form } = this.state.form;
 
 		return `
-<Navigation${toString(form)}>
+<Navigation${toString(form, { type: '' })}>
    <Navigation.Group title="Group 1"${active === 0 ? ' active' : ''}>
       <Navigation.Item>Item 1</Navigation.Item>
       <Navigation.Item>Item 2</Navigation.Item>
@@ -84,7 +84,7 @@ class NavPage extends React.Component {
 						<div className="form">
 							<Form instance={this} path="form">
 								<Form.Field name="type" title="Type">
-									<Radio value="">(empty)</Radio>
+									<Radio value="">(default)</Radio>
 									{TYPE_LIST.map(({ name }) => (
 										<Radio key={name} value={name}>{name}</Radio>
 									))}

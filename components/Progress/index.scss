@@ -8,19 +8,13 @@
 	}
 }
 
-@mixin progressHeight($size) {
-	&.bmbo-#{$size} {
-		height: var(--bmbo-height-#{$size});
-	}
-}
-
 .bmbo-progress {
 	height: 1em;
 	background: var(--bmbo-bac);
 	border-radius: 10em;
 	overflow: hidden;
 
-	transition: all var(--bmbo-duration-mid) ease;
+	transition: all var(--bmbo-duration) linear;
 
 	> .bmbo-progress-bar {
 		height: 100%;
@@ -29,7 +23,7 @@
 		position: relative;
 		overflow: hidden;
 
-		transition: all var(--bmbo-duration-mid) ease;
+		transition: width var(--bmbo-duration-mid) ease;
 
 		> .bmbo-mark {
 			color: #FFF;
@@ -38,6 +32,8 @@
 			font-size: 0.8em;
 			top: 50%;
 			transform: translate(0, -50%);
+
+			transition: all var(--bmbo-duration-fast);
 		}
 	}
 
@@ -65,11 +61,27 @@
 	@include progressColor(danger);
 	@include progressColor(forbid);
 
-	@include progressHeight(xs);
-	@include progressHeight(sm);
-	@include progressHeight(md);
-	@include progressHeight(lg);
-	@include progressHeight(xl);
+	&.bmbo-xs {
+		height: 0.4em;
+
+		> .bmbo-progress-bar {
+			> .bmbo-mark {
+				transform: translate(0, -50%) scale(0.5, 0.5);
+				right: 0;
+			}
+		}
+	}
+
+	&.bmbo-sm {
+		height: 0.6em;
+
+		> .bmbo-progress-bar {
+			> .bmbo-mark {
+				transform: translate(0, -50%) scale(0.7, 0.7);
+				right: 0;
+			}
+		}
+	}
 }
 
 @keyframes bmbo-progress-animation {

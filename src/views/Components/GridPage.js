@@ -65,7 +65,6 @@ class GridPage extends React.Component {
 		return (
 			<Row>
 				<Col xs="1/3">
-					test
 				</Col>
 				<Col xs={[2, 3]}>
 					<h1>栅格</h1>

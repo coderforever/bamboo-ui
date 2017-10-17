@@ -26,14 +26,8 @@ const isProd = process.env.NODE_ENV === 'production';
 class Main extends React.Component {
 	constructor() {
 		super();
-		this.state = {
-			type: '',
-		};
+		this.state = {};
 	}
-
-	setType = (type) => {
-		this.setState({ type });
-	};
 
 	goPage = (path) => {
 		const { history: { push } } = this.props;
@@ -41,11 +35,9 @@ class Main extends React.Component {
 	};
 
 	render() {
-		const { type } = this.state;
-
 		return (
 			<div>
-				<Navigation active={1} type={type}>
+				<Navigation>
 					<Navigation.Item onClick={() => { this.goPage('/'); }}>Home</Navigation.Item>
 					<Navigation.Group title="Components">
 						<Navigation.Item onClick={() => { this.goPage('/grid'); }}>Grid</Navigation.Item>
@@ -58,15 +50,6 @@ class Main extends React.Component {
 						<Navigation.Item onClick={() => { this.goPage('/nav'); }}>Navigation</Navigation.Item>
 						<Navigation.Item onClick={() => { this.goPage('/curtain'); }}>Curtain</Navigation.Item>
 						<Navigation.Item onClick={() => { this.goPage('/progress'); }}>Progress</Navigation.Item>
-					</Navigation.Group>
-					<Navigation.Group title="Set Type">
-						<Navigation.Item onClick={() => { this.setType(''); }}>Default</Navigation.Item>
-						<Navigation.Item onClick={() => { this.setType('primary'); }}>Primary</Navigation.Item>
-						<Navigation.Item onClick={() => { this.setType('info'); }}>Info</Navigation.Item>
-						<Navigation.Item onClick={() => { this.setType('success'); }}>Success</Navigation.Item>
-						<Navigation.Item onClick={() => { this.setType('warning'); }}>Warning</Navigation.Item>
-						<Navigation.Item onClick={() => { this.setType('danger'); }}>Danger</Navigation.Item>
-						<Navigation.Item onClick={() => { this.setType('forbid'); }}>Forbid</Navigation.Item>
 					</Navigation.Group>
 				</Navigation>
 
