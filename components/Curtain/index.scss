@@ -43,7 +43,12 @@
 	}
 
 	&.bmbo-hiding {
-		opacity: 0;
+		background: rgba(#000, 0);
 		pointer-events: none;
+
+		> .bmbo-curtain-content-holder {
+			opacity: 0;
+			transform: translate(0, -60%);
+		}
 	}
 }
