@@ -6,48 +6,46 @@ import {
 	Form, Input, Radio, Checkbox, Menu,
 } from '../../../components';
 
-import { toString } from '../../utils/objectUtil';
-
-const BUTTON_TYPES = ['default', 'primary', 'info', 'success', 'warning', 'danger', 'forbid'];
+import { TYPE_LIST, SIZE_LIST } from '../../utils/enum';
+import { toString } from '../../utils/propsUtil';
 
 class GroupPage extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			type: BUTTON_TYPES[1],
+			type: 'primary',
+			size: 'md',
 			radio: 1,
 			transparent: false,
 		};
 	}
 
-	getInlineSample = () => {
-		const { type, transparent, radio } = this.state;
-
-		const typeStr = type !== BUTTON_TYPES[1] ? ` type="${type}"` : '';
-		const transparentStr = transparent ? ' transparent' : '';
+	getSampleCode = () => {
+		const { radio, ...form } = this.state;
+		const btnStr = toString(form, { type: 'primary', size: 'md' });
 
 		return `
 <Group>
-   <Button${typeStr}${transparentStr}>Button 1</Button>
-   <Button${typeStr}${transparentStr}>Button 2</Button>
-   <Button${typeStr}${transparentStr}>Button 3</Button>
+   <Button${btnStr}>Button 1</Button>
+   <Button${btnStr}>Button 2</Button>
+   <Button${btnStr}>Button 3</Button>
 </Group>
 
 <Group value={${radio}}>
-   <Radio value={1}${typeStr}${transparentStr}>Radio 1</Radio>
-   <Radio value={2}${typeStr}${transparentStr}>Radio 2</Radio>
-   <Radio value={3}${typeStr}${transparentStr}>Radio 3</Radio>
+   <Radio value={1}${btnStr}>Radio 1</Radio>
+   <Radio value={2}${btnStr}>Radio 2</Radio>
+   <Radio value={3}${btnStr}>Radio 3</Radio>
 </Group>
 
 <Group>
    <Input />
-   <Button${typeStr}${transparentStr}>Go</Button>
+   <Button${btnStr}>Go</Button>
 </Group>
 `.trim();
 	};
 
 	render() {
-		const { type, transparent } = this.state;
+		const { type, transparent, size } = this.state;
 
 		return (
 			<Row>
@@ -88,29 +86,48 @@ class GroupPage extends React.Component {
 						<div className="measurement">
 							<div className="preview">
 								<Group>
-									<Button type={type} transparent={transparent}>Button 1</Button>
-									<Button type={type} transparent={transparent}>Button 2</Button>
-									<Button type={type} transparent={transparent}>Button 3</Button>
+									{[1, 2, 3].map(val => (
+										<Button key={val} type={type} size={size} transparent={transparent}>
+											Button {val}
+										</Button>
+									))}
 								</Group>
 
 								<Form.Field name="radio">
 									<Group>
-										<Radio type={type} value={1} transparent={transparent}>Radio 1</Radio>
-										<Radio type={type} value={2} transparent={transparent}>Radio 2</Radio>
-										<Radio type={type} value={3} transparent={transparent}>Radio 3</Radio>
+										{[1, 2, 3].map(val => (
+											<Radio
+												key={val}
+												type={type}
+												size={size}
+												value={val}
+												transparent={transparent}
+											>Radio {val}</Radio>
+										))}
 									</Group>
 								</Form.Field>
 
 								<Group>
-									<Input aria-label="input" />
-									<Button type={type} transparent={transparent}>Go</Button>
+									<Input aria-label="input" size={size} />
+									<Button type={type} size={size} transparent={transparent}>Go</Button>
 								</Group>
 							</div>
 
 							<div className="form">
 								<Form.Field name="type" title="Type">
-									{BUTTON_TYPES.map(t => (
-										<Radio value={t} key={t}>{t}</Radio>
+									{TYPE_LIST.map(({ name, isDefault }) => (
+										<Radio key={name} value={name}>
+											{name}
+											{isDefault && ' (default)'}
+										</Radio>
+									))}
+								</Form.Field>
+								<Form.Field name="size" title="Size">
+									{SIZE_LIST.map(({ name, displayName, isDefault }) => (
+										<Radio key={name} value={name}>
+											{displayName}
+											{isDefault && ' (default)'}
+										</Radio>
 									))}
 								</Form.Field>
 								<Form.Field name="transparent" title="Transparent">
@@ -119,7 +136,7 @@ class GroupPage extends React.Component {
 							</div>
 
 							<pre className="code">
-								{this.getInlineSample()}
+								{this.getSampleCode()}
 							</pre>
 						</div>
 					</Form>

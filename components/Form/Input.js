@@ -1,18 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import cssModules from 'react-css-modules';
+import classNames from 'classnames';
 
 export const BAMBOO_FORM_INPUT = 'BAMBOO_FORM_INPUT';
 
-const Input = props => (
+const Input = ({ size, ...props }) => (
 	<input
-		className="bmbo-form-control"
+		className={classNames(
+			'bmbo-form-control',
+			`bmbo-${size || 'md'}`,
+		)}
 		{...props}
 	/>
 );
 
-Input.propTypes = {};
+Input.propTypes = {
+	size: PropTypes.string,
+};
 
 Input[BAMBOO_FORM_INPUT] = BAMBOO_FORM_INPUT;
 

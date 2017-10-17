@@ -1,7 +1,17 @@
 @charset "UTF-8";
 
 @mixin buttonBorder($color) {
-	border-right: 1px solid var(--bmbo-#{$color}-dark);
+	&.bmbo-#{$color} {
+		&:before {
+			content: '';
+			position: absolute;
+			top: -1px;
+			bottom: -1px;
+			right: -1px;
+			width: 1px;
+			background: var(--bmbo-#{$color}-dark);
+		}
+	}
 }
 
 .bmbo-group {
@@ -15,6 +25,7 @@
 		> * {
 			width: 100%;
 			white-space: nowrap;
+			vertical-align: top;
 		}
 
 		&.bmbo-middle {
@@ -65,26 +76,13 @@
 
 		&:not(:last-child) {
 			> .bmbo-button:not(.bmbo-transparent) {
-				@include buttonBorder(default);
-
-				&.bmbo-primary {
-					@include buttonBorder(primary);
-				}
-				&.bmbo-info {
-					@include buttonBorder(info);
-				}
-				&.bmbo-success {
-					@include buttonBorder(success);
-				}
-				&.bmbo-warning {
-					@include buttonBorder(warning);
-				}
-				&.bmbo-danger {
-					@include buttonBorder(danger);
-				}
-				&.bmbo-forbid {
-					@include buttonBorder(forbid);
-				}
+				@include buttonBorder(deprecated);
+				@include buttonBorder(primary);
+				@include buttonBorder(info);
+				@include buttonBorder(success);
+				@include buttonBorder(warning);
+				@include buttonBorder(danger);
+				@include buttonBorder(forbid);
 			}
 		}
 	}
