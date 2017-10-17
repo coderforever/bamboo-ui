@@ -1,8 +1,8 @@
-export const toString = (props) => {
+export const toString = (props, defaultProps = {}) => {
 	const str = Object.keys(props)
 		.map((key) => {
 			const value = props[key];
-			if (!value) return null;
+			if (!value || defaultProps[key] === value) return null;
 
 			switch (typeof value) {
 				case 'string':

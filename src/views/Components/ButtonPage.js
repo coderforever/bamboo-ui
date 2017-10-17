@@ -31,7 +31,7 @@ class ButtonPage extends React.Component {
 
 	getSampleCode = () => {
 		const { text, ...form } = this.state.form;
-		return `<Button${toString(form)}>
+		return `<Button${toString(form, { type: 'primary', size: 'md' })}>
    ${text}
 </Button>`;
 	};
