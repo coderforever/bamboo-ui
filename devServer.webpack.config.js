@@ -62,7 +62,7 @@ module.exports = {
 			},
 			comments: false,
 		}) : null,
-	],
+	].filter(p => p),
 
 	module: {
 		loaders: [

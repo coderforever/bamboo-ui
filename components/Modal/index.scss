@@ -127,7 +127,7 @@
 	@include boxSize(lg, 900px);
 	@include boxSize(xl, 1200px);
 
-	@include boxType(default);
+	@include boxType(deprecated);
 	@include boxType(primary);
 	@include boxType(info);
 	@include boxType(success);

@@ -7,9 +7,8 @@ import {
 	Modal,
 } from '../../../components';
 
+import { TYPE_LIST } from '../../utils/enum';
 import { toString } from '../../utils/objectUtil';
-
-const MODAL_TYPES = ['default', 'primary', 'info', 'success', 'warning', 'danger', 'forbid'];
 
 class GroupPage extends React.Component {
 	constructor() {
@@ -77,28 +76,28 @@ class GroupPage extends React.Component {
 						您可以通过设置<code>type</code>属性来设置状态（同<code>Button</code>）。
 					</p>
 					<div className="preview">
-						{MODAL_TYPES.map(t => (
-							<div className="inline" key={t}>
+						{TYPE_LIST.map(({ name }) => (
+							<div className="inline" key={name}>
 								<Button
 									onClick={() => {
 										this.setState({
 											typesVisible: {
 												...typesVisible,
-												[t]: true,
+												[name]: true,
 											},
 										});
 									}}
-									type={t}
+									type={name}
 								>点击弹窗</Button>{' '}
 								<Modal
 									title="Primary Modal"
-									type={t}
-									visible={typesVisible[t]}
+									type={name}
+									visible={typesVisible[name]}
 									onClose={() => {
 										this.setState({
 											typesVisible: {
 												...typesVisible,
-												[t]: false,
+												[name]: false,
 											},
 										});
 									}}
