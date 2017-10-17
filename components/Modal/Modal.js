@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import {
 	ANIMATE_STATUS_NONE, ANIMATE_STATUS_SHOWING, ANIMATE_STATUS_SHOWN, ANIMATE_STATUS_HIDING,
-	getHolder, getScrollbarWidth, hasVerticalScroll, getTransitionEndName,
+	getHolder, getScrollbarWidth, hasVerticalScroll,
 } from '../utils/uiUtil';
 import { canUseDOM } from '../utils/envUtil';
 import { mapChildrenByType, mapChildrenByNotType } from '../utils/componentUtil';
@@ -86,7 +86,7 @@ class Modal extends React.Component {
 		this.closeSeq.next(() => {}, { priority: 1 });
 	};
 
-	onAnimationEnd = (event) => {
+	onTransitionEnd = (event) => {
 		const { onClosed } = this.props;
 		const { animateStatus } = this.state;
 
@@ -103,12 +103,6 @@ class Modal extends React.Component {
 
 	setHolderRef = (ele) => {
 		this.$holder = ele;
-
-		if (this.$holder) {
-			const transitionEnd = getTransitionEndName();
-			this.$holder.removeEventListener(transitionEnd, this.onAnimationEnd);
-			this.$holder.addEventListener(transitionEnd, this.onAnimationEnd);
-		}
 	};
 
 	getTitle = () => {
@@ -244,6 +238,7 @@ class Modal extends React.Component {
 					role="presentation"
 					onClick={this.onHolderClick}
 					ref={this.setHolderRef}
+					onTransitionEnd={this.onTransitionEnd}
 				>
 					{$preface}
 					{$modal}

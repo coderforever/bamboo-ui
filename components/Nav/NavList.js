@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import {
 	ANIMATE_STATUS_NONE, ANIMATE_STATUS_INIT,
 	ANIMATE_STATUS_SHOWING, ANIMATE_STATUS_SHOWN, ANIMATE_STATUS_HIDING,
-	getHolder, getEnablePosition, getTransitionEndName,
+	getHolder, getEnablePosition,
 } from '../utils/uiUtil';
 import Sequence from '../utils/Sequence';
 

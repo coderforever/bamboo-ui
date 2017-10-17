@@ -140,33 +140,6 @@ export const getEnablePosition = (surroundRect, targetRect, position = 'dr') => 
 	return target;
 };
 
-let transitionEndName;
-export function getTransitionEndName() {
-	if (!canUseDOM) return null;
-
-	if (transitionEndName === undefined) {
-		const el = window.document.createElement('div');
-
-		const transEndEventNames = {
-			transition: 'transitionend',
-			WebkitTransition: 'webkitTransitionEnd',
-			MozTransition: 'transitionend',
-			OTransition: 'oTransitionEnd otransitionend',
-		};
-
-		transitionEndName = null;
-		Object.keys(transEndEventNames).some((name) => {
-			if (el.style[name] !== undefined) {
-				transitionEndName = transEndEventNames[name];
-				return true;
-			}
-			return false;
-		});
-	}
-
-	return transitionEndName;
-}
-
 export function isInRect(x, y, rect) {
 	return (
 		rect.left <= x &&
