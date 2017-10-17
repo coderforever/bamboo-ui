@@ -1,0 +1,90 @@
+@charset "UTF-8";
+
+@mixin progressColor($color) {
+	&.bmbo-#{$color} {
+		> .bmbo-progress-bar {
+			background: var(--bmbo-#{$color});
+		}
+	}
+}
+
+.bmbo-progress {
+	height: 1em;
+	background: var(--bmbo-bac);
+	border-radius: 10em;
+	overflow: hidden;
+
+	transition: all var(--bmbo-duration) linear;
+
+	> .bmbo-progress-bar {
+		height: 100%;
+		background: var(--bmbo-weak);
+		border-radius: 10em;
+		position: relative;
+		overflow: hidden;
+
+		transition: width var(--bmbo-duration-mid) ease;
+
+		> .bmbo-mark {
+			color: #FFF;
+			position: absolute;
+			right: 0.5em;
+			font-size: 0.8em;
+			top: 50%;
+			transform: translate(0, -50%);
+
+			transition: all var(--bmbo-duration-fast);
+		}
+	}
+
+	&.bmbo-active {
+		> .bmbo-progress-bar {
+			&:after {
+				content: '';
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 200px;
+				height: 100%;
+				background: linear-gradient(90deg, rgba(#FFF, 0), rgba(#FFF, 0.3));
+
+				animation: bmbo-progress-animation var(--bmbo-duration-turtle) linear infinite;
+			}
+		}
+	}
+
+	@include progressColor(default);
+	@include progressColor(primary);
+	@include progressColor(info);
+	@include progressColor(success);
+	@include progressColor(warning);
+	@include progressColor(danger);
+	@include progressColor(forbid);
+
+	&.bmbo-xs {
+		height: 0.4em;
+
+		> .bmbo-progress-bar {
+			> .bmbo-mark {
+				transform: translate(0, -50%) scale(0.5, 0.5);
+				right: 0;
+			}
+		}
+	}
+
+	&.bmbo-sm {
+		height: 0.6em;
+
+		> .bmbo-progress-bar {
+			> .bmbo-mark {
+				transform: translate(0, -50%) scale(0.7, 0.7);
+				right: 0;
+			}
+		}
+	}
+}
+
+@keyframes bmbo-progress-animation {
+	from { left: 0; transform: translate(-100%, 0); }
+	to { left: 100%; }
+}

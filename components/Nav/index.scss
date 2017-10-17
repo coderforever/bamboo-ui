@@ -1,0 +1,157 @@
+@mixin navBacColor($color) {
+	&.bmbo-#{$color} {
+		background: var(--bmbo-#{$color});
+	}
+}
+
+@mixin navBarColor($color, $activeLineColor: '') {
+	@include navBacColor($color);
+
+	@if $activeLineColor != '' {
+		&.bmbo-#{$color} {
+			> .bmbo-nav-group,
+			> .bmbo-nav-item {
+				&:after {
+					background: var(--bmbo-#{$activeLineColor});
+				}
+			}
+		}
+	}
+}
+
+@mixin navItem() {
+	display: inline-block;
+	position: relative;
+	padding: 15px 20px;
+	white-space: nowrap;
+}
+
+.bmbo-horizontal-nav {
+	padding: 0;
+	margin: 0;
+	color: #FFF;
+	cursor: default;
+
+	transition: background var(--bmbo-duration);
+
+	// Navigation first level
+	> .bmbo-nav-group,
+	> .bmbo-nav-item {
+		@include navItem;
+
+		.bmbo-nav-title:before,
+		a:before {
+			content: '';
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+		}
+
+		&:after {
+			content: '';
+			position: absolute;
+			bottom: 5px;
+			height: 3px;
+			left: 10px;
+			right: 10px;
+			background: #FFF;
+
+			opacity: 0;
+			transform: scaleX(0);
+
+			transition: transform var(--bmbo-duration), opacity var(--bmbo-duration);
+		}
+
+		&.bmbo-hover,
+		&:hover,
+		&.bmbo-active {
+			&:after {
+				opacity: 1;
+				transform: scaleX(1);
+			}
+		}
+
+		&.bmbo-disabled {
+			pointer-events: none;
+			opacity: 0.5;
+		}
+	}
+
+	@include navBarColor(lead, lead-active);
+	@include navBarColor(deprecated);
+	@include navBarColor(primary);
+	@include navBarColor(info);
+	@include navBarColor(success);
+	@include navBarColor(warning);
+	@include navBarColor(danger);
+	@include navBarColor(forbid);
+}
+
+.bmbo-nav-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	position: absolute;
+	user-select: none;
+	transform-origin: top;
+	color: #FFF;
+	cursor: default;
+
+	z-index: 101;
+
+	transition: opacity var(--bmbo-duration) ease, transform var(--bmbo-duration) ease, background var(--bmbo-duration);
+
+	&.bmbo-up {
+		transform-origin: bottom;
+	}
+
+	&.bmbo-showing {
+		opacity: 0;
+		transform: scaleY(0.8);
+
+		transition: none;
+	}
+
+	&.bmbo-hiding {
+		opacity: 0;
+		transform: scaleY(0.8);
+		pointer-events: none;
+	}
+
+	@include navBacColor(lead);
+	@include navBacColor(deprecated);
+	@include navBacColor(primary);
+	@include navBacColor(info);
+	@include navBacColor(success);
+	@include navBacColor(warning);
+	@include navBacColor(danger);
+	@include navBacColor(forbid);
+
+	> .bmbo-nav-item {
+		@include navItem;
+		display: block;
+
+		&:after {
+			content: '';
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(#FFF, 0.1);
+			transform: scaleX(0.3);
+			opacity: 0;
+
+			transition: all var(--bmbo-duration);
+		}
+
+		&:hover {
+			&:after {
+				opacity: 1;
+				transform: scaleX(1);
+			}
+		}
+	}
+}

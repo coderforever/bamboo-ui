@@ -1,0 +1,89 @@
+@charset "UTF-8";
+
+@mixin buttonBorder($color) {
+	&.bmbo-#{$color} {
+		&:before {
+			content: '';
+			position: absolute;
+			top: -1px;
+			bottom: -1px;
+			right: -1px;
+			width: 1px;
+			background: var(--bmbo-#{$color}-dark);
+		}
+	}
+}
+
+.bmbo-group {
+	display: table;
+	margin: 0 0 var(--bmbo-component-margin) 0;
+
+	> .bmbo-group-item {
+		display: table-cell;
+		vertical-align: top;
+
+		> * {
+			width: 100%;
+			white-space: nowrap;
+			vertical-align: top;
+		}
+
+		&.bmbo-middle {
+			> .bmbo-button,
+			> .bmbo-form-control {
+				border-radius: 0;
+			}
+		}
+
+		&.bmbo-first {
+			> .bmbo-button,
+			> .bmbo-form-control {
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
+			}
+		}
+
+		&.bmbo-last {
+			> .bmbo-button,
+			> .bmbo-form-control {
+				border-top-left-radius: 0;
+				border-bottom-left-radius: 0;
+			}
+		}
+
+		&:not(:first-child) {
+			> .bmbo-button,
+			> .bmbo-form-control {
+				border-left: 0;
+			}
+
+			> .bmbo-button.bmbo-transparent:not(.bmbo-weak):before,
+			> .bmbo-button.bmbo-transparent.bmbo-checked:before {
+				content: '';
+				z-index: 1;
+				position: absolute;
+				top: -1px;
+				bottom: -1px;
+				left: -1px;
+				right: -1px;
+				border-left: 1px solid currentColor;
+			}
+
+			> .bmbo-form-control:focus {
+				box-shadow: -1px 0 0 var(--bmbo-primary);
+			}
+		}
+
+		&:not(:last-child) {
+			> .bmbo-button:not(.bmbo-transparent) {
+				@include buttonBorder(deprecated);
+				@include buttonBorder(primary);
+				@include buttonBorder(info);
+				@include buttonBorder(success);
+				@include buttonBorder(warning);
+				@include buttonBorder(danger);
+				@include buttonBorder(forbid);
+			}
+		}
+	}
+}

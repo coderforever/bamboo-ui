@@ -1,0 +1,115 @@
+@charset "UTF-8";
+
+@mixin buttonColor($color) {
+	&.bmbo-#{$color} {
+		// Type
+		border-color: var(--bmbo-#{$color});
+		background: var(--bmbo-#{$color});
+
+		&:not(.bmbo-checked):not(.bmbo-disabled):hover {
+			border-color: var(--bmbo-#{$color}-light);
+			background: var(--bmbo-#{$color}-light);
+		}
+
+		&:not(.bmbo-checked):not(.bmbo-disabled):active {
+			border-color: var(--bmbo-#{$color}-dark);
+			background: var(--bmbo-#{$color}-dark);
+		}
+
+		// Disabled
+		&.bmbo-disabled {
+			cursor: not-allowed;
+			opacity: var(--bmbo-disabled-opacity);
+		}
+
+		// Transparent
+		&.bmbo-transparent {
+			background: transparent;
+
+			border: 1px solid var(--bmbo-#{$color});
+
+			@if $color == "weak" {
+				color: var(--bmbo-color-weak);
+			} @else {
+				color: var(--bmbo-#{$color});
+			}
+
+			&:not(.bmbo-checked):not(.bmbo-disabled):hover {
+				background: transparent;
+				border-color: var(--bmbo-#{$color}-dark);
+
+				@if $color == "weak" {
+					color: var(--bmbo-color-weak);
+				} @else {
+					color: var(--bmbo-#{$color}-dark);
+				}
+			}
+
+			&:not(.bmbo-checked):not(.bmbo-disabled):active {
+				background: transparent;
+				border-color: var(--bmbo-#{$color}-light);
+
+				@if $color == "weak" {
+					color: var(--bmbo-color-weak);
+				} @else {
+					color: var(--bmbo-#{$color}-light);
+				}
+			}
+		}
+
+		// Checked
+		&.bmbo-checked {
+			&:not(.bmbo-transparent) {
+				box-shadow: inset 0 0 2px rgba(#000, 0.2);
+				background: var(--bmbo-#{$color}-dark);
+			}
+
+			&.bmbo-transparent {
+				background: transparent;
+				color: var(--bmbo-#{$color}-dark);
+				border-color: var(--bmbo-#{$color}-dark);
+			}
+		}
+	}
+}
+
+.bmbo-button {
+	color: var(--bmbo-color-light);
+	border-radius: 3px;
+	//padding: 6px 13px;
+	font-size: var(--bmbo-font-size);
+	border: 1px solid transparent;
+	position: relative;
+	line-height: normal;
+
+	cursor: pointer;
+
+	transition: all var(--bmbo-duration-fast);
+
+	// Size
+	&.bmbo-xs {
+		padding: var(--bmbo-padding-xs);
+	}
+	&.bmbo-sm {
+		padding: var(--bmbo-padding-sm);
+	}
+	&.bmbo-md {
+		padding: var(--bmbo-padding-md);
+	}
+	&.bmbo-lg {
+		padding: var(--bmbo-padding-lg);
+	}
+	&.bmbo-xl {
+		padding: var(--bmbo-padding-xl);
+	}
+
+	// Type & Transparent
+	@include buttonColor(weak);
+	@include buttonColor(deprecated);
+	@include buttonColor(primary);
+	@include buttonColor(info);
+	@include buttonColor(success);
+	@include buttonColor(warning);
+	@include buttonColor(danger);
+	@include buttonColor(forbid);
+}

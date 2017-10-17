@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+.bmbo-radio {
+	display: inline-block;
+	font-size: var(--bmbo-font-size);
+	margin: 0 15px 0 0;
+
+	> input {
+		display: none;
+	}
+
+	> .bmbo-radio-check {
+		display: inline-block;
+		border: 1px solid var(--bmbo-border);
+		border-radius: 100%;
+		width: 14px;
+		height: 14px;
+		text-align: center;
+		margin: 0 5px 1px 0;
+		vertical-align: text-bottom;
+
+		transition: border-color var(--bmbo-duration);
+
+		&:after {
+			content: '';
+			display: inline-block;
+			border-radius: 100%;
+			vertical-align: top;
+
+			width: 2px;
+			height: 2px;
+			margin: 5px 0 0 0;
+			background: transparent;
+
+			transition: all var(--bmbo-duration);
+		}
+	}
+
+	> .bmbo-radio-content {
+		display: inline-block;
+	}
+
+	&:hover {
+		> .bmbo-radio-check {
+			border-color: var(--bmbo-primary);
+		}
+	}
+
+	&.bmbo-checked {
+		> .bmbo-radio-check {
+			border-color: var(--bmbo-primary);
+
+			&:after {
+				width: 6px;
+				height: 6px;
+				margin: 3px 0 0 0;
+				background: var(--bmbo-primary);
+			}
+		}
+	}
+}

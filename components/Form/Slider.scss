@@ -1,0 +1,169 @@
+@charset "UTF-8";
+$markSize: 10px;
+
+@mixin sliderColor($color) {
+	&.bmbo-#{$color} {
+		.bmbo-slider-range {
+			background: var(--bmbo-#{$color});
+		}
+
+		.bmbo-slider-pin {
+			border: 2px solid var(--bmbo-#{$color});
+		}
+
+		&:not(.bmbo-disabled) {
+			.bmbo-slider-pin:hover {
+				box-shadow: 0 0 5px var(--bmbo-#{$color});
+			}
+		}
+	}
+}
+
+.bmbo-slider {
+	margin: 0 0.5em;
+
+	&.bmbo-single {
+		cursor: pointer;
+	}
+
+	// Holder
+	.bmbo-slider-content {
+		position: relative;
+		height: 1em;
+		overflow: visible;
+		user-select: none;
+
+		transition: height var(--bmbo-duration);
+	}
+
+	// Marks
+	.bmbo-slider-title {
+		position: relative;
+		pointer-events: none;
+
+		.bmbo-title-holder {
+			position: relative;
+			width: 0;
+			display: inline-block;
+			overflow: visible;
+			vertical-align: top;
+
+			.bmbo-title {
+				white-space: nowrap;
+				width: 500px;
+				text-align: center;
+				transform: translate(-50%, 0);
+
+				transition: all var(--bmbo-duration);
+			}
+		}
+	}
+
+	// Content
+	.bmbo-slider-bar {
+		position: absolute;
+		height: 0.4em;
+		left: 0;
+		width: 100%;
+		top: 50%;
+		transform: translate(0, -50%);
+		background: var(--bmbo-bac);
+
+		transition: background var(--bmbo-duration);
+	}
+
+	.bmbo-slider-range {
+		position: absolute;
+		left: 0;
+		top: 50%;
+		transform: translate(0, -50%);
+		width: 100px;
+		height: 0.4em;
+		pointer-events: none;
+
+		transition: background var(--bmbo-duration);
+	}
+
+	.bmbo-slider-pin {
+		position: absolute;
+		left: 100%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+
+		width: 1em;
+		height: 1em;
+		border-radius: 100%;
+		background: #FFF;
+		border: 2px solid transparent;
+
+		transition: border-color var(--bmbo-duration),
+					width var(--bmbo-duration-fast),
+					height var(--bmbo-duration-fast),
+					box-shadow var(--bmbo-duration-fast);
+
+		&.bmbo-mark {
+			pointer-events: none;
+			width: 0.65em;
+			height: 0.65em;
+
+			transition: none;
+
+			&:not(.bmbo-active) {
+				border-color: var(--bmbo-bac-dark);
+			}
+		}
+	}
+
+	&:not(.bmbo-disabled) {
+		&:hover {
+			.bmbo-slider-bar {
+				background: var(--bmbo-bac-dark);
+			}
+		}
+
+		.bmbo-slider-pin {
+			&:hover {
+				width: 1.2em;
+				height: 1.2em;
+			}
+
+			&:active {
+				width: 1em;
+				height: 1em;
+				box-shadow: none!important;
+			}
+		}
+	}
+
+	@include sliderColor(deprecated);
+	@include sliderColor(primary);
+	@include sliderColor(info);
+	@include sliderColor(success);
+	@include sliderColor(warning);
+	@include sliderColor(danger);
+	@include sliderColor(forbid);
+
+	&.bmbo-disabled {
+		cursor: not-allowed;
+
+		.bmbo-slider-pin {
+			cursor: not-allowed;
+		}
+
+		.bmbo-slider-range {
+			background: var(--bmbo-weak);
+		}
+
+		.bmbo-slider-pin:not(.bmbo-mark),
+		.bmbo-slider-pin.bmbo-mark.bmbo-active {
+			border-color: var(--bmbo-weak);
+		}
+	}
+
+	&.bmbo-transparent,
+	&.bmbo-transparent.bmbo-disabled {
+		.bmbo-slider-range {
+			background: transparent;
+		}
+	}
+}
