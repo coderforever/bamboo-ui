@@ -107,8 +107,8 @@ export const getEnablePosition = (surroundRect, targetRect, position = 'dr') => 
 
 	// TODO: use left & top only
 	const { width: sw = 0, height: sh = 0 } = surroundRect;
-	const sx = surroundRect.left || surroundRect.x || 0;
-	const sy = surroundRect.top || surroundRect.y || 0;
+	const sx = surroundRect.left || 0;
+	const sy = surroundRect.top || 0;
 	const { width: tw = 0, height: th = 0 } = targetRect;
 
 	const winWidth = getWinWidth();
@@ -118,6 +118,8 @@ export const getEnablePosition = (surroundRect, targetRect, position = 'dr') => 
 
 	const isR = position.includes('r');
 	const isB = position.includes('b');
+	const isT = position.includes('t');
+	const isL = position.includes('l');
 
 	const target = {
 		x: sx + scrollX,
@@ -125,8 +127,16 @@ export const getEnablePosition = (surroundRect, targetRect, position = 'dr') => 
 		direct: '',
 	};
 
-	if (isR) target.x = sx + sw + scrollX;
-	if (isB) target.y = sy + sh + scrollY;
+	if (isL && !isR) target.x = (sx - tw) + scrollX;
+	if (isR && !isL) target.x = (sx + sw) + scrollX;
+	if (isT && !isB) target.y = (sy - th) + scrollY;
+	if (isB && !isT) target.y = (sy + sh) + scrollY;
+
+	if (isL && isR) target.x = (sx - ((tw - sw) / 2)) + scrollX;
+	if (isT && isB) target.y = (sy - ((th - sh) / 2)) + scrollY;
+
+	target._x = target.x;
+	target._y = target.y;
 
 	// Bottom out of the window
 	if ((target.y - scrollY) + th > winHeight) {

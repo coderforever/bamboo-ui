@@ -26,7 +26,7 @@ class MenuList extends React.Component {
 
 		this.seq.next(() => {
 			this.setState({
-				...getEnablePosition({ x, y, width, height }, rect, 'r'),
+				...getEnablePosition({ left: x, top: y, width, height }, rect, 'r'),
 				animateStatus: ANIMATE_STATUS_SHOWING,
 			});
 		}).next(() => {

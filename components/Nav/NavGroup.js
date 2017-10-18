@@ -27,7 +27,6 @@ class NavGroup extends React.Component {
 			// Chrome has the bug of click event will trigger mouse leave event
 			// ref: https://stackoverflow.com/questions/45266854/mouseleave-triggered-by-click
 			if (isInRect(clientX, clientY, rect)) {
-				console.log('Fake leave!');
 				return;
 			}
 		}

@@ -6,6 +6,8 @@
 
 .bmbo-tooltip {
 	position: absolute;
+	pointer-events: none;
+	transition: transform var(--bmbo-duration-fast), opacity var(--bmbo-duration-fast);
 
 	.bmbo-tooltip-title {
 		color: #FFF;
@@ -13,5 +15,21 @@
 		padding: var(--bmbo-padding-md);
 		border-radius: 2px;
 		max-width: 500px;
+	}
+
+	&.bmbo-showing {
+		transform: scale(0.8);
+		opacity: 0;
+		transition: none;
+	}
+
+	&.bmbo-hiding {
+		transform: scale(1.1);
+		opacity: 0;
+	}
+
+	.bmbo-tooltip-arrow {
+		position: absolute;
+		border: 5px solid red;
 	}
 }

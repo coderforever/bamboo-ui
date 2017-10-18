@@ -31,6 +31,14 @@ class NavList extends React.Component {
 		this.checkUpdate(this.props, nextProps);
 	}
 
+	onTransitionEnd = (event) => {
+		if (this.state.animateStatus === ANIMATE_STATUS_HIDING && event.target === this.$list) {
+			this.seq.next(() => {
+				this.setState({ animateStatus: ANIMATE_STATUS_NONE });
+			});
+		}
+	};
+
 	setListRef = (ele) => {
 		const { setRef } = this.props;
 		this.$list = ele;
@@ -91,6 +99,7 @@ class NavList extends React.Component {
 				)}
 				ref={this.setListRef}
 				style={{ left: `${x}px`, top: `${y}px`, minWidth: `${rect.width}px` }}
+				onTransitionEnd={this.onTransitionEnd}
 			>
 				{children}
 			</div>
