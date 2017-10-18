@@ -11,7 +11,6 @@ import {
 import Sequence from '../utils/Sequence';
 
 const $holder = getHolder();
-// const ARROW_DES = 20;
 const ARROW_DES = 5;
 
 class Tooltip extends React.Component {
@@ -46,29 +45,37 @@ class Tooltip extends React.Component {
 				const { rect } = this.props;
 				if (!this.$title) return;
 
-				const { left, width, top, height } = this.$title.getBoundingClientRect();
+				const { left, width, top, height } = rect;
+				const tgtRect = this.$title.getBoundingClientRect();
+				const { _x, _y, ...pos } = getEnablePosition({
+					left: left - ARROW_DES,
+					top: top - ARROW_DES,
+					width: width + (2 * ARROW_DES),
+					height: height + (2 * ARROW_DES),
+				}, tgtRect, 'tlr');
+
+				const arrowOffsetX = _x - pos.x;
+				const arrowOffsetY = _y - pos.y;
+
 				this.setState({
 					animateStatus: ANIMATE_STATUS_SHOWING,
-					...getEnablePosition(rect, {
-						left: left - ARROW_DES,
-						top: top - ARROW_DES,
-						width: width + (2 * ARROW_DES),
-						height: height + (2 * ARROW_DES),
-					}, 'tlr'),
+					...pos,
+					arrowOffsetX,
+					arrowOffsetY,
 				});
 			}).next(() => {
 				this.setState({ animateStatus: ANIMATE_STATUS_SHOWN });
 			});
 		} else {
-			// this.seq.next(() => {
-			// 	this.setState({ animateStatus: ANIMATE_STATUS_HIDING });
-			// });
+			this.seq.next(() => {
+				this.setState({ animateStatus: ANIMATE_STATUS_HIDING });
+			});
 		}
 	};
 
 	render() {
 		const { children } = this.props;
-		const { animateStatus, x, y } = this.state;
+		const { animateStatus, x, y, arrowOffsetX, arrowOffsetY } = this.state;
 
 		if (animateStatus === ANIMATE_STATUS_NONE) return null;
 
@@ -87,7 +94,10 @@ class Tooltip extends React.Component {
 				<div className="bmbo-tooltip-title" ref={this.setTitleRef}>
 					{children}
 				</div>
-				<div className="bmbo-tooltip-arrow" />
+				<div
+					className="bmbo-tooltip-arrow"
+					style={{ marginLeft: `${arrowOffsetX}px`, marginTop: `${arrowOffsetY}px` }}
+				/>
 			</div>
 		, $holder);
 	}

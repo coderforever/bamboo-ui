@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+$bacColor: rgba(#000, 0.8);
+
 .bmbo-tooltip-holder {
 	display: inline;
 }
@@ -11,14 +13,14 @@
 
 	.bmbo-tooltip-title {
 		color: #FFF;
-		background: rgba(#000, 0.8);
+		background: $bacColor;
 		padding: var(--bmbo-padding-md);
 		border-radius: 2px;
 		max-width: 500px;
 	}
 
 	&.bmbo-showing {
-		transform: scale(0.8);
+		transform: scale(0.9);
 		opacity: 0;
 		transition: none;
 	}
@@ -30,6 +32,11 @@
 
 	.bmbo-tooltip-arrow {
 		position: absolute;
-		border: 5px solid red;
+		border: 5px solid transparent;
+		border-top-color: $bacColor;
+
+		left: 50%;
+		bottom: 0;
+		transform: translate(-50%, 100%);
 	}
 }

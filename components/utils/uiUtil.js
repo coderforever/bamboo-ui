@@ -151,6 +151,11 @@ export const getEnablePosition = (surroundRect, targetRect, position = 'dr') => 
 		}
 	}
 
+	// Left out of the window
+	if (target.x - scrollX < 0) {
+		target.x = scrollX;
+	}
+
 	// Right out of the window
 	if ((target.x - scrollX) + tw > winWidth) {
 		target.x = sx - tw;

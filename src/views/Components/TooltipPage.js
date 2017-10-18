@@ -21,6 +21,9 @@ class ButtonPage extends React.Component {
 		return (
 			<Row>
 				<Col xs="1/3">
+					<Tooltip title="hi, Bamboo UI! hi, Bamboo UI! hi, Bamboo UI!hi, Bamboo UI!hi, Bamboo UI!hi, Bamboo UI!hi, Bamboo UI!">
+						A
+					</Tooltip>
 				</Col>
 
 				<Col xs="2/3">
@@ -32,8 +35,8 @@ class ButtonPage extends React.Component {
 
 					<div className="measurement">
 						<div className="preview">
-							<Tooltip title="hi, Bamboo UI!">
-								鼠标悬浮我试试~
+							<Tooltip title="=-=-=-=">
+								A
 							</Tooltip>
 						</div>
 					</div>
