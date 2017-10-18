@@ -45,6 +45,12 @@ class Tooltip extends React.Component {
 				const { rect } = this.props;
 				if (!this.$title) return;
 
+				let ps;
+				switch (nextProps.placement) {
+					default:
+						ps = 't,lr';
+				}
+
 				const { left, width, top, height } = rect;
 				const tgtRect = this.$title.getBoundingClientRect();
 				const { _x, _y, ...pos } = getEnablePosition({
@@ -52,7 +58,7 @@ class Tooltip extends React.Component {
 					top: top - ARROW_DES,
 					width: width + (2 * ARROW_DES),
 					height: height + (2 * ARROW_DES),
-				}, tgtRect, 'tlr');
+				}, tgtRect, ps);
 
 				const arrowOffsetX = _x - pos.x;
 				const arrowOffsetY = _y - pos.y;
@@ -107,6 +113,7 @@ Tooltip.propTypes = {
 	visible: PropTypes.bool,
 	rect: PropTypes.object,
 	children: PropTypes.node,
+	placement: PropTypes.string,
 };
 
 export default Tooltip;

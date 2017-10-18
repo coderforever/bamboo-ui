@@ -26,7 +26,7 @@ class TooltipHolder extends React.Component {
 	};
 
 	render() {
-		const { title, children } = this.props;
+		const { title, children, placement } = this.props;
 		const { hover, rect } = this.state;
 
 		return (
@@ -37,7 +37,7 @@ class TooltipHolder extends React.Component {
 				ref={this.setHolderRef}
 			>
 				{children}
-				<Tooltip visible={hover} rect={rect}>
+				<Tooltip visible={hover} rect={rect} placement={placement}>
 					{title}
 				</Tooltip>
 			</div>
@@ -48,6 +48,7 @@ class TooltipHolder extends React.Component {
 TooltipHolder.propTypes = {
 	title: PropTypes.string,
 	children: PropTypes.node,
+	placement: PropTypes.string,
 };
 
 export default TooltipHolder;

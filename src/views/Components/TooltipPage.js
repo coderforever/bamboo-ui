@@ -40,6 +40,12 @@ class ButtonPage extends React.Component {
 							</Tooltip>
 						</div>
 					</div>
+
+					<div style={{ textAlign: 'right' }}>
+						<Tooltip title="hi, Bamboo UI! hi, Bamboo UI! hi, Bamboo UI!hi, Bamboo UI!hi, Bamboo UI!hi, Bamboo UI!hi, Bamboo UI!">
+							A
+						</Tooltip>
+					</div>
 				</Col>
 			</Row>
 		);
