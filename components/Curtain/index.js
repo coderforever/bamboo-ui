@@ -57,7 +57,7 @@ class Curtain extends React.Component {
 	};
 
 	render() {
-		const { children, className } = this.props;
+		const { children, className, ...props } = this.props;
 		const { animateStatus } = this.state;
 
 		if (animateStatus === ANIMATE_STATUS_NONE) return null;
@@ -71,6 +71,7 @@ class Curtain extends React.Component {
 
 				ref={this.setCurtainRef}
 				onTransitionEnd={this.onTransitionEnd}
+				{...props}
 			>
 				<div className="bmbo-curtain-content-holder">
 					<div className="bmbo-curtain-content">

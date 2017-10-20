@@ -100,9 +100,10 @@ export const getWinHeight = () => {
  * @param surroundRect
  * @param targetRect
  * @param position
+ * @param switchPos		Switch position when position has no space left
  * @returns {{x: number, y: number}}
  */
-export const getEnablePosition = (surroundRect, targetRect, position = 'dr') => {
+export const getEnablePosition = (surroundRect, targetRect, position = 'dr', switchPos = true) => {
 	if (typeof window === 'undefined') return { x: 0, y: 0 };
 
 	// TODO: use left & top only
@@ -150,10 +151,18 @@ export const getEnablePosition = (surroundRect, targetRect, position = 'dr') => 
 			}
 		}
 	}
+	// Top out of the window
+	if ((target.y - scrollY) < 0) {
+		if (switchPos) {
+			target.y = sy + sh + scrollY;
+		} else {
+			target.y = scrollY;
+		}
+	}
 
 	// Left out of the window
 	if (target.x - scrollX < 0) {
-		if (isL && !isR) {
+		if (switchPos) {
 			target.x = sx + sw;
 		} else {
 			target.x = scrollX;
@@ -162,7 +171,7 @@ export const getEnablePosition = (surroundRect, targetRect, position = 'dr') => 
 
 	// Right out of the window
 	if ((target.x - scrollX) + tw > winWidth) {
-		if (isR && !isL) {
+		if (switchPos) {
 			target.x = sx - tw;
 		} else {
 			target.x = (winWidth + scrollX) - tw;

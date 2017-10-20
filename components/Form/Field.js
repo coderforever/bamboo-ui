@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import { BAMBOO_FORM_RADIO } from './Radio';
 import { BAMBOO_FORM_CHECKBOX } from './Checkbox';
@@ -122,12 +123,15 @@ class Field extends React.Component {
 	};
 
 	render() {
-		const { name, title } = this.props;
+		const { name, title, className, ...props } = this.props;
+
+		delete props.value;
+		delete props.defaultValue;
 
 		const list = this.getList();
 
 		return (
-			<div className="bmbp-form-field">
+			<div className={classNames('bmbp-form-field', className)} {...props}>
 				<label htmlFor={name}>
 					{title}
 				</label>
@@ -139,6 +143,7 @@ class Field extends React.Component {
 
 Field.propTypes = {
 	children: PropTypes.node,
+	className: PropTypes.string,
 
 	name: PropTypes.string,
 	title: PropTypes.string,

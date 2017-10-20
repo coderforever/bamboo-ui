@@ -65,15 +65,20 @@ class ModalPreface extends React.Component {
 	};
 
 	render() {
-		const { children } = this.props;
+		const { children, className, ...props } = this.props;
 		const { animateStatus, contentWidth } = this.state;
+
+		delete props.delay;
+		delete props.visible;
 
 		return (
 			<div
 				className={classNames('bmbo-modal-preface', {
 					'bmbo-showing': animateStatus === ANIMATE_STATUS_SHOWING,
+					className,
 				})}
 				style={{ width: contentWidth ? `${contentWidth}px` : null }}
+				{...props}
 			>
 				<div className="bmbo-modal-preface-content" ref={this.setContentRef}>
 					{children}
@@ -86,6 +91,7 @@ class ModalPreface extends React.Component {
 ModalPreface.propTypes = {
 	delay: PropTypes.number,
 	children: PropTypes.node,
+	className: PropTypes.string,
 	visible: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
 };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import { canUseDOM } from '../utils/envUtil';
 import { getHolder } from '../utils/uiUtil';
@@ -55,11 +56,17 @@ class Menu extends React.Component {
 	};
 
 	render() {
-		const { menu = [], children } = this.props;
+		const { menu = [], children, className, ...props } = this.props;
 		const { show, x, y } = this.state;
 
+		delete props.size;
+
 		return (
-			<div className="bmbo-menu-wrapper" onContextMenu={this.onContextMenu}>
+			<div
+				className={classNames('bmbo-menu-wrapper', className)}
+				onContextMenu={this.onContextMenu}
+				{...props}
+			>
 				{children}
 
 				{show && <MenuList holder={$menuHolder} list={menu} x={x} y={y} />}
@@ -70,6 +77,7 @@ class Menu extends React.Component {
 
 Menu.propTypes = {
 	children: PropTypes.node,
+	className: PropTypes.string,
 	menu: PropTypes.array,
 	size: PropTypes.string,
 };

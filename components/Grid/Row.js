@@ -16,11 +16,11 @@ class Row extends React.PureComponent {
 	}
 
 	render() {
-		const { gutter = DEFAULT_GUTTER, children, className } = this.props;
+		const { gutter = DEFAULT_GUTTER, children, className, ...props } = this.props;
 		const hg = gutter / 2;
 
 		return (
-			<div className={classNames('bmbo-row', className)}>
+			<div className={classNames('bmbo-row', className)} {...props}>
 				<div style={{ marginLeft: `-${hg}px`, marginRight: `-${hg}px` }}>
 					{children}
 				</div>

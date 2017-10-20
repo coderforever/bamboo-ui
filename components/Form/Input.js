@@ -4,11 +4,12 @@ import classNames from 'classnames';
 
 export const BAMBOO_FORM_INPUT = 'BAMBOO_FORM_INPUT';
 
-const Input = ({ size, ...props }) => (
+const Input = ({ size, className, ...props }) => (
 	<input
 		className={classNames(
 			'bmbo-form-control',
 			`bmbo-${size || 'md'}`,
+			className,
 		)}
 		{...props}
 	/>
@@ -16,6 +17,7 @@ const Input = ({ size, ...props }) => (
 
 Input.propTypes = {
 	size: PropTypes.string,
+	className: PropTypes.string,
 };
 
 Input[BAMBOO_FORM_INPUT] = BAMBOO_FORM_INPUT;

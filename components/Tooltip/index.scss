@@ -9,18 +9,9 @@ $bacColor: rgba(#000, 0.8);
 .bmbo-tooltip {
 	position: absolute;
 	pointer-events: none;
-	transition: transform var(--bmbo-duration-fast), opacity var(--bmbo-duration-fast);
-
-	.bmbo-tooltip-title {
-		color: #FFF;
-		background: $bacColor;
-		padding: var(--bmbo-padding-md);
-		border-radius: 2px;
-		max-width: 500px;
-	}
+	transition: transform var(--bmbo-duration), opacity var(--bmbo-duration);
 
 	&.bmbo-showing {
-		transform: scale(0.9);
 		opacity: 0;
 		transition: none;
 	}
@@ -30,13 +21,68 @@ $bacColor: rgba(#000, 0.8);
 		opacity: 0;
 	}
 
-	.bmbo-tooltip-arrow {
+	> .bmbo-tooltip-title {
+		color: #FFF;
+		background: $bacColor;
+		padding: var(--bmbo-padding-md);
+		border-radius: 2px;
+		max-width: 500px;
+	}
+
+	> .bmbo-tooltip-arrow {
 		position: absolute;
 		border: 5px solid transparent;
-		border-top-color: $bacColor;
+	}
 
-		left: 50%;
-		bottom: 0;
-		transform: translate(-50%, 100%);
+	&.bmbo-top {
+		&.bmbo-showing {
+			transform: translate(0, 5px);
+		}
+
+		> .bmbo-tooltip-arrow {
+			left: 50%;
+			bottom: 0;
+			transform: translate(-50%, 100%);
+			border-top-color: $bacColor;
+		}
+	}
+
+	&.bmbo-bottom {
+		&.bmbo-showing {
+			transform: translate(0, -5px);
+		}
+
+		> .bmbo-tooltip-arrow {
+			left: 50%;
+			top: 0;
+			transform: translate(-50%, -100%);
+			border-bottom-color: $bacColor;
+		}
+	}
+
+	&.bmbo-left {
+		&.bmbo-showing {
+			transform: translate(5px, 0);
+		}
+
+		> .bmbo-tooltip-arrow {
+			right: 0;
+			top: 50%;
+			transform: translate(100%, -50%);
+			border-left-color: $bacColor;
+		}
+	}
+
+	&.bmbo-right {
+		&.bmbo-showing {
+			transform: translate(-5px, 0);
+		}
+
+		> .bmbo-tooltip-arrow {
+			left: 0;
+			top: 50%;
+			transform: translate(-100%, -50%);
+			border-right-color: $bacColor;
+		}
 	}
 }

@@ -16,7 +16,10 @@ class Item extends React.Component {
 	};
 
 	render() {
-		const { style = {}, width, children, isFirst, isLast, value, onChange } = this.props;
+		const {
+			style = {}, width, children, isFirst, isLast, value, onChange, className,
+			...props
+		} = this.props;
 		if (width) style.width = width;
 
 		let $child = React.Children.only(children);
@@ -51,8 +54,10 @@ class Item extends React.Component {
 					'bmbo-first': isFirst && !isLast,
 					'bmbo-last': isLast && !isFirst,
 					'bmbo-middle': !isFirst && !isLast,
+					className,
 				})}
 				style={style}
+				{...props}
 			>
 				{$child}
 			</div>
@@ -62,6 +67,7 @@ class Item extends React.Component {
 
 Item.propTypes = {
 	children: PropTypes.node,
+	className: PropTypes.string,
 	style: PropTypes.object,
 	width: PropTypes.string,
 	isFirst: PropTypes.bool,

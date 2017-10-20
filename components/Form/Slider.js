@@ -296,7 +296,17 @@ class Slider extends React.Component {
 	};
 
 	render() {
-		const { min = 0, max = 100, disabled, transparent, type, size } = this.props;
+		const {
+			min = 0, max = 100, disabled, transparent, type, size, className,
+			...props,
+		} = this.props;
+
+		delete props.value;
+		delete props.step;
+		delete props.multi;
+		delete props.marks;
+		delete props.onMouseDown;
+		delete props.onChange;
 
 		const pinCount = this.getPinCount();
 
@@ -364,6 +374,7 @@ class Slider extends React.Component {
 					`bmbo-${size || 'md'}`,
 					disabled && 'bmbo-disabled',
 					transparent && 'bmbo-transparent',
+					className,
 				)}
 
 				onMouseDown={this.onBarMouseDown}
@@ -392,6 +403,7 @@ class Slider extends React.Component {
 }
 
 Slider.propTypes = {
+	className: PropTypes.string,
 	value: PropTypes.oneOfType([PropTypes.number, PropTypes.array]),
 	min: PropTypes.number,
 	max: PropTypes.number,

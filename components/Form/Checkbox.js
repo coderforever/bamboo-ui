@@ -5,12 +5,13 @@ import { BAMBOO_COMPONENT } from '../utils/componentUtil';
 
 export const BAMBOO_FORM_CHECKBOX = 'BAMBOO_FORM_CHECKBOX';
 
-const Checkbox = ({ children, checked, onClick }) => (
+const Checkbox = ({ children, checked, onClick, className, ...props }) => (
 	<div
-		className={classNames('bmbo-checkbox', checked && 'bmbo-checked')}
+		className={classNames('bmbo-checkbox', checked && 'bmbo-checked', className)}
 		role="button"
 		tabIndex={0}
 		onClick={onClick}
+		{...props}
 	>
 		<input type="checkbox" checked={checked} readOnly />
 		<span className="bmbo-checkbox-check" />
@@ -21,6 +22,7 @@ const Checkbox = ({ children, checked, onClick }) => (
 
 Checkbox.propTypes = {
 	children: PropTypes.node,
+	className: PropTypes.string,
 
 	checked: PropTypes.bool,
 	onClick: PropTypes.func,

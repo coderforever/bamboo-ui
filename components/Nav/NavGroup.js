@@ -43,7 +43,7 @@ class NavGroup extends React.Component {
 	};
 
 	render() {
-		const { title, children, active, disabled } = this.props;
+		const { title, children, active, disabled, className, ...props } = this.props;
 		const { hover, rect } = this.state;
 
 		return (
@@ -53,10 +53,12 @@ class NavGroup extends React.Component {
 					hover && 'bmbo-hover',
 					active && 'bmbo-active',
 					disabled && 'bmbo-disabled',
+					className,
 				)}
 				ref={this.setItemRef}
 				onMouseEnter={this.onMouseEnter}
 				onMouseLeave={this.onMouseLeave}
+				{...props}
 			>
 				<div
 					className="bmbo-nav-title"
@@ -77,6 +79,7 @@ class NavGroup extends React.Component {
 }
 
 NavGroup.propTypes = {
+	className: PropTypes.string,
 	title: PropTypes.node,
 	children: PropTypes.node,
 	active: PropTypes.bool,

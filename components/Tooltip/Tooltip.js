@@ -31,8 +31,16 @@ class Tooltip extends React.Component {
 		this.checkUpdate(this.props, nextProps);
 	}
 
-	setTitleRef = (ele) => {
-		this.$title = ele;
+	onTransitionEnd = (event) => {
+		if (this.state.animateStatus === ANIMATE_STATUS_HIDING && event.target === this.$holder) {
+			this.seq.next(() => {
+				this.setState({ animateStatus: ANIMATE_STATUS_NONE });
+			});
+		}
+	};
+
+	setHolderRef = (ele) => {
+		this.$holder = ele;
 	};
 
 	checkUpdate = (prevProps, nextProps) => {
@@ -43,22 +51,31 @@ class Tooltip extends React.Component {
 				this.setState({ animateStatus: ANIMATE_STATUS_INIT, x: 0, y: 0 });
 			}).next(() => {
 				const { rect } = this.props;
-				if (!this.$title) return;
+				if (!this.$holder) return;
 
 				let ps;
 				switch (nextProps.placement) {
+					case 'bottom':
+						ps = 'b,lr';
+						break;
+					case 'left':
+						ps = 'l,tb';
+						break;
+					case 'right':
+						ps = 'r,tb';
+						break;
 					default:
 						ps = 't,lr';
 				}
 
 				const { left, width, top, height } = rect;
-				const tgtRect = this.$title.getBoundingClientRect();
+				const tgtRect = this.$holder.getBoundingClientRect();
 				const { _x, _y, ...pos } = getEnablePosition({
 					left: left - ARROW_DES,
 					top: top - ARROW_DES,
 					width: width + (2 * ARROW_DES),
 					height: height + (2 * ARROW_DES),
-				}, tgtRect, ps);
+				}, tgtRect, ps, false);
 
 				const arrowOffsetX = _x - pos.x;
 				const arrowOffsetY = _y - pos.y;
@@ -75,12 +92,14 @@ class Tooltip extends React.Component {
 		} else {
 			this.seq.next(() => {
 				this.setState({ animateStatus: ANIMATE_STATUS_HIDING });
-			});
+			}).next(() => {
+				this.setState({ animateStatus: ANIMATE_STATUS_NONE });
+			}, { delay: 1000 });
 		}
 	};
 
 	render() {
-		const { children } = this.props;
+		const { children, placement, maxWidth } = this.props;
 		const { animateStatus, x, y, arrowOffsetX, arrowOffsetY } = this.state;
 
 		if (animateStatus === ANIMATE_STATUS_NONE) return null;
@@ -94,10 +113,16 @@ class Tooltip extends React.Component {
 						'bmbo-showing': animateStatus === ANIMATE_STATUS_SHOWING,
 						'bmbo-hiding': animateStatus === ANIMATE_STATUS_HIDING,
 					},
+					`bmbo-${placement || 'top'}`,
 				)}
 				style={{ left: `${x}px`, top: `${y}px` }}
+				ref={this.setHolderRef}
+				onTransitionEnd={this.onTransitionEnd}
 			>
-				<div className="bmbo-tooltip-title" ref={this.setTitleRef}>
+				<div
+					className="bmbo-tooltip-title"
+					style={{ maxWidth: maxWidth && `${maxWidth}px` }}
+				>
 					{children}
 				</div>
 				<div
@@ -111,6 +136,7 @@ class Tooltip extends React.Component {
 
 Tooltip.propTypes = {
 	visible: PropTypes.bool,
+	maxWidth: PropTypes.number,
 	rect: PropTypes.object,
 	children: PropTypes.node,
 	placement: PropTypes.string,

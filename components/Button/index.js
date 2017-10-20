@@ -11,7 +11,7 @@ class Button extends React.Component {
 	};
 
 	render() {
-		const { children, disabled, size, transparent, checked, ...props } = this.props;
+		const { children, className, disabled, size, transparent, checked, ...props } = this.props;
 		const type = this.props.type || 'primary';
 
 		delete props.type;
@@ -26,6 +26,7 @@ class Button extends React.Component {
 					`bmbo-${size || 'md'}`,
 					transparent && 'bmbo-transparent',
 					checked && 'bmbo-checked',
+					className,
 				)}
 				onClick={this.onClick}
 
@@ -41,6 +42,7 @@ Button.propTypes = {
 	children: PropTypes.node,
 
 	type: PropTypes.string,
+	className: PropTypes.string,
 	size: PropTypes.string,
 	disabled: PropTypes.bool,
 	onClick: PropTypes.func,

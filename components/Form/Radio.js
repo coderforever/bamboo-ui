@@ -18,14 +18,20 @@ class Radio extends React.Component {
 	};
 
 	render() {
-		const { children, checked } = this.props;
+		const { children, checked, className, ...props } = this.props;
+
+		delete props.checked;
+		delete props.onClick;
+		delete props.onChange;
+		delete props.value;
 
 		return (
 			<div
-				className={classNames('bmbo-radio', checked && 'bmbo-checked')}
+				className={classNames('bmbo-radio', checked && 'bmbo-checked', className)}
 				role="button"
 				tabIndex={0}
 				onClick={this.onClick}
+				{...props}
 			>
 				<input type="radio" checked={checked} readOnly />
 				<span className="bmbo-radio-check" />
@@ -38,6 +44,7 @@ class Radio extends React.Component {
 
 Radio.propTypes = {
 	children: PropTypes.node,
+	className: PropTypes.string,
 
 	checked: PropTypes.bool,
 	onClick: PropTypes.func,

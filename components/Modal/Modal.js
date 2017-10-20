@@ -198,7 +198,7 @@ class Modal extends React.Component {
 	};
 
 	render() {
-		const { size, type, loading } = this.props;
+		const { size, type, loading, className, ...props } = this.props;
 		const { animateStatus } = this.state;
 
 		if (animateStatus === ANIMATE_STATUS_NONE) return null;
@@ -219,6 +219,18 @@ class Modal extends React.Component {
 			</div>
 		);
 
+		delete props.visible;
+		delete props.lock;
+		delete props.title;
+		delete props.content;
+		delete props.footer;
+		delete props.onClose;
+		delete props.onClosed;
+		delete props.onConfirm;
+		delete props.closeText;
+		delete props.confirmText;
+		delete props.noMaskClose;
+
 		return createPortal(
 			<div
 				className={classNames(
@@ -226,6 +238,7 @@ class Modal extends React.Component {
 						'bmbo-showing': animateStatus === ANIMATE_STATUS_SHOWING,
 						'bmbo-hidding': animateStatus === ANIMATE_STATUS_HIDING,
 						'bmbo-loading': loading,
+						className,
 					},
 					size && `bmbo-${size}`,
 					type && `bmbo-${type}`,
@@ -251,6 +264,7 @@ class Modal extends React.Component {
 Modal.propTypes = {
 	visible: PropTypes.bool,
 	children: PropTypes.node,
+	className: PropTypes.string,
 	size: PropTypes.string,
 	type: PropTypes.string,
 	loading: PropTypes.bool,

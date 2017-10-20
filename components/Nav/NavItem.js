@@ -2,32 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import NavList from './NavList';
-
-class NavItem extends React.Component {
-	render() {
-		const { children, onClick, active, disabled } = this.props;
-
-		return (
-			<li
-				className={classNames(
-					'bmbo-nav-item',
-					active && 'bmbo-active',
-					disabled && 'bmbo-disabled',
-				)}
-				role="button"
-				tabIndex={-1}
-				onClick={onClick}
-			>
-				{children}
-			</li>
-		);
-	}
-}
+const NavItem = ({ children, onClick, active, disabled, className, ...props }) => (
+	<li
+		className={classNames(
+			'bmbo-nav-item',
+			active && 'bmbo-active',
+			disabled && 'bmbo-disabled',
+			className,
+		)}
+		role="button"
+		tabIndex={-1}
+		onClick={onClick}
+		{...props}
+	>
+		{children}
+	</li>
+);
 
 NavItem.propTypes = {
 	children: PropTypes.node,
 	onClick: PropTypes.func,
+	className: PropTypes.string,
 
 	active: PropTypes.bool,
 	disabled: PropTypes.bool,

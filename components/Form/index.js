@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import Field from './Field';
 
@@ -27,10 +28,14 @@ class Form extends React.Component {
 	getInstance = () => this.props.instance || this;
 
 	render() {
-		const { children } = this.props;
+		const { children, className, ...props } = this.props;
+
+		delete props.instance;
+		delete props.path;
+		delete props.onChanged;
 
 		return (
-			<div className="bmbo-form">
+			<div className={classNames('bmbo-form', className)} {...props}>
 				{children}
 			</div>
 		);
@@ -39,6 +44,7 @@ class Form extends React.Component {
 
 Form.propTypes = {
 	children: PropTypes.node,
+	className: PropTypes.string,
 
 	instance: PropTypes.object,
 	path: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),

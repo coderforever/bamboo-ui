@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 const REGEX = /^(\d+)\/(\d+)$/;
 
@@ -22,7 +23,7 @@ function getName(val) {
 	return getMatch(numerator, denominator, 24) || getMatch(numerator, denominator, 10);
 }
 
-const Col = ({ xs, sm, md, lg, xl, children }, { rowGutter }) => {
+const Col = ({ xs, sm, md, lg, xl, children, className, ...props }, { rowGutter }) => {
 	const xsClassName = xs ? `bmbo-col-xs-${getName(xs)}` : '';
 	const smClassName = sm ? `bmbo-col-sm-${getName(sm)}` : '';
 	const mdClassName = md ? `bmbo-col-md-${getName(md)}` : '';
@@ -33,8 +34,9 @@ const Col = ({ xs, sm, md, lg, xl, children }, { rowGutter }) => {
 
 	return (
 		<div
-			className={`bmbo-col ${xsClassName} ${smClassName} ${mdClassName} ${lgClassName} ${xlClassName}`}
+			className={classNames('bmbo-col', xsClassName, smClassName, mdClassName, lgClassName, xlClassName, className)}
 			style={{ paddingLeft: `${hg}px`, paddingRight: `${hg}px` }}
+			{...props}
 		>
 			{children}
 		</div>
@@ -42,6 +44,7 @@ const Col = ({ xs, sm, md, lg, xl, children }, { rowGutter }) => {
 };
 
 Col.propTypes = {
+	className: PropTypes.string,
 	xs: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 	sm: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 	md: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),

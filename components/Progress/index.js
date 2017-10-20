@@ -3,11 +3,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 class Progress extends React.Component {
-	constructor() {
-		super();
-		this.state = {};
-	}
-
 	getPercentage = () => {
 		const { min, max, value } = this.props;
 		let myValue = value;
@@ -17,8 +12,12 @@ class Progress extends React.Component {
 	};
 
 	render() {
-		const { type, size, active, showMark } = this.props;
+		const { type, size, active, showMark, className, ...props } = this.props;
 		const ptg = this.getPercentage();
+
+		delete props.min;
+		delete props.max;
+		delete props.value;
 
 		return (
 			<div
@@ -27,8 +26,10 @@ class Progress extends React.Component {
 					`bmbo-${type || 'primary'}`,
 					`bmbo-${size || 'md'}`,
 					active && 'bmbo-active',
+					className,
 				)}
 				role="progressbar"
+				{...props}
 			>
 				<div className="bmbo-progress-bar" style={{ width: `${ptg}%` }}>
 					{showMark && <span className="bmbo-mark">{ptg}%</span>}
@@ -39,6 +40,7 @@ class Progress extends React.Component {
 }
 
 Progress.propTypes = {
+	className: PropTypes.string,
 	min: PropTypes.number,
 	max: PropTypes.number,
 	value: PropTypes.number,

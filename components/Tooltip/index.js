@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import classNames from 'classnames';
 
 import Tooltip from './Tooltip';
 
@@ -26,18 +26,19 @@ class TooltipHolder extends React.Component {
 	};
 
 	render() {
-		const { title, children, placement } = this.props;
+		const { title, children, placement, maxWidth, className, ...props } = this.props;
 		const { hover, rect } = this.state;
 
 		return (
 			<div
-				className="bmbo-tooltip-holder"
+				className={classNames('bmbo-tooltip-holder', className)}
 				onMouseEnter={this.onMouseEnter}
 				onMouseLeave={this.onMouseLeave}
 				ref={this.setHolderRef}
+				{...props}
 			>
 				{children}
-				<Tooltip visible={hover} rect={rect} placement={placement}>
+				<Tooltip visible={hover} rect={rect} placement={placement} maxWidth={maxWidth}>
 					{title}
 				</Tooltip>
 			</div>
@@ -46,9 +47,11 @@ class TooltipHolder extends React.Component {
 }
 
 TooltipHolder.propTypes = {
+	className: PropTypes.string,
 	title: PropTypes.string,
 	children: PropTypes.node,
 	placement: PropTypes.string,
+	maxWidth: PropTypes.number,
 };
 
 export default TooltipHolder;

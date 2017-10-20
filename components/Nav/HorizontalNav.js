@@ -4,25 +4,23 @@ import classNames from 'classnames';
 
 import NavItem from './NavItem';
 
-class HorizontalNav extends React.Component {
-	render() {
-		const { type, children } = this.props;
+const HorizontalNav = ({ type, children, className, ...props }) => (
+	<ul
+		className={classNames('bmbo-horizontal-nav',
+			`bmbo-${type || 'lead'}`,
+			className,
+		)}
+		{...props}
+	>
+		{children}
+	</ul>
+);
 
-		return (
-			<ul
-				className={classNames('bmbo-horizontal-nav',
-					`bmbo-${type || 'lead'}`,
-				)}
-			>
-				{children}
-			</ul>
-		);
-	}
-}
 
 HorizontalNav.propTypes = {
 	type: PropTypes.string,
 	children: PropTypes.node,
+	className: PropTypes.string,
 };
 
 export default HorizontalNav;
