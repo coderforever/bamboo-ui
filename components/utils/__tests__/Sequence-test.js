@@ -103,4 +103,26 @@ describe('Sequence', () => {
 			done();
 		}, 2000);
 	});
+
+	test('Sequence task loop', () => {
+		const seq = new Sequence();
+		let value = 0;
+		let times = 0;
+
+		return seq.next(() => {
+			value += 10;
+		}).next(() => {
+			value += 1;
+			times += 1;
+
+			if (times >= 10) {
+				return false;
+			}
+		}, {
+			loop: true,
+		}).promise.then(() => {
+			expect(value).toBe(20);
+			expect(times).toBe(10);
+		});
+	});
 });

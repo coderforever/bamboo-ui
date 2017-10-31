@@ -62,11 +62,22 @@ class Sequence {
 				const exec = () => {
 					try {
 						if (this.taskHolder !== taskHolder || this._destroy) return;
-						if (task.callback() === false) {
+
+						// Execute task
+						const taskResult = task.callback();
+						if (taskResult === false) {
 							this.taskHolder = null;
 							resolve();
 							return;
 						}
+
+						// If is a looper
+						if (task.config.loop) {
+							step();
+							return;
+						}
+
+						// Next task
 						taskHolder.nextStep();
 						step();
 					} catch (err) {

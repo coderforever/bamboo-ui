@@ -19,7 +19,7 @@ if (canUseDOM) {
 	$bambooHolder = window.document.createElement('div');
 	$bambooHolder.id = BAMBOO_PORTALS_HOLDER;
 	$bambooHolder.className = 'bmbo-portals-holder';
-	$bambooHolder.dataset.timestamp = Date.now();
+	// $bambooHolder.dataset.timestamp = Date.now();
 	window.document.body.appendChild($bambooHolder);
 }
 export function getHolder() {
