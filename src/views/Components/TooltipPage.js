@@ -16,9 +16,20 @@ class ButtonPage extends React.Component {
 			form: {
 				title: 'Hello, Bamboo UI!',
 				placement: 'top',
+				inject: false,
 			},
 		};
 	}
+
+	getSampleCode = () => {
+		const { form } = this.state;
+
+		return `
+<Tooltip${toString(form, { placement: 'top' })}>
+	<Button>Hover Me!</Button>
+</Tooltip>
+`.replace(/\t/g, '   ').trim();
+	};
 
 	render() {
 		const { form } = this.state;
@@ -57,7 +68,11 @@ class ButtonPage extends React.Component {
 					<h2>试一试</h2>
 					<div className="measurement">
 						<div className="preview">
-							<Tooltip title={form.title}>
+							<Tooltip
+								title={form.title}
+								placement={form.placement}
+								inject={form.inject}
+							>
 								<Button>Hover Me!</Button>
 							</Tooltip>
 						</div>
@@ -72,8 +87,15 @@ class ButtonPage extends React.Component {
 									<Radio value="left">Left</Radio>
 									<Radio value="right">Right</Radio>
 								</Form.Field>
+								<Form.Field name="inject" title="Inject">
+									<Checkbox>inject</Checkbox>
+								</Form.Field>
 							</Form>
 						</div>
+
+						<pre className="code">
+							{this.getSampleCode()}
+						</pre>
 					</div>
 				</Col>
 			</Row>

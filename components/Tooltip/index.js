@@ -12,8 +12,8 @@ class TooltipHolder extends React.Component {
 		};
 	}
 
-	onMouseEnter = () => {
-		const rect = this.$holder.getBoundingClientRect();
+	onMouseEnter = (event) => {
+		const rect = event.currentTarget.getBoundingClientRect();
 		this.setState({ hover: true, rect });
 	};
 
@@ -21,20 +21,31 @@ class TooltipHolder extends React.Component {
 		this.setState({ hover: false });
 	};
 
-	setHolderRef = (ele) => {
-		this.$holder = ele;
-	};
-
 	render() {
-		const { title, children, placement, maxWidth, className, ...props } = this.props;
+		const { title, children, placement, maxWidth, className, inject, ...props } = this.props;
 		const { hover, rect } = this.state;
+
+		if (inject) {
+			const childList = React.Children.map(children, node => (
+				React.cloneElement(node, {
+					onMouseEnter: this.onMouseEnter,
+					onMouseLeave: this.onMouseLeave,
+					ref: this.setHolderRef,
+				})
+			));
+
+			return childList.concat(
+				<Tooltip key="bmbo-tooltip" visible={hover} rect={rect} placement={placement} maxWidth={maxWidth}>
+					{title}
+				</Tooltip>,
+			);
+		}
 
 		return (
 			<div
 				className={classNames('bmbo-tooltip-holder', className)}
 				onMouseEnter={this.onMouseEnter}
 				onMouseLeave={this.onMouseLeave}
-				ref={this.setHolderRef}
 				{...props}
 			>
 				{children}
@@ -52,6 +63,7 @@ TooltipHolder.propTypes = {
 	children: PropTypes.node,
 	placement: PropTypes.string,
 	maxWidth: PropTypes.number,
+	inject: PropTypes.bool,
 };
 
 export default TooltipHolder;
