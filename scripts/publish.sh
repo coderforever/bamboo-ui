@@ -13,15 +13,15 @@ echo "[Dist] generate dist..."
 rm -rf dist
 npm run dist
 
-echo "[Package] Git commit package..."
-git add .
-git commit -m "publish new version"
-git push
-git tag ${tag}
-git push origin ${tag}
+# echo "[Package] Git commit package..."
+# git add .
+# git commit -m "publish new version"
+# git push
+# git tag ${tag}
+# git push origin ${tag}
 
-echo "[NPM] NPM publish..."
-npm publish
+# echo "[NPM] NPM publish..."
+# npm publish
 
 echo "[Package] Generate github page..."
 npm run vendor
