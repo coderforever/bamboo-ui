@@ -33,7 +33,7 @@ rm -rf ./builds
 mv /tmp/builds .
 git add .
 git commit -m "update pages"
-git push
+git push -f
 
 echo "[Package] Back to master branch..."
 git checkout master

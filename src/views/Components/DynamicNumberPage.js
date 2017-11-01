@@ -15,15 +15,32 @@ class ButtonPage extends React.Component {
 		this.state = {
 			form: {
 				value: 10,
+				duration: 1000,
+				decimal: 0,
+				step: 1,
+				animateType: 0,
 			},
 		};
 	}
 
 	getSampleCode = () => {
-		const { form } = this.state;
+		const form = { ...this.state.form };
+
+		form.value = Number(form.value);
+		form.duration = Number(form.duration);
+		form.decimal = Number(form.decimal);
+		form.step = Number(form.step);
+
+		if (form.animateType === 0) {
+			delete form.step;
+		} else {
+			delete form.duration;
+		}
+		delete form.animateType;
 
 		return `
-<Tooltip${toString(form, { placement: 'top' })}>
+当前值：
+<DynamicNumber${toString(form, { placement: 'top' })}>
 	<Button>Hover Me!</Button>
 </Tooltip>
 `.replace(/\t/g, '   ').trim();
@@ -47,13 +64,31 @@ class ButtonPage extends React.Component {
 					<div className="measurement">
 						<div className="preview">
 							当前值：
-							<DynamicNumber value={form.value} />
+							<DynamicNumber
+								value={Number(form.value)}
+								decimal={Number(form.decimal)}
+								duration={form.animateType === 0 ? Number(form.duration) : null}
+								step={form.animateType === 1 ? Number(form.step) : null}
+							/>
 						</div>
 						<div>
 							<Form instance={this} path="form">
 								<Form.Field name="value" title="Value">
-									<Input />
+									<Input type="number" />
 								</Form.Field>
+								<Form.Field name="decimal" title="Decimal (>=0)">
+									<Input type="number" />
+								</Form.Field>
+								<Form.Field name="animateType" title="Animation">
+									<Radio value={0}>By Duration</Radio>
+									<Radio value={1}>By Step</Radio>
+								</Form.Field>
+								{form.animateType === 0 && <Form.Field name="duration" title="Duration">
+									<Input type="number" />
+								</Form.Field>}
+								{form.animateType === 1 && <Form.Field name="step" title="Step">
+									<Input type="number" />
+								</Form.Field>}
 							</Form>
 						</div>
 
