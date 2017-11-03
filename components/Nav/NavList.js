@@ -57,10 +57,13 @@ class NavList extends React.Component {
 				});
 			}).next(() => {
 				const { rect } = this.props;
+				const { navVertical } = this.context;
 				const listRect = this.$list.getBoundingClientRect();
 
+				const pos = navVertical ? 'r' : 'b';
+
 				this.setState({
-					...getEnablePosition(rect, listRect, 'b'),
+					...getEnablePosition(rect, listRect, pos),
 					animateStatus: ANIMATE_STATUS_SHOWING,
 				});
 			}).next(() => {
@@ -82,7 +85,7 @@ class NavList extends React.Component {
 
 	render() {
 		const { children, rect } = this.props;
-		const { navType } = this.context;
+		const { navType, navVertical } = this.context;
 		const { animateStatus, x, y, direct } = this.state;
 
 		if (animateStatus === ANIMATE_STATUS_NONE) return null;
@@ -118,6 +121,7 @@ NavList.propTypes = {
 
 NavList.contextTypes = {
 	navType: PropTypes.string,
+	navVertical: PropTypes.bool,
 };
 
 export default NavList;

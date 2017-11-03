@@ -183,9 +183,9 @@ export const getEnablePosition = (surroundRect, targetRect, position = 'dr', swi
 
 export function isInRect(x, y, rect) {
 	return (
-		rect.left <= x &&
-		x <= rect.right &&
-		rect.top <= y &&
-		y <= rect.bottom
+		rect.left < x &&
+		x < rect.right &&
+		rect.top < y &&
+		y < rect.bottom
 	);
 }

@@ -1,0 +1,54 @@
+@charset "UTF-8";
+
+@mixin navItem() {
+	position: relative;
+	padding: 15px 20px;
+	white-space: nowrap;
+}
+
+.bmbo-vertical-nav {
+	// Navigation first level
+	> .bmbo-nav-group,
+	> .bmbo-nav-item {
+		@include navItem;
+
+		.bmbo-nav-title:before,
+		a:before {
+			content: '';
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+		}
+
+		&:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			width: 5px;
+			background: #FFF;
+
+			opacity: 0;
+			transform: scaleY(0);
+
+			transition: transform var(--bmbo-duration), opacity var(--bmbo-duration);
+		}
+
+		&.bmbo-hover,
+		&:hover,
+		&.bmbo-active {
+			&:after {
+				opacity: 1;
+				transform: scaleY(1);
+			}
+		}
+
+		&.bmbo-disabled {
+			pointer-events: none;
+			opacity: 0.5;
+		}
+	}
+}

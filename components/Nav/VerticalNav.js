@@ -4,9 +4,9 @@ import classNames from 'classnames';
 
 import NavItem from './NavItem';
 
-const HorizontalNav = ({ type, children, className, ...props }) => (
+const VerticalNav = ({ type, children, className, ...props }) => (
 	<ul
-		className={classNames('bmbo-nav', 'bmbo-horizontal-nav',
+		className={classNames('bmbo-nav', 'bmbo-vertical-nav',
 			`bmbo-${type || 'lead'}`,
 			className,
 		)}
@@ -17,10 +17,10 @@ const HorizontalNav = ({ type, children, className, ...props }) => (
 );
 
 
-HorizontalNav.propTypes = {
+VerticalNav.propTypes = {
 	type: PropTypes.string,
 	children: PropTypes.node,
 	className: PropTypes.string,
 };
 
-export default HorizontalNav;
+export default VerticalNav;

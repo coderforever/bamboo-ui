@@ -1,11 +1,12 @@
-@mixin navBacColor($color) {
+@charset "UTF-8";
+
+@import "./horizontal";
+@import "./vertical";
+
+@mixin navBarColor($color, $activeLineColor: '') {
 	&.bmbo-#{$color} {
 		background: var(--bmbo-#{$color});
 	}
-}
-
-@mixin navBarColor($color, $activeLineColor: '') {
-	@include navBacColor($color);
 
 	@if $activeLineColor != '' {
 		&.bmbo-#{$color} {
@@ -19,65 +20,21 @@
 	}
 }
 
-@mixin navItem() {
-	display: inline-block;
-	position: relative;
-	padding: 15px 20px;
-	white-space: nowrap;
+@mixin navItemColor($color) {
+	&.bmbo-#{$color} {
+		> .bmbo-nav-item {
+			background: var(--bmbo-#{$color});
+		}
+	}
 }
 
-.bmbo-horizontal-nav {
+.bmbo-nav {
 	padding: 0;
 	margin: 0;
 	color: #FFF;
 	cursor: default;
 
 	transition: background var(--bmbo-duration);
-
-	// Navigation first level
-	> .bmbo-nav-group,
-	> .bmbo-nav-item {
-		@include navItem;
-
-		.bmbo-nav-title:before,
-		a:before {
-			content: '';
-			position: absolute;
-			left: 0;
-			right: 0;
-			top: 0;
-			bottom: 0;
-		}
-
-		&:after {
-			content: '';
-			position: absolute;
-			bottom: 5px;
-			height: 3px;
-			left: 10px;
-			right: 10px;
-			background: #FFF;
-
-			opacity: 0;
-			transform: scaleX(0);
-
-			transition: transform var(--bmbo-duration), opacity var(--bmbo-duration);
-		}
-
-		&.bmbo-hover,
-		&:hover,
-		&.bmbo-active {
-			&:after {
-				opacity: 1;
-				transform: scaleX(1);
-			}
-		}
-
-		&.bmbo-disabled {
-			pointer-events: none;
-			opacity: 0.5;
-		}
-	}
 
 	@include navBarColor(lead, lead-active);
 	@include navBarColor(deprecated);
@@ -91,7 +48,7 @@
 
 .bmbo-nav-list {
 	margin: 0;
-	padding: 0;
+	padding: 1px;
 	list-style: none;
 	position: absolute;
 	user-select: none;
@@ -120,14 +77,14 @@
 		pointer-events: none;
 	}
 
-	@include navBacColor(lead);
-	@include navBacColor(deprecated);
-	@include navBacColor(primary);
-	@include navBacColor(info);
-	@include navBacColor(success);
-	@include navBacColor(warning);
-	@include navBacColor(danger);
-	@include navBacColor(forbid);
+	@include navItemColor(lead);
+	@include navItemColor(deprecated);
+	@include navItemColor(primary);
+	@include navItemColor(info);
+	@include navItemColor(success);
+	@include navItemColor(warning);
+	@include navItemColor(danger);
+	@include navItemColor(forbid);
 
 	> .bmbo-nav-item {
 		@include navItem;

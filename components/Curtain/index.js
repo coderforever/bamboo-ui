@@ -62,6 +62,8 @@ class Curtain extends React.Component {
 
 		if (animateStatus === ANIMATE_STATUS_NONE) return null;
 
+		delete props.visible;
+
 		return (
 			<div
 				className={classNames('bmbo-curtain', {
