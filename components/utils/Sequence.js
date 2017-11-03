@@ -43,6 +43,10 @@ class Sequence {
 		return taskHolder;
 	}
 
+	stop() {
+		this.taskHolder = null;
+	}
+
 	destroy() {
 		this._destroy = true;
 	}

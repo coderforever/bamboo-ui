@@ -18,3 +18,4 @@ export Curtain from './Curtain';
 export Progress from './Progress';
 export Tooltip from './Tooltip';
 export DynamicNumber from './DynamicNumber';
+export DynamicString from './DynamicString';

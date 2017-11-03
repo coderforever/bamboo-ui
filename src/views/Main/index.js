@@ -18,6 +18,7 @@ import CurtainPage from '../Components/CurtainPage';
 import ProgressPage from '../Components/ProgressPage';
 import TooltipPage from '../Components/TooltipPage';
 import DynamicNumberPage from '../Components/DynamicNumberPage';
+import DynamicStringPage from '../Components/DynamicStringPage';
 
 import Navigation from '../../../components/Nav';
 
@@ -54,6 +55,7 @@ class Main extends React.Component {
 						<Navigation.Item onClick={() => { this.goPage('/progress'); }}>Progress</Navigation.Item>
 						<Navigation.Item onClick={() => { this.goPage('/tooltip'); }}>Tooltip</Navigation.Item>
 						<Navigation.Item onClick={() => { this.goPage('/dynamic_number'); }}>Dynamic Number</Navigation.Item>
+						<Navigation.Item onClick={() => { this.goPage('/dynamic_string'); }}>Dynamic String</Navigation.Item>
 					</Navigation.Group>
 				</Navigation>
 
@@ -71,6 +73,7 @@ class Main extends React.Component {
 					<Route path="/progress" component={ProgressPage} />
 					<Route path="/tooltip" component={TooltipPage} />
 					<Route path="/dynamic_number" component={DynamicNumberPage} />
+					<Route path="/dynamic_string" component={DynamicStringPage} />
 				</div>
 			</div>
 		);

@@ -50,6 +50,22 @@
 	overflow: scroll;
 }
 
+.bmbo-text-cursor {
+	display: inline-block;
+	height: 1em;
+	width: 0.3em;
+	background: currentColor;
+	vertical-align: text-top;
+
+	animation: bmbo-text-cursor var(--bmbo-duration-slow) linear infinite;
+}
+
+@keyframes bmbo-text-cursor {
+	0% { opacity: 1; }
+	50% { opacity: 0; }
+	100% { opacity: 1; }
+}
+
 .bmbo-hidden {
 	opacity: 0;
 	transition: none!important;

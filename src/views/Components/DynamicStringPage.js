@@ -2,23 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-	Navigation, Row, Col, Button, DynamicNumber,
+	Navigation, Row, Col, Button, DynamicString,
 	Form, Input, Radio, Checkbox, Tooltip,
 } from '../../../components';
 
 import { TYPE_LIST, SIZE_LIST } from '../../utils/enum';
 import { toString } from '../../utils/propsUtil';
 
-class DynamicNumberPage extends React.Component {
+class DynamicStringPage extends React.Component {
 	constructor() {
 		super();
 		this.state = {
 			form: {
-				value: 10,
+				value: 'Hello, Bamboo UI~',
 				duration: 1000,
-				decimal: 0,
 				step: 1,
 				animateType: 0,
+				cursor: false,
 			},
 		};
 	}
@@ -26,9 +26,7 @@ class DynamicNumberPage extends React.Component {
 	getSampleCode = () => {
 		const form = { ...this.state.form };
 
-		form.value = Number(form.value);
 		form.duration = Number(form.duration);
-		form.decimal = Number(form.decimal);
 		form.step = Number(form.step);
 
 		if (form.animateType === 0) {
@@ -39,8 +37,7 @@ class DynamicNumberPage extends React.Component {
 		delete form.animateType;
 
 		return `
-当前值：
-<DynamicNumber${toString(form, { duration: 1000, decimal: 0 })} />
+<DynamicString${toString(form, { duration: 1000 })} />
 `.replace(/\t/g, '   ').trim();
 	};
 
@@ -53,18 +50,17 @@ class DynamicNumberPage extends React.Component {
 				</Col>
 
 				<Col xs="2/3">
-					<h1>动态数字</h1>
+					<h1>动态文字</h1>
 					<p>
-						动态数字可以使你通过动画形式展示数字内容。
+						动态文字可以使你通过动画形式展示文字内容。
 					</p>
 
 					<h2>试一试</h2>
 					<div className="measurement">
 						<div className="preview">
-							当前值：
-							<DynamicNumber
-								value={Number(form.value)}
-								decimal={Number(form.decimal)}
+							<DynamicString
+								value={form.value}
+								cursor={form.cursor}
 								duration={form.animateType === 0 ? Number(form.duration) : null}
 								step={form.animateType === 1 ? Number(form.step) : null}
 							/>
@@ -72,10 +68,10 @@ class DynamicNumberPage extends React.Component {
 						<div>
 							<Form instance={this} path="form">
 								<Form.Field name="value" title="Value">
-									<Input type="number" />
+									<Input />
 								</Form.Field>
-								<Form.Field name="decimal" title="Decimal (>=0)">
-									<Input type="number" />
+								<Form.Field name="cursor" title="Cursor">
+									<Checkbox>cursor</Checkbox>
 								</Form.Field>
 								<Form.Field name="animateType" title="Animation">
 									<Radio value={0}>By Duration</Radio>
@@ -100,8 +96,8 @@ class DynamicNumberPage extends React.Component {
 	}
 }
 
-DynamicNumberPage.propTypes = {
+DynamicStringPage.propTypes = {
 	history: PropTypes.object,
 };
 
-export default DynamicNumberPage;
+export default DynamicStringPage;

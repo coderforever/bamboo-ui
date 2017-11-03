@@ -10,11 +10,6 @@ class DynamicNumber extends React.Component {
 			current: 0,
 		};
 
-		// Not affect render, just use as inner variable
-		this.origin = 0;
-		this.target = 0;
-		this.passTime = 0;
-
 		this.seq = new Sequence();
 	}
 
@@ -32,11 +27,14 @@ class DynamicNumber extends React.Component {
 
 	doAnimation = (props) => {
 		const { value, duration, step, decimal } = props;
+		const currentValue = Number(this.state.current);
 
 		// Ignore if value not change
-		if (value === this.state.target) return;
+		if (value === currentValue) {
+			this.seq.stop();
+			return;
+		}
 
-		const currentValue = Number(this.state.current);
 		const startValue = isNaN(currentValue) ? 0 : currentValue;
 
 		if (step) {
