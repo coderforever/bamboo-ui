@@ -106,7 +106,6 @@ export const getWinHeight = () => {
 export const getEnablePosition = (surroundRect, targetRect, position = 'dr', switchPos = true) => {
 	if (typeof window === 'undefined') return { x: 0, y: 0 };
 
-	// TODO: use left & top only
 	const { width: sw = 0, height: sh = 0 } = surroundRect;
 	const sx = surroundRect.left || 0;
 	const sy = surroundRect.top || 0;

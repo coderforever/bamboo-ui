@@ -11,6 +11,8 @@ class NavGroup extends React.Component {
 		this.state = {
 			hover: false,
 			rect: null,
+
+			open: false,
 		};
 	}
 
@@ -34,6 +36,12 @@ class NavGroup extends React.Component {
 		this.setState({ hover: false });
 	};
 
+	onClick = () => {
+		this.setState(({ open }) => ({
+			open: !open,
+		}));
+	};
+
 	setItemRef = (ele) => {
 		this.$item = ele;
 	};
@@ -44,7 +52,8 @@ class NavGroup extends React.Component {
 
 	render() {
 		const { title, children, active, disabled, className, ...props } = this.props;
-		const { hover, rect } = this.state;
+		const { navVertical } = this.context;
+		const { hover, rect, open } = this.state;
 
 		return (
 			<li
@@ -62,14 +71,24 @@ class NavGroup extends React.Component {
 			>
 				<div
 					className="bmbo-nav-title"
+					role="button"
+					tabIndex={-1}
+					onClick={this.onClick}
 				>
 					{title}
+					{navVertical && <span
+						className={classNames(
+							'bmbo-caret',
+							open && 'bmbo-caret-down',
+						)}
+					/>}
 				</div>
 
 				<NavList
 					visible={hover}
 					rect={rect}
 					setRef={this.setListRef}
+					open={open}
 				>
 					{children}
 				</NavList>
@@ -84,6 +103,11 @@ NavGroup.propTypes = {
 	children: PropTypes.node,
 	active: PropTypes.bool,
 	disabled: PropTypes.bool,
+};
+
+NavGroup.contextTypes = {
+	navVertical: PropTypes.bool,
+	navInline: PropTypes.bool,
 };
 
 export default NavGroup;

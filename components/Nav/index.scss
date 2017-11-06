@@ -11,6 +11,7 @@
 	@if $activeLineColor != '' {
 		&.bmbo-#{$color} {
 			> .bmbo-nav-group,
+			.bmbo-nav-group > .bmbo-nav-title,
 			> .bmbo-nav-item {
 				&:after {
 					background: var(--bmbo-#{$activeLineColor});
@@ -100,6 +101,7 @@
 			background: rgba(#FFF, 0.1);
 			transform: scaleX(0.3);
 			opacity: 0;
+			pointer-events: none;
 
 			transition: all var(--bmbo-duration);
 		}

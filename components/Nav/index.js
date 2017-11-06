@@ -11,11 +11,13 @@ class Nav extends React.Component {
 		return {
 			navType: this.props.type,
 			navVertical: this.props.vertical,
+			navInline: this.props.inline,
 		};
 	}
 
 	render() {
 		const { vertical, ...props } = this.props;
+		delete props.inline;
 
 		if (vertical) return <VerticalNav {...props} />;
 		return <HorizontalNav {...props} />;
@@ -30,6 +32,7 @@ Nav.propTypes = {
 Nav.childContextTypes = {
 	navType: PropTypes.string,
 	navVertical: PropTypes.bool,
+	navInline: PropTypes.bool,
 };
 
 Nav.Group = NavGroup;

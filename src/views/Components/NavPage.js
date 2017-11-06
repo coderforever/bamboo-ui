@@ -18,6 +18,7 @@ class NavPage extends React.Component {
 				type: '',
 				active: -1,
 				vertical: false,
+				inline: false,
 			},
 		};
 	}
@@ -64,7 +65,7 @@ class NavPage extends React.Component {
 						<div className="preview">
 							<Row>
 								<Col xs={form.vertical ? '1/3' : '1/1'}>
-									<Navigation type={form.type} vertical={form.vertical}>
+									<Navigation type={form.type} vertical={form.vertical} inline={form.inline}>
 										<Navigation.Group title="Group 1" active={form.active === 0}>
 											<Navigation.Item>Item 1</Navigation.Item>
 											<Navigation.Item>Item 2</Navigation.Item>
@@ -103,6 +104,9 @@ class NavPage extends React.Component {
 								<Form.Field name="vertical" title="Vertical">
 									<Checkbox>vertical</Checkbox>
 								</Form.Field>
+								{form.vertical && <Form.Field name="inline" title="Inline">
+									<Checkbox>inline</Checkbox>
+								</Form.Field>}
 							</Form>
 						</div>
 						<pre className="code">

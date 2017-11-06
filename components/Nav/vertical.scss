@@ -1,26 +1,15 @@
 @charset "UTF-8";
 
-@mixin navItem() {
+@mixin verticalNavItem() {
 	position: relative;
 	padding: 15px 20px;
 	white-space: nowrap;
 }
 
 .bmbo-vertical-nav {
-	// Navigation first level
-	> .bmbo-nav-group,
-	> .bmbo-nav-item {
-		@include navItem;
-
-		.bmbo-nav-title:before,
-		a:before {
-			content: '';
-			position: absolute;
-			left: 0;
-			right: 0;
-			top: 0;
-			bottom: 0;
-		}
+	.bmbo-nav-group > .bmbo-nav-title,
+	.bmbo-nav-item {
+		@include verticalNavItem;
 
 		&:after {
 			content: '';
@@ -36,7 +25,37 @@
 
 			transition: transform var(--bmbo-duration), opacity var(--bmbo-duration);
 		}
+	}
 
+	.bmbo-nav-group {
+		> .bmbo-nav-title {
+			> .bmbo-caret {
+				position: absolute;
+				right: 10px;
+				top: 19px;
+			}
+		}
+
+		&.bmbo-hover,
+		&:hover,
+		&.bmbo-active {
+			> .bmbo-nav-title {
+				&:after {
+					opacity: 1;
+					transform: scaleY(1);
+				}
+			}
+		}
+
+		&.bmbo-disabled {
+			> .bmbo-nav-title {
+				pointer-events: none;
+				opacity: 0.5;
+			}
+		}
+	}
+
+	.bmbo-nav-item {
 		&.bmbo-hover,
 		&:hover,
 		&.bmbo-active {
@@ -50,5 +69,24 @@
 			pointer-events: none;
 			opacity: 0.5;
 		}
+	}
+
+	.bmbo-nav-item {
+		a:before {
+			content: '';
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+		}
+	}
+
+	// Nav list
+	.bmbo-nav-list {
+		position: static;
+		background: rgba(#FFF, 0.05);
+		overflow-y: hidden;
+		padding: 0;
 	}
 }

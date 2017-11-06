@@ -12,6 +12,8 @@ import Sequence from '../utils/Sequence';
 
 const $holder = getHolder();
 
+const DRILL_SPEED = 4 / 5;
+
 class NavList extends React.Component {
 	constructor() {
 		super();
@@ -19,6 +21,7 @@ class NavList extends React.Component {
 			animateStatus: ANIMATE_STATUS_NONE,
 			x: 0,
 			y: 0,
+			height: 0,
 		};
 		this.seq = new Sequence();
 	}
@@ -46,9 +49,67 @@ class NavList extends React.Component {
 	};
 
 	checkUpdate = (prevProps, nextProps) => {
-		if (!prevProps.visible === !nextProps.visible) return;
+		if (this.context.navInline) {
+			if (!prevProps.open === !nextProps.open) return;
+			this.doDrillAnimation(nextProps);
+		} else {
+			if (!prevProps.visible === !nextProps.visible) return;
+			this.doFloatAnimation(nextProps);
+		}
+	};
 
-		if (nextProps.visible) {
+	doDrillAnimation = (props) => {
+		if (props.open) {
+			this.seq.next(() => {
+				this.setState({
+					height: 0,
+				});
+			}).next(() => {
+				const { scrollHeight } = this.$list;
+				const height = this.state.height || 0;
+
+				let currentHeight = (height * DRILL_SPEED) + (scrollHeight * (1 - DRILL_SPEED));
+				if (scrollHeight - currentHeight <= 1) {
+					currentHeight = scrollHeight;
+					this.setState({ height: null });
+					return false;
+				}
+
+				this.setState({ height: currentHeight });
+
+				return true;
+			}, {
+				loop: true,
+			});
+		} else {
+			this.seq.next(() => {
+				this.setState({
+					height: null,
+				});
+			}).next(() => {
+				return;
+				// TODO: do it!
+				const { scrollHeight } = this.$list;
+				const height = this.state.height || scrollHeight;
+
+				let currentHeight = (height * DRILL_SPEED) + (scrollHeight * (1 - DRILL_SPEED));
+				if (scrollHeight - currentHeight <= 1) {
+					currentHeight = scrollHeight;
+					this.setState({ height: null });
+					return false;
+				}
+
+				this.setState({ height: currentHeight });
+
+				return true;
+			}, {
+				loop: true,
+			});
+		}
+	};
+
+	doFloatAnimation = (props) => {
+		if (props.visible) {
 			this.seq.next(() => {
 				this.setState({
 					animateStatus: ANIMATE_STATUS_INIT,
@@ -62,8 +123,23 @@ class NavList extends React.Component {
 
 				const pos = navVertical ? 'r' : 'b';
 
+				// Add offset to let nav list match with parent
+				const superRect = {
+					left: rect.left,
+					top: rect.top,
+					width: rect.width,
+					height: rect.height,
+				};
+				if (navVertical) {
+					superRect.top -= 1;
+					superRect.height += 2;
+				} else {
+					superRect.left -= 1;
+					superRect.width += 2;
+				}
+
 				this.setState({
-					...getEnablePosition(rect, listRect, pos),
+					...getEnablePosition(superRect, listRect, pos),
 					animateStatus: ANIMATE_STATUS_SHOWING,
 				});
 			}).next(() => {
@@ -85,33 +161,53 @@ class NavList extends React.Component {
 
 	render() {
 		const { children, rect } = this.props;
-		const { navType, navVertical } = this.context;
-		const { animateStatus, x, y, direct } = this.state;
+		const { navType, navVertical, navInline } = this.context;
+		const { animateStatus, x, y, height } = this.state;
 
-		if (animateStatus === ANIMATE_STATUS_NONE) return null;
+		if (!navVertical || !navInline) {
+			// Float display
 
-		return createPortal(
-			<div
-				className={classNames('bmbo-nav-list', {
-					'bmbo-hidden': animateStatus === ANIMATE_STATUS_INIT,
-					'bmbo-showing': animateStatus === ANIMATE_STATUS_SHOWING,
-					'bmbo-hiding': animateStatus === ANIMATE_STATUS_HIDING,
-				},
-				`bmbo-${navType || 'lead'}`,
-				direct && `bmbo-${direct}`,
-				)}
+			if (animateStatus === ANIMATE_STATUS_NONE) return null;
+
+			return createPortal(
+				<div
+					className={classNames('bmbo-nav-list', {
+							'bmbo-hidden': animateStatus === ANIMATE_STATUS_INIT,
+							'bmbo-showing': animateStatus === ANIMATE_STATUS_SHOWING,
+							'bmbo-hiding': animateStatus === ANIMATE_STATUS_HIDING,
+						},
+						`bmbo-${navType || 'lead'}`,
+					)}
+					ref={this.setListRef}
+					style={{ left: `${x}px`, top: `${y}px`, minWidth: `${rect.width}px` }}
+					onTransitionEnd={this.onTransitionEnd}
+				>
+					{children}
+				</div>
+				, $holder);
+		}
+
+		// Inline display
+		const style = {};
+		if (height !== null) {
+			style.height = `${height}px`;
+		}
+
+		return (
+			<ul
+				className="bmbo-nav-list"
+				style={style}
 				ref={this.setListRef}
-				style={{ left: `${x}px`, top: `${y}px`, minWidth: `${rect.width}px` }}
-				onTransitionEnd={this.onTransitionEnd}
 			>
 				{children}
-			</div>
-		, $holder);
+			</ul>
+		);
 	}
 }
 
 NavList.propTypes = {
 	visible: PropTypes.bool,
+	open: PropTypes.bool,
 	rect: PropTypes.object,
 
 	setRef: PropTypes.func,
@@ -122,6 +218,7 @@ NavList.propTypes = {
 NavList.contextTypes = {
 	navType: PropTypes.string,
 	navVertical: PropTypes.bool,
+	navInline: PropTypes.bool,
 };
 
 export default NavList;
