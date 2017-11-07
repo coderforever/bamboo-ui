@@ -12,7 +12,7 @@ import Sequence from '../utils/Sequence';
 
 const $holder = getHolder();
 
-const DRILL_SPEED = 4 / 5;
+const DRILL_SPEED = 3 / 5;
 
 class NavList extends React.Component {
 	constructor() {
@@ -65,10 +65,10 @@ class NavList extends React.Component {
 					height: 0,
 				});
 			}).next(() => {
-				const { scrollHeight } = this.$list;
-				const height = this.state.height || 0;
+				const clientHeight = this.$list.clientHeight;
+				const scrollHeight = this.$list.scrollHeight;
 
-				let currentHeight = (height * DRILL_SPEED) + (scrollHeight * (1 - DRILL_SPEED));
+				let currentHeight = (clientHeight * DRILL_SPEED) + (scrollHeight * (1 - DRILL_SPEED));
 				if (scrollHeight - currentHeight <= 1) {
 					currentHeight = scrollHeight;
 					this.setState({ height: null });
@@ -87,15 +87,11 @@ class NavList extends React.Component {
 					height: null,
 				});
 			}).next(() => {
-				return;
-				// TODO: do it!
-				const { scrollHeight } = this.$list;
-				const height = this.state.height || scrollHeight;
+				const clientHeight = this.$list.clientHeight;
 
-				let currentHeight = (height * DRILL_SPEED) + (scrollHeight * (1 - DRILL_SPEED));
-				if (scrollHeight - currentHeight <= 1) {
-					currentHeight = scrollHeight;
-					this.setState({ height: null });
+				const currentHeight = clientHeight * DRILL_SPEED;
+				if (clientHeight <= 1) {
+					this.setState({ height: 0 });
 					return false;
 				}
 
