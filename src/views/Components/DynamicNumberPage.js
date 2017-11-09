@@ -69,7 +69,7 @@ class DynamicNumberPage extends React.Component {
 								step={form.animateType === 1 ? Number(form.step) : null}
 							/>
 						</div>
-						<div>
+						<div className="form">
 							<Form instance={this} path="form">
 								<Form.Field name="value" title="Value">
 									<Input type="number" />

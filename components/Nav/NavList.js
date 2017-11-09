@@ -1,18 +1,15 @@
 import React from 'react';
-import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import {
 	ANIMATE_STATUS_NONE, ANIMATE_STATUS_INIT,
 	ANIMATE_STATUS_SHOWING, ANIMATE_STATUS_SHOWN, ANIMATE_STATUS_HIDING,
-	getHolder, getEnablePosition,
+	createPortal, getEnablePosition,
 } from '../utils/uiUtil';
 import Sequence from '../utils/Sequence';
 
-const $holder = getHolder();
-
-const DRILL_SPEED = 3 / 5;
+const DRILL_SPEED = 4 / 5;
 
 class NavList extends React.Component {
 	constructor() {
@@ -68,7 +65,9 @@ class NavList extends React.Component {
 				const clientHeight = this.$list.clientHeight;
 				const scrollHeight = this.$list.scrollHeight;
 
-				let currentHeight = (clientHeight * DRILL_SPEED) + (scrollHeight * (1 - DRILL_SPEED));
+				let currentHeight = Math.ceil(
+					(clientHeight * DRILL_SPEED) + (scrollHeight * (1 - DRILL_SPEED))
+				);
 				if (scrollHeight - currentHeight <= 1) {
 					currentHeight = scrollHeight;
 					this.setState({ height: null });
@@ -77,9 +76,10 @@ class NavList extends React.Component {
 
 				this.setState({ height: currentHeight });
 
-				return true;
+				return null;
 			}, {
 				loop: true,
+				frame: 1,
 			});
 		} else {
 			this.seq.next(() => {
@@ -89,7 +89,7 @@ class NavList extends React.Component {
 			}).next(() => {
 				const clientHeight = this.$list.clientHeight;
 
-				const currentHeight = clientHeight * DRILL_SPEED;
+				const currentHeight = Math.floor(clientHeight * DRILL_SPEED);
 				if (clientHeight <= 1) {
 					this.setState({ height: 0 });
 					return false;
@@ -97,9 +97,10 @@ class NavList extends React.Component {
 
 				this.setState({ height: currentHeight });
 
-				return true;
+				return null;
 			}, {
 				loop: true,
+				frame: 1,
 			});
 		}
 	};
@@ -148,7 +149,7 @@ class NavList extends React.Component {
 					return false;
 				}
 				this.setState({ animateStatus: ANIMATE_STATUS_HIDING });
-				return true;
+				return null;
 			}).next(() => {
 				this.setState({ animateStatus: ANIMATE_STATUS_NONE });
 			}, { delay: 1000 });
@@ -179,8 +180,8 @@ class NavList extends React.Component {
 					onTransitionEnd={this.onTransitionEnd}
 				>
 					{children}
-				</div>
-				, $holder);
+				</div>,
+			);
 		}
 
 		// Inline display

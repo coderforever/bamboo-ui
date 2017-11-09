@@ -1,3 +1,4 @@
+import { createPortal as oriCreatePortal } from 'react-dom';
 import { canUseDOM } from './envUtil';
 
 export const ANIMATE_STATUS_NONE = 0;
@@ -51,6 +52,12 @@ export const requestAnimationFrame = (func, delayFrame = 1) => {
 	}
 
 	doAction();
+};
+
+export const createPortal = (node) => {
+	if (!canUseDOM) return null;
+
+	return oriCreatePortal(node, $bambooHolder);
 };
 
 /**

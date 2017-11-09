@@ -161,7 +161,7 @@ class Slider extends React.Component {
 
 				if (markValue - stick <= pinValue && pinValue <= markValue + stick) {
 					pinValue = markValue;
-					return true;
+					return null;
 				}
 
 				return false;

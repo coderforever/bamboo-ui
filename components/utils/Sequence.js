@@ -67,23 +67,33 @@ class Sequence {
 					try {
 						if (this.taskHolder !== taskHolder || this._destroy) return;
 
+						const taskCallback = task.callback;
+						const needCallback = taskCallback.length !== 0;
+
+						// Do next
+						const doNext = () => {
+							// If is a looper
+							if (task.config.loop) {
+								step();
+								return;
+							}
+
+							// Next task
+							taskHolder.nextStep();
+							step();
+						};
+
 						// Execute task
-						const taskResult = task.callback();
+						const taskResult = taskCallback(doNext);
 						if (taskResult === false) {
 							this.taskHolder = null;
 							resolve();
 							return;
 						}
 
-						// If is a looper
-						if (task.config.loop) {
-							step();
-							return;
+						if (!needCallback) {
+							doNext();
 						}
-
-						// Next task
-						taskHolder.nextStep();
-						step();
 					} catch (err) {
 						reject(err);
 					}

@@ -3,11 +3,9 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { canUseDOM } from '../utils/envUtil';
-import { getHolder } from '../utils/uiUtil';
 
 import MenuList from './MenuList';
 
-const $menuHolder = getHolder();
 let $currentMenu;
 
 if (canUseDOM) {
@@ -32,7 +30,6 @@ class Menu extends React.Component {
 	getChildContext() {
 		return {
 			hideMenu: this.hideMenu,
-			menuHolder: $menuHolder,
 			menuSize: this.props.size,
 		};
 	}
@@ -69,7 +66,7 @@ class Menu extends React.Component {
 			>
 				{children}
 
-				{show && <MenuList holder={$menuHolder} list={menu} x={x} y={y} />}
+				{show && <MenuList list={menu} x={x} y={y} />}
 			</div>
 		);
 	}
@@ -84,7 +81,6 @@ Menu.propTypes = {
 
 Menu.childContextTypes = {
 	hideMenu: PropTypes.func,
-	menuHolder: PropTypes.object,
 	menuSize: PropTypes.string,
 };
 

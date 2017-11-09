@@ -1,11 +1,10 @@
 import React from 'react';
-import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import {
 	ANIMATE_STATUS_NONE, ANIMATE_STATUS_SHOWING, ANIMATE_STATUS_SHOWN, ANIMATE_STATUS_HIDING,
-	getHolder, getScrollbarWidth, hasVerticalScroll,
+	createPortal, getScrollbarWidth, hasVerticalScroll,
 } from '../utils/uiUtil';
 import { canUseDOM } from '../utils/envUtil';
 import { mapChildrenByType, mapChildrenByNotType } from '../utils/componentUtil';
@@ -20,7 +19,6 @@ import ModalLoading, { BAMBOO_MODAL_LOADING } from './ModalLoading';
 import Button from '../Button';
 
 let modalList = [];
-const $holder = getHolder();
 
 // ========================================================
 // =                          UI                          =
@@ -256,8 +254,8 @@ class Modal extends React.Component {
 					{$preface}
 					{$modal}
 				</div>
-			</div>
-			, $holder);
+			</div>,
+		);
 	}
 }
 

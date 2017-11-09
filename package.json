@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "React base UI component library",
   "scripts": {
-    "test": "jest",
+    "test": "jest components",
     "eslint": "eslint src components",
     "eslintFix": "eslint --fix src components",
     "vendor": "webpack --config vendor.webpack.config.js",

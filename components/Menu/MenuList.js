@@ -1,11 +1,10 @@
 import React from 'react';
-import { createPortal } from 'react-dom';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 import {
 	ANIMATE_STATUS_NONE, ANIMATE_STATUS_SHOWING, ANIMATE_STATUS_SHOWN,
-	getEnablePosition, requestAnimationFrame,
+	getEnablePosition, createPortal,
 } from '../utils/uiUtil';
 import Sequence from '../utils/Sequence';
 
@@ -50,9 +49,7 @@ class MenuList extends React.Component {
 
 	render() {
 		const { list = [] } = this.props;
-		const { menuHolder, menuSize } = this.context;
-
-		if (!menuHolder) return null;
+		const { menuSize } = this.context;
 
 		const { x, y, animateStatus } = this.state;
 
@@ -75,8 +72,8 @@ class MenuList extends React.Component {
 					if (!item) return null;
 					return <MenuItem key={index} item={item} />;
 				})}
-			</ul>
-		, menuHolder);
+			</ul>,
+		);
 	}
 }
 
@@ -89,7 +86,6 @@ MenuList.propTypes = {
 };
 
 MenuList.contextTypes = {
-	menuHolder: PropTypes.object,
 	menuSize: PropTypes.string,
 };
 

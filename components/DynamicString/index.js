@@ -66,7 +66,7 @@ class DynamicString extends React.Component {
 					if (current.length === value.length) return false;
 				}
 
-				return true;
+				return null;
 			}, {
 				loop: true,
 			});
@@ -91,7 +91,7 @@ class DynamicString extends React.Component {
 					this.setState({ current: value.slice(0, Math.floor(value.length * desPtg)) });
 				}
 
-				return true;
+				return null;
 			}, {
 				loop: true,
 			});

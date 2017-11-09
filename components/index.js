@@ -19,3 +19,4 @@ export Progress from './Progress';
 export Tooltip from './Tooltip';
 export DynamicNumber from './DynamicNumber';
 export DynamicString from './DynamicString';
+export AutoComplete from './AutoComplete';

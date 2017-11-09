@@ -54,7 +54,7 @@ class DynamicNumber extends React.Component {
 				current += frameStep;
 				this.setState({ current: current.toFixed(decimal) });
 
-				return true;
+				return null;
 			}, {
 				loop: true,
 			});
@@ -75,7 +75,7 @@ class DynamicNumber extends React.Component {
 					.toFixed(decimal);
 				this.setState({ current });
 
-				return true;
+				return null;
 			}, {
 				loop: true,
 			});

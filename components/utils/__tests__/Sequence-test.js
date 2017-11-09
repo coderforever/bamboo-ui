@@ -125,4 +125,18 @@ describe('Sequence', () => {
 			expect(times).toBe(10);
 		});
 	});
+
+	test('Sequence callback next', () => {
+		const seq = new Sequence();
+		seq.next((done) => {
+			expect(done).toBeTruthy();
+		}).next(() => {
+			expect(true).toBe(false);
+			return false;
+		});
+
+		return new Promise((resolve) => {
+			setTimeout(resolve, 2000);
+		});
+	});
 });

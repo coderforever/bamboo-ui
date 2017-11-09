@@ -52,7 +52,7 @@ class NavGroup extends React.Component {
 
 	render() {
 		const { title, children, active, disabled, className, ...props } = this.props;
-		const { navVertical } = this.context;
+		const { navVertical, navInline } = this.context;
 		const { hover, rect, open } = this.state;
 
 		return (
@@ -79,7 +79,7 @@ class NavGroup extends React.Component {
 					{navVertical && <span
 						className={classNames(
 							'bmbo-caret',
-							open && 'bmbo-caret-down',
+							navInline && open && 'bmbo-caret-down',
 						)}
 					/>}
 				</div>

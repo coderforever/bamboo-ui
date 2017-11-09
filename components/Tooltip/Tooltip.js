@@ -1,16 +1,14 @@
 import React from 'react';
-import { createPortal } from 'react-dom';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 import {
 	ANIMATE_STATUS_NONE, ANIMATE_STATUS_INIT,
 	ANIMATE_STATUS_SHOWING, ANIMATE_STATUS_SHOWN, ANIMATE_STATUS_HIDING,
-	getHolder, getEnablePosition,
+	createPortal, getEnablePosition,
 } from '../utils/uiUtil';
 import Sequence from '../utils/Sequence';
 
-const $holder = getHolder();
 const ARROW_DES = 5;
 
 class Tooltip extends React.Component {
@@ -129,8 +127,8 @@ class Tooltip extends React.Component {
 					className="bmbo-tooltip-arrow"
 					style={{ marginLeft: `${arrowOffsetX}px`, marginTop: `${arrowOffsetY}px` }}
 				/>
-			</div>
-		, $holder);
+			</div>,
+		);
 	}
 }
 
