@@ -94,8 +94,10 @@ class AutoComplete extends React.PureComponent {
 				const cur = matcher[i];
 
 				// String match
-				if (typeof cur === 'string' && cur.toUpperCase().includes(myStr)) {
-					list.push({ value: cur });
+				if (typeof cur === 'string') {
+					if (cur.toUpperCase().includes(myStr)) {
+						list.push({ value: cur });
+					}
 				} else {
 					const { value } = cur;
 					if (String(value).toUpperCase().includes(myStr)) {
