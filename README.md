@@ -3,3 +3,8 @@
 在线演示请点击[这里](http://zombiej.github.io/bamboo-ui).
 
 (基于react 16开发。项目未完成，请勿直接使用)
+
+### 安装
+```bash
+npm install --save bamboo-ui
+```

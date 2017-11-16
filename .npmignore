@@ -1,0 +1,13 @@
+.*
+assets/
+builds/
+components/
+node_modules/
+res/
+scripts/
+src/
+*.config.js
+Gruntfile.js
+index.html
+*.pid
+yarn-error.log

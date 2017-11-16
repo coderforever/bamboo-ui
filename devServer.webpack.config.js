@@ -1,12 +1,14 @@
-/**
- * Created by jiljiang on 2016/10/12.
- */
-
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const isProd = process.env.NODE_ENV === 'production';
+const cssMin = isProd ? '&minimize' : '';
+
+const extractAppCSS = new ExtractTextPlugin({
+	filename: 'style.css',
+	allChunks: true,
+});
 
 module.exports = {
 	devtool: isProd ? 'source-map' : 'cheap-eval-source-map',
@@ -16,9 +18,7 @@ module.exports = {
 			!isProd ? 'react-hot-loader/patch' : null,
 			!isProd ? 'webpack-hot-middleware/client' : null,
 			'./src/index',
-		].filter(function (item) {
-			return item;
-		}),
+		].filter(item => item),
 	},
 
 	output: {
@@ -28,8 +28,7 @@ module.exports = {
 	},
 
 	plugins: [
-		new ExtractTextPlugin('style.css', { allChunks: true }),
-		new webpack.optimize.OccurenceOrderPlugin(),
+		extractAppCSS,
 		new webpack.HotModuleReplacementPlugin(),
 
 		new webpack.DefinePlugin({
@@ -68,6 +67,89 @@ module.exports = {
 		loaders: [
 			{
 				test: /\.js$/,
+				use: [
+					{
+						loader: 'babel-loader',
+					},
+				],
+				exclude: /node_modules/,
+				include: __dirname,
+			},
+			{
+				test: /\.scss/,
+				use: isProd ? extractAppCSS.extract({
+					fallback: 'style-loader',
+					use: [
+						`css-loader?sourceMap&importLoaders=1&modules&localIdentName=bmbo_[local]_[hash:base64:5]${cssMin}`,
+						'postcss-loader?sourceMap=inline',
+						'sass-loader?sourceMap',
+					],
+				}) : [
+					'style-loader',
+					'css-loader?sourceMap&importLoaders=1&modules&localIdentName=bmbo_[local]_[hash:base64:5]',
+					'postcss-loader?sourceMap=inline',
+					'sass-loader?sourceMap',
+				],
+				exclude: [/components/, /main.scss/],
+			},
+			{
+				test: /\.scss/,
+				use: isProd ? extractAppCSS.extract({
+					fallback: 'style-loader',
+					use: [
+						`css-loader?sourceMap&importLoaders=1${cssMin}`,
+						'postcss-loader?sourceMap=inline',
+						'sass-loader?sourceMap',
+					],
+				}) : [
+					'style-loader',
+					'css-loader?sourceMap&importLoaders=1',
+					'postcss-loader?sourceMap=inline',
+					'sass-loader?sourceMap',
+				],
+				include: [/components/, /main.scss/],
+			},
+			{
+				test: /\.css/,
+				use: isProd ? extractAppCSS.extract({
+					fallback: 'style-loader',
+					use: [
+						`css-loader?sourceMap&importLoaders=1${cssMin}`,
+					],
+				}) : [
+					'style-loader',
+					'css-loader?sourceMap&importLoaders=1',
+				],
+			},
+			{
+				test: /\.(woff|woff2|svg|eot|ttf)/,
+				use: [
+					{
+						loader: 'file-loader',
+						options: {
+							prefix: 'font/',
+						},
+					},
+				],
+			},
+			{
+				test: /\.(png|gif|jpe?g|svg)$/i,
+				use: [
+					{
+						loader: 'file-loader',
+						options: {
+							prefix: 'img/',
+						},
+					},
+				],
+			},
+		],
+	},
+
+	/* module: {
+		loaders: [
+			{
+				test: /\.js$/,
 				loaders: ['babel'],
 				exclude: /node_modules/,
 				include: __dirname,
@@ -76,7 +158,7 @@ module.exports = {
 				test: /\.scss/,
 				loader: ExtractTextPlugin.extract(
 					'style-loader',
-					'css-loader?sourceMap&modules&importLoaders=1&localIdentName=bdp_[local]_[hash:base64:5]!postcss-loader?sourceMap=inline!sass-loader?sourceMap'
+					'css-loader?sourceMap&modules&importLoaders=1&localIdentName=bmbo_[local]_[hash:base64:5]!postcss-loader?sourceMap=inline!sass-loader?sourceMap',
 				),
 				exclude: [/components/, /main/],
 			},
@@ -84,7 +166,7 @@ module.exports = {
 				test: /\.scss/,
 				loader: isProd ? ExtractTextPlugin.extract(
 					'style-loader',
-					'css-loader?sourceMap&importLoaders=1&localIdentName=bdp_[local]_[hash:base64:5]!postcss-loader?sourceMap=inline!sass-loader?sourceMap'
+					'css-loader?sourceMap&importLoaders=1&localIdentName=bdp_[local]_[hash:base64:5]!postcss-loader?sourceMap=inline!sass-loader?sourceMap',
 				) : undefined,
 				loaders: !isProd ? [
 					'style-loader',
@@ -108,9 +190,9 @@ module.exports = {
 				loader: 'file?prefix=img/',
 			},
 		]
-	},
+	}, */
 
 	resolve: {
-		modulesDirectories: ['node_modules', './src'],
+		modules: ['node_modules', path.resolve('./src')],
 	},
 };
