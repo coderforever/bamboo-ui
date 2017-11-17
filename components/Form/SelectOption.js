@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Checkbox from './Checkbox';
+import { BAMBOO_COMPONENT } from '../utils/componentUtil';
+
+export const BAMBOO_FORM_SELECT_OPTION = 'BAMBOO_FORM_SELECT_OPTION';
 
 class SelectOption extends React.Component {
 	constructor() {
@@ -57,5 +60,7 @@ SelectOption.contextTypes = {
 	bmboOnSelectValue: PropTypes.func,
 	bmboSelectIsChecked: PropTypes.func,
 };
+
+SelectOption[BAMBOO_COMPONENT] = BAMBOO_FORM_SELECT_OPTION;
 
 export default SelectOption;

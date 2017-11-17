@@ -8,6 +8,8 @@ import {
 } from '../utils/uiUtil';
 import Sequence from '../utils/Sequence';
 
+import CheckBox from './Checkbox';
+
 class SelectList extends React.Component {
 	constructor() {
 		super();
@@ -81,6 +83,10 @@ class SelectList extends React.Component {
 	render() {
 		const { animateStatus, width, x, y } = this.state;
 		const { children } = this.props;
+		const {
+			bmboSelectSize, bmboSelectMulti, bmboSelectIsAllChecked, bmboOnSelectAllValue,
+		} = this.context;
+
 		if (animateStatus === ANIMATE_STATUS_NONE) return null;
 
 		return createPortal(
@@ -98,6 +104,13 @@ class SelectList extends React.Component {
 				style={{ width: `${width}px`, left: `${x}px`, top: `${y}px` }}
 				onTransitionEnd={this.onTransitionEnd}
 			>
+				{bmboSelectMulti && <li
+					className={`bmbo-${bmboSelectSize || 'md'} bmbo-select-item bmbo-select-item-all`}
+				>
+					<CheckBox checked={bmboSelectIsAllChecked()} onClick={bmboOnSelectAllValue}>
+						Select All
+					</CheckBox>
+				</li>}
 				{children}
 			</ul>,
 		);
@@ -108,6 +121,13 @@ SelectList.propTypes = {
 	open: PropTypes.bool,
 	rect: PropTypes.object,
 	children: PropTypes.node,
+};
+
+SelectList.contextTypes = {
+	bmboSelectSize: PropTypes.string,
+	bmboSelectMulti: PropTypes.bool,
+	bmboSelectIsAllChecked: PropTypes.func,
+	bmboOnSelectAllValue: PropTypes.func,
 };
 
 export default SelectList;

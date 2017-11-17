@@ -33,6 +33,16 @@ export const mapChildrenByType = (children, type, func) => {
 	});
 };
 
+export const someChildrenByType = (children, type, func) => {
+	const childList = mapChildrenByType(children, type, node => node);
+	return childList.some(func);
+};
+
+export const everyChildrenByType = (children, type, func) => {
+	const childList = mapChildrenByType(children, type, node => node);
+	return childList.every(func);
+};
+
 export const mapChildrenByNotType = (children, type, func) => {
 	const typeList = Array.isArray(type) ? type : [type];
 

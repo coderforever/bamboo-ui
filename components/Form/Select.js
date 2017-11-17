@@ -5,9 +5,10 @@ import { isDev } from '../utils/envUtil';
 import { requestAnimationFrame } from '../utils/uiUtil';
 import { addUniqueListener, removeUniqueListener, isSameSource, wrapperEventValue } from '../utils/eventUtil';
 import { toArray } from '../utils/arrayUtil';
+import { everyChildrenByType, mapChildrenByType } from '../utils/componentUtil';
 
 import SelectList from './SelectList';
-import SelectOption from './SelectOption';
+import SelectOption, { BAMBOO_FORM_SELECT_OPTION } from './SelectOption';
 
 class Select extends React.Component {
 	constructor() {
@@ -22,7 +23,9 @@ class Select extends React.Component {
 			bmboSelectSize: this.props.size,
 			bmboSelectMulti: this.props.multi,
 			bmboOnSelectValue: this.onSelectValue,
+			bmboOnSelectAllValue: this.onSelectAllValue,
 			bmboSelectIsChecked: this.isValueChecked,
+			bmboSelectIsAllChecked: this.isAllValueChecked,
 		};
 	}
 
@@ -85,6 +88,24 @@ class Select extends React.Component {
 		}
 	};
 
+	onSelectAllValue = (event) => {
+		const { onChange, children } = this.props;
+
+		let newValue;
+		if (this.isAllValueChecked()) {
+			newValue = [];
+		} else {
+			newValue = mapChildrenByType(children, BAMBOO_FORM_SELECT_OPTION, (node) => {
+				const { value: nodeValue, children: nodeChildren } = node.props;
+				return nodeValue !== undefined ? nodeValue : nodeChildren;
+			});
+		}
+
+		if (onChange) {
+			onChange(wrapperEventValue(event, this.$ele, newValue));
+		}
+	};
+
 	setRef = (ele) => {
 		this.$ele = ele;
 	};
@@ -92,6 +113,18 @@ class Select extends React.Component {
 	isValueChecked = (val) => {
 		const { value } = this.props;
 		return toArray(value).includes(val);
+	};
+
+	isAllValueChecked = () => {
+		const { value, children } = this.props;
+		const myValue = toArray(value);
+
+		return everyChildrenByType(children, BAMBOO_FORM_SELECT_OPTION, (node) => {
+			const { value: nodeVal, children: nodeChildren } = node.props;
+			const myVal = nodeVal !== undefined ? nodeVal : nodeChildren;
+
+			return myValue.includes(myVal);
+		});
 	};
 
 	render() {
@@ -155,7 +188,9 @@ Select.childContextTypes = {
 	bmboSelectSize: PropTypes.string,
 	bmboSelectMulti: PropTypes.bool,
 	bmboSelectIsChecked: PropTypes.func,
+	bmboSelectIsAllChecked: PropTypes.func,
 	bmboOnSelectValue: PropTypes.func,
+	bmboOnSelectAllValue: PropTypes.func,
 };
 
 Select.Option = SelectOption;

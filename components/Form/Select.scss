@@ -52,5 +52,9 @@
 		> .bmbo-checkbox {
 			margin-right: 0;
 		}
+
+		&.bmbo-select-item-all {
+			border-bottom: 1px solid var(--bmbo-border);
+		}
 	}
 }
