@@ -57,7 +57,9 @@ class MenuList extends React.Component {
 			<ul
 				ref={this.setRef}
 				className={classNames(
-					'bmbo-menu-list', {
+					'bmbo-box-absolute',
+					'bmbo-menu-list',
+					{
 						'bmbo-hidden': animateStatus === ANIMATE_STATUS_NONE,
 						'bmbo-showing': animateStatus === ANIMATE_STATUS_SHOWING,
 					},

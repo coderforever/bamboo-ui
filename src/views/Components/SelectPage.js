@@ -21,7 +21,7 @@ class SelectPage extends React.Component {
 		this.state = {
 			form: {
 				value: VALUE_LIST[0],
-				multi: true,
+				multi: false,
 				size: 'md',
 			},
 		};

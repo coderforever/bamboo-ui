@@ -78,6 +78,7 @@ class SelectList extends React.Component {
 		return createPortal(
 			<ul
 				className={classNames(
+					'bmbo-box-absolute',
 					'bmbo-select-list',
 					{
 						'bmbo-hidden': animateStatus === ANIMATE_STATUS_INIT,

@@ -24,21 +24,8 @@
 	}
 }
 
-// TODO: Copy from menu. Maybe pop out it
+// TODO: Not handle transform when list show in top
 .bmbo-select-list {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-	background: #FFF;
-	border: 1px solid var(--bmbo-border);
-	cursor: default;
-	color: var(--bmbo-color);
-	display: inline-block;
-	position: absolute;
-	transform-origin: left top;
-	box-shadow: var(--bmbo-shadow);
-	z-index: 101;
-
 	transition: opacity var(--bmbo-duration-fast), transform var(--bmbo-duration-fast);
 
 	&.bmbo-showing {
