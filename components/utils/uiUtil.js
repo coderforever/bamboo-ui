@@ -10,6 +10,9 @@ export const ANIMATE_STATUS_HIDING = 4;
 const BAMBOO_PORTALS_HOLDER = 'bmbo_portals_holder';
 let $bambooHolder;
 
+// =====================================================================================
+// =                                   Window Holder                                   =
+// =====================================================================================
 if (canUseDOM) {
 	// Clean up menu holder for hot module reload
 	window.document.querySelectorAll(`#${BAMBOO_PORTALS_HOLDER}`).forEach((ele) => {
@@ -27,7 +30,9 @@ export function getHolder() {
 	return $bambooHolder;
 }
 
-
+// =====================================================================================
+// =                                     Animation                                     =
+// =====================================================================================
 export const ANIMATION_INTERVAL = 1000 / 60;
 
 const delayByFrame = (func) => {
@@ -54,6 +59,9 @@ export const requestAnimationFrame = (func, delayFrame = 1) => {
 	doAction();
 };
 
+// =====================================================================================
+// =                                        UI                                         =
+// =====================================================================================
 export const createPortal = (node) => {
 	if (!canUseDOM) return null;
 

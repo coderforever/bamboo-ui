@@ -10,6 +10,7 @@ export Input from './Form/Input';
 export Radio from './Form/Radio';
 export Checkbox from './Form/Checkbox';
 export Slider from './Form/Slider';
+export Select from './Form/Select';
 export Menu from './Menu';
 export Group from './Group';
 export GroupItem from './Group/Item';

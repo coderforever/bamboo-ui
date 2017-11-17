@@ -1,7 +1,9 @@
 @charset "UTF-8";
+@import "./Input";
 @import "./Radio";
 @import "./Checkbox";
 @import "./Slider";
+@import "./Select";
 
 .bmbo-form {
 	.bmbp-form-field {
@@ -14,40 +16,6 @@
 			display: block;
 			color: var(--bmbo-color-dim);
 		}
-	}
-}
-
-.bmbo-form-control {
-	display: block;
-	width: 100%;
-	border: 1px solid var(--bmbo-border);
-	border-radius: 3px;
-	//height: 28px;
-	//padding: 0 6px;
-	color: var(--bmbo-font-size);
-	position: relative;
-
-	transition: all var(--bmbo-duration-fast);
-
-	&:focus {
-		border-color: var(--bmbo-primary);
-	}
-
-	// Size
-	&.bmbo-xs {
-		padding: var(--bmbo-input-padding-xs);
-	}
-	&.bmbo-sm {
-		padding: var(--bmbo-input-padding-sm);
-	}
-	&.bmbo-md {
-		padding: var(--bmbo-input-padding-md);
-	}
-	&.bmbo-lg {
-		padding: var(--bmbo-input-padding-lg);
-	}
-	&.bmbo-xl {
-		padding: var(--bmbo-input-padding-xl);
 	}
 }
 

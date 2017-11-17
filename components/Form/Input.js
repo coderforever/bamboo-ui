@@ -7,7 +7,7 @@ export const BAMBOO_FORM_INPUT = 'BAMBOO_FORM_INPUT';
 const Input = ({ size, className, ...props }) => (
 	<input
 		className={classNames(
-			'bmbo-form-control',
+			'bmbo-input',
 			`bmbo-${size || 'md'}`,
 			className,
 		)}

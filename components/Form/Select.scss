@@ -1,0 +1,57 @@
+@charset "UTF-8";
+@import "../common";
+@import "./Input";
+
+.bmbo-select {
+	.bmbo-select-value {
+		@extend .bmbo-input;
+
+		padding-right: 1.5em;
+
+		> .bmbo-caret {
+			position: absolute;
+			right: .5em;
+			top: .6em;
+		}
+	}
+}
+
+// TODO: Copy from menu. Maybe pop out it
+.bmbo-select-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	background: #FFF;
+	border: 1px solid var(--bmbo-border);
+	cursor: default;
+	color: var(--bmbo-color);
+	display: inline-block;
+	position: absolute;
+	transform-origin: left top;
+	box-shadow: var(--bmbo-shadow);
+	z-index: 101;
+
+	transition: opacity var(--bmbo-duration-fast), transform var(--bmbo-duration-fast);
+
+	&.bmbo-showing {
+		opacity: 0;
+		transform: scale(1, 0.5);
+		transition: none;
+	}
+
+	&.bmbo-hiding {
+		opacity: 0;
+		transform: scale(1, 0.5);
+		pointer-events: none;
+	}
+
+	> li {
+		@include padding;
+
+		transition: background var(--bmbo-duration);
+
+		&:hover {
+			background: var(--bmbo-bac);
+		}
+	}
+}

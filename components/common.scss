@@ -107,3 +107,21 @@ $border: #CCC;
 	padding: 0;
 	list-style: none;
 }
+
+@mixin padding {
+	&.bmbo-xs {
+		padding: var(--bmbo-input-padding-xs);
+	}
+	&.bmbo-sm {
+		padding: var(--bmbo-input-padding-sm);
+	}
+	&.bmbo-md {
+		padding: var(--bmbo-input-padding-md);
+	}
+	&.bmbo-lg {
+		padding: var(--bmbo-input-padding-lg);
+	}
+	&.bmbo-xl {
+		padding: var(--bmbo-input-padding-xl);
+	}
+}

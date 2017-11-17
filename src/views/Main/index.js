@@ -20,6 +20,7 @@ import TooltipPage from '../Components/TooltipPage';
 import DynamicNumberPage from '../Components/DynamicNumberPage';
 import DynamicStringPage from '../Components/DynamicStringPage';
 import AutoCompletePage from '../Components/AutoCompletePage';
+import SelectPage from '../Components/SelectPage';
 
 import Navigation from '../../../components/Nav';
 
@@ -58,6 +59,7 @@ class Main extends React.Component {
 						<Navigation.Item onClick={() => { this.goPage('/dynamic_number'); }}>Dynamic Number</Navigation.Item>
 						<Navigation.Item onClick={() => { this.goPage('/dynamic_string'); }}>Dynamic String</Navigation.Item>
 						<Navigation.Item onClick={() => { this.goPage('/auto_complete'); }}>Auto Complete</Navigation.Item>
+						<Navigation.Item onClick={() => { this.goPage('/select'); }}>Select</Navigation.Item>
 					</Navigation.Group>
 				</Navigation>
 
@@ -77,6 +79,7 @@ class Main extends React.Component {
 					<Route path="/dynamic_number" component={DynamicNumberPage} />
 					<Route path="/dynamic_string" component={DynamicStringPage} />
 					<Route path="/auto_complete" component={AutoCompletePage} />
+					<Route path="/select" component={SelectPage} />
 				</div>
 			</div>
 		);
