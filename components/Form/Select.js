@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import $ from 'jquery';
 import classNames from 'classnames';
+import { isDev } from '../utils/envUtil';
 import { requestAnimationFrame } from '../utils/uiUtil';
-import { addUniqueListener, removeUniqueListener, isSameSource, wrapEvent } from '../utils/eventUtil';
+import { addUniqueListener, removeUniqueListener, isSameSource, wrapperEventValue } from '../utils/eventUtil';
+import { toArray } from '../utils/arrayUtil';
 
 import SelectList from './SelectList';
 import SelectOption from './SelectOption';
@@ -19,7 +20,9 @@ class Select extends React.Component {
 	getChildContext() {
 		return {
 			bmboSelectSize: this.props.size,
+			bmboSelectMulti: this.props.multi,
 			bmboOnSelectValue: this.onSelectValue,
+			bmboSelectIsChecked: this.isValueChecked,
 		};
 	}
 
@@ -46,7 +49,7 @@ class Select extends React.Component {
 
 				requestAnimationFrame(() => {
 					addUniqueListener('mousedown', this.onWindowHide);
-					addUniqueListener('blur', this.onWindowHide);
+					if (!isDev) addUniqueListener('blur', this.onWindowHide);
 				});
 			}
 
@@ -55,29 +58,60 @@ class Select extends React.Component {
 	};
 
 	onSelectValue = (value, event) => {
-		const { onChange } = this.props;
+		const { onChange, multi, value: oriValue } = this.props;
 
-		if (onChange) {
-			console.log('~~>', event, value);
-			onChange(wrapEvent({
-				...event,
-				target: this.$ele,
-				currentTarget: this.$ele,
-			}, value, 'onChange'));
+		let newValue;
+		if (multi) {
+			newValue = oriValue;
+			if (!Array.isArray(newValue)) {
+				newValue = newValue ? [newValue] : [];
+			}
+
+			if (newValue.includes(value)) {
+				newValue = newValue.filter(v => v !== value);
+			} else {
+				newValue = [...newValue, value];
+			}
+		} else {
+			newValue = value;
 		}
 
-		this.setState({ open: false });
+		if (onChange) {
+			onChange(wrapperEventValue(event, this.$ele, newValue));
+		}
+
+		if (!multi) {
+			this.setState({ open: false });
+		}
 	};
 
 	setRef = (ele) => {
 		this.$ele = ele;
 	};
 
+	isValueChecked = (val) => {
+		const { value } = this.props;
+		return toArray(value).includes(val);
+	};
+
 	render() {
-		const { size, className, value, children, ...props } = this.props;
+		const { size, className, value, multi, children, ...props } = this.props;
 		const { open, rect } = this.state;
 
 		delete props.onChange;
+
+		let $value = value;
+		if (multi) {
+			const valueList = toArray(value);
+			$value = (
+				<ul className="bmbo-list-inline">
+					{valueList.map(val => (
+						<li key={val}>{val}</li>
+					))}
+					{!valueList.length && <li>{'\u00A0'}</li>}
+				</ul>
+			);
+		}
 
 		return (
 			<div
@@ -96,7 +130,7 @@ class Select extends React.Component {
 					tabIndex={0}
 					onMouseDown={this.onTitleMouseDown}
 				>
-					{value || '\u00A0'}
+					{$value}
 					<span className="bmbo-caret bmbo-caret-down" />
 				</div>
 
@@ -114,10 +148,13 @@ Select.propTypes = {
 	className: PropTypes.string,
 	value: PropTypes.any,
 	children: PropTypes.node,
+	multi: PropTypes.bool, // TODO: Support number if necessary
 };
 
 Select.childContextTypes = {
 	bmboSelectSize: PropTypes.string,
+	bmboSelectMulti: PropTypes.bool,
+	bmboSelectIsChecked: PropTypes.func,
 	bmboOnSelectValue: PropTypes.func,
 };
 

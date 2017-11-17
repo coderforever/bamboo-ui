@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import cssModules from 'react-css-modules';
+import Checkbox from './Checkbox';
 
-class SelectOption extends React.PureComponent {
+class SelectOption extends React.Component {
 	constructor() {
 		super();
 		this.state = {};
@@ -20,18 +19,27 @@ class SelectOption extends React.PureComponent {
 	};
 
 	render() {
-		const { children, ...props } = this.props;
-		const { bmboSelectSize = 'md' } = this.context;
+		const { value, children, ...props } = this.props;
+		const { bmboSelectMulti, bmboSelectSize, bmboSelectIsChecked } = this.context;
+
+		let $children = children;
+		if (bmboSelectMulti) {
+			$children = (
+				<Checkbox size={bmboSelectSize} checked={bmboSelectIsChecked(value || children)}>
+					{children}
+				</Checkbox>
+			);
+		}
 
 		return (
 			<li
 				role="button"
 				tabIndex={-1}
-				className={`bmbo-${bmboSelectSize}`}
+				className={`bmbo-${bmboSelectSize || 'md'} bmbo-select-item`}
 				{...props}
 				onClick={this.onClick}
 			>
-				{children}
+				{$children}
 			</li>
 		);
 	}
@@ -45,7 +53,9 @@ SelectOption.propTypes = {
 
 SelectOption.contextTypes = {
 	bmboSelectSize: PropTypes.string,
+	bmboSelectMulti: PropTypes.bool,
 	bmboOnSelectValue: PropTypes.func,
+	bmboSelectIsChecked: PropTypes.func,
 };
 
 export default SelectOption;

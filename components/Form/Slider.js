@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { wrapperEventValue } from '../utils/componentUtil';
+import { wrapperEventValue } from '../utils/eventUtil';
 import { canUseDOM } from '../utils/envUtil';
 
 let currentSlider;

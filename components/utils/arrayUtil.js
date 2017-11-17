@@ -13,4 +13,8 @@ export const equals = (list1 = [], list2 = [], path = []) => {
 	return true;
 };
 
-export default {};
+export const toArray = (value) => {
+	if (Array.isArray(value)) return value;
+	if (!value) return [];
+	return [value];
+};

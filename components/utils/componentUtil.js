@@ -49,16 +49,3 @@ export const mapChildrenByNotType = (children, type, func) => {
 		return node;
 	});
 };
-
-export const wrapperEventValue = (originEvent, target, value) => {
-	target.value = value; // eslint-disable-line no-param-reassign
-
-	return (
-		new Proxy(originEvent, {
-			get(tgt, key) {
-				if (key === 'target') return target;
-				return tgt[key];
-			},
-		})
-	);
-};

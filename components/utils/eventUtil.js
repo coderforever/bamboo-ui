@@ -41,13 +41,15 @@ export function isSameSource(event, target) {
 	return false;
 }
 
-export function wrapEvent(oriEvent = {}, value, type) {
-	const { target } = oriEvent;
+export const wrapperEventValue = (originEvent, target, value) => {
+	target.value = value; // eslint-disable-line no-param-reassign
 
-	target.value = value;
-
-	return {
-		...oriEvent,
-		type: type || oriEvent.type,
-	};
-}
+	return (
+		new Proxy(originEvent, {
+			get(tgt, key) {
+				if (key === 'target') return target;
+				return tgt[key];
+			},
+		})
+	);
+};

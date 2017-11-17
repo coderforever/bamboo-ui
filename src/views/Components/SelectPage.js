@@ -21,15 +21,20 @@ class SelectPage extends React.Component {
 		this.state = {
 			form: {
 				value: VALUE_LIST[0],
+				multi: true,
+				size: 'md',
 			},
 		};
 	}
 
 	getSampleCode = () => {
-		const { text, ...form } = this.state.form;
-		return `<Button${toString(form, { type: 'primary', size: 'md' })}>
-   ${text}
-</Button>`;
+		const { ...form } = this.state.form;
+		return `
+<Select${toString(form, { size: 'md' })}>
+	{VALUE_LIST.map(val => (
+		<Select.Option key={val}>{val}</Select.Option>
+	))}
+</Button>`.trim().replace(/\t/g, '   ');
 	};
 
 	render() {
@@ -48,6 +53,8 @@ class SelectPage extends React.Component {
 								<Form.Field name="value">
 									<Select
 										value={form.value}
+										multi={form.multi}
+										size={form.size}
 									>
 										{VALUE_LIST.map(val => (
 											<Select.Option key={val}>{val}</Select.Option>
@@ -59,9 +66,19 @@ class SelectPage extends React.Component {
 
 						<div className="form">
 							<Form instance={this} path="form">
-								{/*<Form.Field name="value" title="Value">*/}
-									{/*<Input />*/}
-								{/*</Form.Field>*/}
+								<Form.Field name="multi" title="Multi">
+									<Checkbox>multi</Checkbox>
+								</Form.Field>
+
+								<Form.Field name="size" title="Size">
+									{SIZE_LIST.map(({ name, displayName, isDefault }) => (
+										<Radio key={name} value={name}>
+											{displayName}
+											{isDefault && ' (default)'}
+										</Radio>
+									))}
+								</Form.Field>
+
 								{/*<Form.Field name="type" title="Type">*/}
 									{/*{TYPE_LIST.map(({ name, isDefault }) => (*/}
 										{/*<Radio key={name} value={name}>*/}
@@ -73,14 +90,7 @@ class SelectPage extends React.Component {
 								{/*<Form.Field name="disabled" title="Disabled">*/}
 									{/*<Checkbox>disabled</Checkbox>*/}
 								{/*</Form.Field>*/}
-								{/*<Form.Field name="size" title="Size">*/}
-									{/*{SIZE_LIST.map(({ name, displayName, isDefault }) => (*/}
-										{/*<Radio key={name} value={name}>*/}
-											{/*{displayName}*/}
-											{/*{isDefault && ' (default)'}*/}
-										{/*</Radio>*/}
-									{/*))}*/}
-								{/*</Form.Field>*/}
+
 								{/*<Form.Field name="transparent" title="Transparent">*/}
 									{/*<Checkbox>transparent</Checkbox>*/}
 								{/*</Form.Field>*/}
