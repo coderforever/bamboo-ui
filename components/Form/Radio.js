@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { BAMBOO_COMPONENT, wrapperEventValue } from '../utils/componentUtil';
+import { BAMBOO_COMPONENT } from '../utils/componentUtil';
+import { wrapperEventValue } from '../utils/eventUtil';
 
 export const BAMBOO_FORM_RADIO = 'BAMBOO_FORM_RADIO';
 

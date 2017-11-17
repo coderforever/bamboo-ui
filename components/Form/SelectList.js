@@ -27,6 +27,14 @@ class SelectList extends React.Component {
 		this.checkUpdate(this.props, nextProps);
 	}
 
+	onTransitionEnd = (event) => {
+		if (this.state.animateStatus === ANIMATE_STATUS_HIDING && event.target === this.$list) {
+			this.seq.next(() => {
+				this.setState({ animateStatus: ANIMATE_STATUS_NONE });
+			});
+		}
+	};
+
 	setListRef = (ele) => {
 		this.$list = ele;
 
@@ -88,6 +96,7 @@ class SelectList extends React.Component {
 				)}
 				ref={this.setListRef}
 				style={{ width: `${width}px`, left: `${x}px`, top: `${y}px` }}
+				onTransitionEnd={this.onTransitionEnd}
 			>
 				{children}
 			</ul>,
