@@ -40,92 +40,87 @@ class ButtonPage extends React.Component {
 		const { form } = this.state;
 
 		return (
-			<Row>
-				<Col xs="1/3">
-				</Col>
+			<div>
+				<h1>按钮</h1>
+				<p>
+					按钮通过<code>Button</code>调用，我们提供了一下几种样式。
+					你可以通过<code>type</code>属性来进行设置。
+				</p>
+				<div className="preview">
+					<span className="margin">
+						<Button type="deprecated">deprecated</Button>
+					</span>
+					<span className="margin">
+						<Button>primary</Button>
+					</span>
+					<span className="margin">
+						<Button type="info">info</Button>
+					</span>
+					<span className="margin">
+						<Button type="success">success</Button>
+					</span>
+					<span className="margin">
+						<Button type="warning">warning</Button>
+					</span>
+					<span className="margin">
+						<Button type="danger">danger</Button>
+					</span>
+					<span className="margin">
+						<Button type="forbid">forbid</Button>
+					</span>
+				</div>
 
-				<Col xs="2/3">
-					<h1>按钮</h1>
-					<p>
-						按钮通过<code>Button</code>调用，我们提供了一下几种样式。
-						你可以通过<code>type</code>属性来进行设置。
-					</p>
+				<h2>试一试</h2>
+				<div className="measurement">
 					<div className="preview">
-						<span className="margin">
-							<Button type="deprecated">deprecated</Button>
-						</span>
-						<span className="margin">
-							<Button>primary</Button>
-						</span>
-						<span className="margin">
-							<Button type="info">info</Button>
-						</span>
-						<span className="margin">
-							<Button type="success">success</Button>
-						</span>
-						<span className="margin">
-							<Button type="warning">warning</Button>
-						</span>
-						<span className="margin">
-							<Button type="danger">danger</Button>
-						</span>
-						<span className="margin">
-							<Button type="forbid">forbid</Button>
-						</span>
+						<Button
+							type={form.type}
+							disabled={form.disabled}
+							size={form.size}
+							transparent={form.transparent}
+							checked={form.checked}
+						>
+							{form.text}
+						</Button>
 					</div>
 
-					<h2>试一试</h2>
-					<div className="measurement">
-						<div className="preview">
-							<Button
-								type={form.type}
-								disabled={form.disabled}
-								size={form.size}
-								transparent={form.transparent}
-								checked={form.checked}
-							>
-								{form.text}
-							</Button>
-						</div>
-
-						<div className="form">
-							<Form instance={this} path="form">
-								<Form.Field name="text" title="Text">
-									<Input />
-								</Form.Field>
-								<Form.Field name="type" title="Type">
-									{TYPE_LIST.map(({ name, isDefault }) => (
-										<Radio key={name} value={name}>
-											{name}
-											{isDefault && ' (default)'}
-										</Radio>
-									))}
-								</Form.Field>
-								<Form.Field name="disabled" title="Disabled">
-									<Checkbox>disabled</Checkbox>
-								</Form.Field>
-								<Form.Field name="size" title="Size">
-									{SIZE_LIST.map(({ name, displayName, isDefault }) => (
-										<Radio key={name} value={name}>
-											{displayName}
-											{isDefault && ' (default)'}
-										</Radio>
-									))}
-								</Form.Field>
-								<Form.Field name="transparent" title="Transparent">
-									<Checkbox>transparent</Checkbox>
-								</Form.Field>
-								<Form.Field name="checked" title="Checked">
-									<Checkbox>checked</Checkbox>
-								</Form.Field>
-							</Form>
-						</div>
-						<pre className="code">
-							{this.getSampleCode()}
-						</pre>
+					<div className="form">
+						<Form instance={this} path="form">
+							<Form.Field name="text" title="Text">
+								<Input />
+							</Form.Field>
+							<Form.Field name="type" title="Type">
+								{TYPE_LIST.map(({ name, isDefault }) => (
+									<Radio key={name} value={name}>
+										{name}
+										{isDefault && ' (default)'}
+									</Radio>
+								))}
+							</Form.Field>
+							<Form.Field name="disabled" title="Disabled">
+								<Checkbox>disabled</Checkbox>
+							</Form.Field>
+							<Form.Field name="size" title="Size">
+								{SIZE_LIST.map(({ name, displayName, isDefault }) => (
+									<Radio key={name} value={name}>
+										{displayName}
+										{isDefault && ' (default)'}
+									</Radio>
+								))}
+							</Form.Field>
+							<Form.Field name="transparent" title="Transparent">
+								<Checkbox>transparent</Checkbox>
+							</Form.Field>
+							<Form.Field name="checked" title="Checked">
+								<Checkbox>checked</Checkbox>
+							</Form.Field>
+						</Form>
 					</div>
-				</Col>
-			</Row>
+					<pre className="code">
+						{this.getSampleCode()}
+					</pre>
+				</div>
+			</div>
 		);
 	}
 }

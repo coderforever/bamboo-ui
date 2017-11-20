@@ -85,7 +85,9 @@ class DynamicString extends React.Component {
 				const ptg = distance / duration;
 				if (ptg < hidePtg) {
 					const desPtg = (hidePtg - ptg) / hidePtg;
-					this.setState({ current: currentValue.slice(0, Math.floor(currentValue.length * desPtg)) });
+					this.setState({
+						current: currentValue.slice(0, Math.floor(currentValue.length * desPtg)),
+					});
 				} else {
 					const desPtg = (ptg - hidePtg) / (1 - hidePtg);
 					this.setState({ current: value.slice(0, Math.floor(value.length * desPtg)) });

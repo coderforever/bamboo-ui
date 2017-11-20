@@ -47,38 +47,33 @@ class AutoCompletePage extends React.Component {
 		];
 
 		return (
-			<Row>
-				<Col xs="1/3">
-				</Col>
+			<div>
+				<h1>自动完成</h1>
+				<p>
+					该组件将监听键盘事件，请务必确保子组件支持<code>onKeyDown</code>和<code>onKeyUp</code>事件。
+				</p>
 
-				<Col xs="2/3">
-					<h1>自动完成</h1>
-					<p>
-						该组件将监听键盘事件，请务必确保子组件支持<code>onKeyDown</code>和<code>onKeyUp</code>事件。
-					</p>
-
-					<h2>试一试</h2>
-					<div className="measurement">
-						<div className="preview">
-							<Form instance={this}>
-								<Form.Field name="value">
-									<AutoComplete matcher={matcherList} />
-								</Form.Field>
-							</Form>
-						</div>
-						<div className="form">
-							<pre>
-								{'const matcherList = '}
-								{JSON.stringify(matcherList, null, 3)}
-							</pre>
-						</div>
-
-						<pre className="code">
-							{this.getSampleCode()}
+				<h2>试一试</h2>
+				<div className="measurement">
+					<div className="preview">
+						<Form instance={this}>
+							<Form.Field name="value">
+								<AutoComplete matcher={matcherList} />
+							</Form.Field>
+						</Form>
+					</div>
+					<div className="form">
+						<pre>
+							{'const matcherList = '}
+							{JSON.stringify(matcherList, null, 3)}
 						</pre>
 					</div>
-				</Col>
-			</Row>
+
+					<pre className="code">
+						{this.getSampleCode()}
+					</pre>
+				</div>
+			</div>
 		);
 	}
 }

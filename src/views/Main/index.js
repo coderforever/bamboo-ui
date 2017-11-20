@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import cssModules from 'react-css-modules';
 
 import Home from '../Home';
+import withSideBar from '../Components';
 import GridPage from '../Components/GridPage';
 import ButtonPage from '../Components/ButtonPage';
 import IconPage from '../Components/IconPage';
@@ -44,45 +45,32 @@ class Main extends React.Component {
 		return (
 			<div>
 				<Navigation>
-					<Navigation.Item onClick={() => { this.goPage('/'); }}>Home</Navigation.Item>
-					<Navigation.Group title="Components">
-						<Navigation.Item onClick={() => { this.goPage('/grid'); }}>Grid</Navigation.Item>
-						<Navigation.Item onClick={() => { this.goPage('/button'); }}>Button</Navigation.Item>
-						<Navigation.Item onClick={() => { this.goPage('/icon'); }}>Icon</Navigation.Item>
-						<Navigation.Item onClick={() => { this.goPage('/slider'); }}>Slider</Navigation.Item>
-						<Navigation.Item onClick={() => { this.goPage('/menu'); }}>Menu</Navigation.Item>
-						<Navigation.Item onClick={() => { this.goPage('/group'); }}>Group</Navigation.Item>
-						<Navigation.Item onClick={() => { this.goPage('/modal'); }}>Modal</Navigation.Item>
-						<Navigation.Item onClick={() => { this.goPage('/nav'); }}>Navigation</Navigation.Item>
-						<Navigation.Item onClick={() => { this.goPage('/curtain'); }}>Curtain</Navigation.Item>
-						<Navigation.Item onClick={() => { this.goPage('/progress'); }}>Progress</Navigation.Item>
-						<Navigation.Item onClick={() => { this.goPage('/tooltip'); }}>Tooltip</Navigation.Item>
-						<Navigation.Item onClick={() => { this.goPage('/dynamic_number'); }}>Dynamic Number</Navigation.Item>
-						<Navigation.Item onClick={() => { this.goPage('/dynamic_string'); }}>Dynamic String</Navigation.Item>
-						<Navigation.Item onClick={() => { this.goPage('/auto_complete'); }}>Auto Complete</Navigation.Item>
-						<Navigation.Item onClick={() => { this.goPage('/select'); }}>Select</Navigation.Item>
-						<Navigation.Item onClick={() => { this.goPage('/table'); }}>Table</Navigation.Item>
-					</Navigation.Group>
+					<Navigation.Item>
+						<Link to="/">Home</Link>
+					</Navigation.Item>
+					<Navigation.Item>
+						<Link to="/grid">Components</Link>
+					</Navigation.Item>
 				</Navigation>
 
 				<div id="content">
 					<Route exact path="/" component={Home} />
-					<Route path="/grid" component={GridPage} />
-					<Route path="/button" component={ButtonPage} />
-					<Route path="/icon" component={IconPage} />
-					<Route path="/slider" component={SliderPage} />
-					<Route path="/menu" component={MenuPage} />
-					<Route path="/group" component={GroupPage} />
-					<Route path="/modal" component={ModalPage} />
-					<Route path="/nav" component={NavPage} />
-					<Route path="/curtain" component={CurtainPage} />
-					<Route path="/progress" component={ProgressPage} />
-					<Route path="/tooltip" component={TooltipPage} />
-					<Route path="/dynamic_number" component={DynamicNumberPage} />
-					<Route path="/dynamic_string" component={DynamicStringPage} />
-					<Route path="/auto_complete" component={AutoCompletePage} />
-					<Route path="/select" component={SelectPage} />
-					<Route path="/table" component={TablePage} />
+					<Route path="/grid" component={withSideBar(GridPage)} />
+					<Route path="/button" component={withSideBar(ButtonPage)} />
+					<Route path="/icon" component={withSideBar(IconPage)} />
+					<Route path="/slider" component={withSideBar(SliderPage)} />
+					<Route path="/menu" component={withSideBar(MenuPage)} />
+					<Route path="/group" component={withSideBar(GroupPage)} />
+					<Route path="/modal" component={withSideBar(ModalPage)} />
+					<Route path="/nav" component={withSideBar(NavPage)} />
+					<Route path="/curtain" component={withSideBar(CurtainPage)} />
+					<Route path="/progress" component={withSideBar(ProgressPage)} />
+					<Route path="/tooltip" component={withSideBar(TooltipPage)} />
+					<Route path="/dynamic_number" component={withSideBar(DynamicNumberPage)} />
+					<Route path="/dynamic_string" component={withSideBar(DynamicStringPage)} />
+					<Route path="/auto_complete" component={withSideBar(AutoCompletePage)} />
+					<Route path="/select" component={withSideBar(SelectPage)} />
+					<Route path="/table" component={withSideBar(TablePage)} />
 				</div>
 			</div>
 		);

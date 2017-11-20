@@ -54,33 +54,28 @@ class MenuPage extends React.Component {
 		const { form } = this.state;
 
 		return (
-			<Row>
-				<Col xs="1/3">
-				</Col>
+			<div>
+				<h1>菜单</h1>
+				<p>
+					菜单提供了下拉和右击菜单功能。
+				</p>
 
-				<Col xs="2/3">
-					<h1>菜单</h1>
-					<p>
-						菜单提供了下拉和右击菜单功能。
-					</p>
+				<Menu menu={MENU_SAMPLE}>
+					<strong>[右击这段文字来实验一下]</strong>
+				</Menu>
 
-					<Menu menu={MENU_SAMPLE}>
-						<strong>[右击这段文字来实验一下]</strong>
-					</Menu>
-
-					<pre>
-						{`const menu = ${toString(MENU_SAMPLE)};
+				<pre>
+					{`const menu = ${toString(MENU_SAMPLE)};
 
 <Menu menu={menu}>
-   <strong>[右击这段文字来实验一下]</strong>
+<strong>[右击这段文字来实验一下]</strong>
 </Menu>`}
-					</pre>
+				</pre>
 
-					<p>
-						* 同其他组件一样，你可以通过<code>size</code>属性来控制菜单大小。
-					</p>
-				</Col>
-			</Row>
+				<p>
+					* 同其他组件一样，你可以通过<code>size</code>属性来控制菜单大小。
+				</p>
+			</div>
 		);
 	}
 }

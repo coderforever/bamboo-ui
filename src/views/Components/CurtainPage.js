@@ -25,47 +25,42 @@ class CurtainPage extends React.Component {
 		const { visible } = this.state;
 
 		return (
-			<Row styleName="curtain">
-				<Col xs="1/3">
-				</Col>
+			<div styleName="curtain">
+				<h1>幕布</h1>
+				<p>
+					该组件提供全屏幕布，你可以通过它来创建一个临时的弹窗空白页面。
+				</p>
 
-				<Col xs="2/3">
-					<h1>幕布</h1>
-					<p>
-						该组件提供全屏幕布，你可以通过它来创建一个临时的弹窗空白页面。
-					</p>
+				<div className="measurement">
+					<div className="preview">
+						<Button
+							onClick={() => {
+								this.setState({ visible: true });
+							}}
+						>
+							点击展示舞台
+						</Button>
 
-					<div className="measurement">
-						<div className="preview">
+						<Curtain visible={visible} styleName="curtain-sample">
+							<h1>你好，幕布</h1>
+							<img src="./assets/light.min.jpg" alt="Light" />
 							<Button
 								onClick={() => {
-									this.setState({ visible: true });
+									this.setState({ visible: false });
 								}}
-							>
-								点击展示舞台
-							</Button>
+							>点击关闭</Button>
+						</Curtain>
+					</div>
 
-							<Curtain visible={visible} styleName="curtain-sample">
-								<h1>你好，幕布</h1>
-								<img src="./assets/light.min.jpg" alt="Light" />
-								<Button
-									onClick={() => {
-										this.setState({ visible: false });
-									}}
-								>点击关闭</Button>
-							</Curtain>
-						</div>
-
-						<pre className="code">
-							{`
+					<pre className="code">
+						{`
 <Curtain visible={visible}>
-   ...
+...
 </Curtain>
 `.trim()}
-						</pre>
-					</div>
-				</Col>
-			</Row>
+					</pre>
+				</div>
+			</div>
 		);
 	}
 }

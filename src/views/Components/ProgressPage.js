@@ -31,64 +31,59 @@ class CurtainPage extends React.Component {
 		const { form } = this.state;
 
 		return (
-			<Row styleName="curtain">
-				<Col xs="1/3">
-				</Col>
+			<div styleName="curtain">
+				<h1>进度条</h1>
+				<p>
+					没错，是个组件库就会有进度条组件。
+				</p>
 
-				<Col xs="2/3">
-					<h1>进度条</h1>
-					<p>
-						没错，是个组件库就会有进度条组件。
-					</p>
-
-					<h2>试一试</h2>
-					<div className="measurement">
-						<div className="preview">
-							<Progress
-								value={Number(form.value)}
-								type={form.type}
-								size={form.size}
-								active={form.active}
-								showMark={form.showMark}
-							/>
-						</div>
-
-						<div className="form">
-							<Form instance={this} path="form">
-								<Form.Field name="type" title="Type">
-									{TYPE_LIST.map(({ name }) => (
-										<Radio key={name} value={name}>
-											{name}
-											{name === 'primary' && ' (default)'}
-										</Radio>
-									))}
-								</Form.Field>
-								<Form.Field name="size" title="Size">
-									{SIZE_LIST.map(({ name, displayName, isDefault }) => (
-										<Radio key={name} value={name}>
-											{displayName}
-											{isDefault && ' (default)'}
-										</Radio>
-									))}
-								</Form.Field>
-								<Form.Field name="value" title="Value">
-									<Input type="number" />
-								</Form.Field>
-								<Form.Field name="showMark" title="Show Mark">
-									<Checkbox>showMark</Checkbox>
-								</Form.Field>
-								<Form.Field name="active" title="Active">
-									<Checkbox>active</Checkbox>
-								</Form.Field>
-							</Form>
-						</div>
-
-						<pre className="code">
-							lol
-						</pre>
+				<h2>试一试</h2>
+				<div className="measurement">
+					<div className="preview">
+						<Progress
+							value={Number(form.value)}
+							type={form.type}
+							size={form.size}
+							active={form.active}
+							showMark={form.showMark}
+						/>
 					</div>
-				</Col>
-			</Row>
+
+					<div className="form">
+						<Form instance={this} path="form">
+							<Form.Field name="type" title="Type">
+								{TYPE_LIST.map(({ name }) => (
+									<Radio key={name} value={name}>
+										{name}
+										{name === 'primary' && ' (default)'}
+									</Radio>
+								))}
+							</Form.Field>
+							<Form.Field name="size" title="Size">
+								{SIZE_LIST.map(({ name, displayName, isDefault }) => (
+									<Radio key={name} value={name}>
+										{displayName}
+										{isDefault && ' (default)'}
+									</Radio>
+								))}
+							</Form.Field>
+							<Form.Field name="value" title="Value">
+								<Input type="number" />
+							</Form.Field>
+							<Form.Field name="showMark" title="Show Mark">
+								<Checkbox>showMark</Checkbox>
+							</Form.Field>
+							<Form.Field name="active" title="Active">
+								<Checkbox>active</Checkbox>
+							</Form.Field>
+						</Form>
+					</div>
+
+					<pre className="code">
+						lol
+					</pre>
+				</div>
+			</div>
 		);
 	}
 }
