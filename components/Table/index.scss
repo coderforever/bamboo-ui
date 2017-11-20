@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+$narrowPadding: .2em 0.3em;
+
 .bmbo-table {
 	width: 100%;
 	margin-bottom: var(--bmbo-component-margin);
@@ -30,5 +32,18 @@
 			border-left: 1px solid var(--bmbo-table-border);
 			border-right: 1px solid var(--bmbo-table-border);
 		}
+	}
+
+	// Narrow
+	&.bmbo-narrow {
+		th,
+		td {
+			padding: $narrowPadding;
+		}
+	}
+
+	th.bmbo-narrow,
+	td.bmbo-narrow {
+		padding: $narrowPadding;
 	}
 }
