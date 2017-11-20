@@ -106,8 +106,11 @@ class SelectList extends React.Component {
 			>
 				{bmboSelectMulti && <li
 					className={`bmbo-${bmboSelectSize || 'md'} bmbo-select-item bmbo-select-item-all`}
+					onClick={bmboOnSelectAllValue}
+					role="button"
+					tabIndex={-1}
 				>
-					<CheckBox checked={bmboSelectIsAllChecked()} onClick={bmboOnSelectAllValue}>
+					<CheckBox checked={bmboSelectIsAllChecked()}>
 						Select All
 					</CheckBox>
 				</li>}
