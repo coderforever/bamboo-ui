@@ -17,12 +17,38 @@ class CurtainPage extends React.Component {
 	constructor() {
 		super();
 		this.state = {
+			form: {
+				hasClose: false,
+			},
 			visible: false,
 		};
 	}
 
+	onCurtainClose = () => {
+		this.setState({ visible: false });
+	};
+
+	getSampleCode = () => {
+		const { form: { hasClose } } = this.state;
+		let closeStr = '';
+		if (hasClose) {
+			closeStr = ' onClose={...}';
+		}
+
+		return `
+<Curtain visible={visible}${closeStr}>
+	...
+</Curtain>
+		`.trim().replace(/\t/g, '   ');
+	};
+
 	render() {
-		const { visible } = this.state;
+		const { visible, form: { hasClose } } = this.state;
+
+		const props = {};
+		if (hasClose) {
+			props.onClose = this.onCurtainClose;
+		}
 
 		return (
 			<div styleName="curtain">
@@ -41,7 +67,7 @@ class CurtainPage extends React.Component {
 							点击展示舞台
 						</Button>
 
-						<Curtain visible={visible} styleName="curtain-sample">
+						<Curtain visible={visible} styleName="curtain-sample" {...props}>
 							<h1>你好，幕布</h1>
 							<img src="./assets/light.min.jpg" alt="Light" />
 							<Button
@@ -52,12 +78,19 @@ class CurtainPage extends React.Component {
 						</Curtain>
 					</div>
 
+					<div className="form">
+						<Form instance={this} path="form">
+							<Form.Field name="hasClose">
+								<Checkbox>
+									Provide <code>onClose</code> function.
+									(Will show <span className="bmbo-times" /> on the top right)
+								</Checkbox>
+							</Form.Field>
+						</Form>
+					</div>
+
 					<pre className="code">
-						{`
-<Curtain visible={visible}>
-...
-</Curtain>
-`.trim()}
+						{this.getSampleCode()}
 					</pre>
 				</div>
 			</div>

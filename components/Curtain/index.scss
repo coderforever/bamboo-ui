@@ -19,10 +19,27 @@
 		transition: transform var(--bmbo-duration-mid) ease, opacity var(--bmbo-duration-mid) linear;
 
 		> .bmbo-curtain-content {
+			position: relative;
 			width: 100%;
 			height: 100%;
 			overflow-y: auto;
 			transition: transform var(--bmbo-duration) ease var(--bmbo-duration-mid), opacity var(--bmbo-duration) linear var(--bmbo-duration-mid);
+
+			> .bmbo-curtain-close {
+				position: absolute;
+				right: .4em;
+				top: .4em;
+				font-size: 2em;
+				cursor: pointer;
+
+				&:hover {
+					opacity: .8;
+				}
+
+				&:active {
+					opacity: 1;
+				}
+			}
 		}
 	}
 

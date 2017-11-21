@@ -60,7 +60,7 @@ class Curtain extends React.Component {
 	};
 
 	render() {
-		const { children, className, ...props } = this.props;
+		const { children, className, onClose, ...props } = this.props;
 		const { animateStatus } = this.state;
 
 		if (animateStatus === ANIMATE_STATUS_NONE) return null;
@@ -81,6 +81,14 @@ class Curtain extends React.Component {
 				<div className="bmbo-curtain-content-holder">
 					<div className="bmbo-curtain-content">
 						{children}
+						{onClose &&
+							<a
+								role="button"
+								tabIndex={-1}
+								onClick={onClose}
+								className="bmbo-curtain-close bmbo-times"
+							/>
+						}
 					</div>
 				</div>
 			</div>
@@ -92,6 +100,7 @@ Curtain.propTypes = {
 	visible: PropTypes.bool,
 	children: PropTypes.node,
 	className: PropTypes.string,
+	onClose: PropTypes.func,
 };
 
 export default Curtain;
