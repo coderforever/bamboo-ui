@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { isInRect } from '../utils/uiUtil';
+import Caret from '../Icon/Caret';
 import NavList from './NavList';
 
 class NavGroup extends React.Component {
@@ -76,11 +77,8 @@ class NavGroup extends React.Component {
 					onClick={this.onClick}
 				>
 					{title}
-					{navVertical && <span
-						className={classNames(
-							'bmbo-caret',
-							navInline && open && 'bmbo-caret-down',
-						)}
+					{navVertical && <Caret
+						direct={navInline && open ? 'down' : 'right'}
 					/>}
 				</div>
 

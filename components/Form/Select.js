@@ -7,6 +7,7 @@ import { addUniqueListener, removeUniqueListener, isSameSource, wrapperEventValu
 import { toArray } from '../utils/arrayUtil';
 import { everyChildrenByType, mapChildrenByType } from '../utils/componentUtil';
 
+import Caret from '../Icon/Caret';
 import SelectList from './SelectList';
 import SelectOption, { BAMBOO_FORM_SELECT_OPTION } from './SelectOption';
 
@@ -133,7 +134,7 @@ class Select extends React.Component {
 
 		delete props.onChange;
 
-		let $value = value;
+		let $value;
 		if (multi) {
 			const valueList = toArray(value);
 			$value = (
@@ -142,6 +143,12 @@ class Select extends React.Component {
 						<li key={val}>{val}</li>
 					))}
 					{!valueList.length && <li>{'\u00A0'}</li>}
+				</ul>
+			);
+		} else {
+			$value = (
+				<ul className="bmbo-list-inline">
+					<li>{value || '\u00A0'}</li>
 				</ul>
 			);
 		}
@@ -164,7 +171,7 @@ class Select extends React.Component {
 					onMouseDown={this.onTitleMouseDown}
 				>
 					{$value}
-					<span className="bmbo-caret bmbo-caret-down" />
+					<Caret direct="down" />
 				</div>
 
 				<SelectList size={size} open={open} rect={rect}>

@@ -12,6 +12,13 @@
 }
 
 .bmbo-icon {
+	vertical-align: middle;
+}
+
+// =======================================================================================
+// =                                       Loading                                       =
+// =======================================================================================
+.bmbo-icon {
 	&.bmbo-loading {
 		display: inline-block;
 		position: relative;
@@ -101,4 +108,50 @@
 @keyframes bmbo-icon-loading-expand {
 	0% { transform: scale(0, 0); }
 	100% { transform: scale(1.5, 1.5); opacity: 0; }
+}
+
+
+// =======================================================================================
+// =                                        Caret                                        =
+// =======================================================================================
+.bmbo-icon {
+	&.bmbo-caret {
+		width: 1em;
+		height: 1em;
+		display: inline-block;
+		position: relative;
+
+		&:before {
+			position: absolute;
+			content: '';
+			display: inline-block;
+			width: 0;
+			height: 0;
+			border: 0.3em solid currentColor;
+			border-color: transparent transparent transparent currentColor;
+			left: 0.35em;
+			top: 0.2em;
+
+			transform-origin: 25% 50%;
+			transition: transform var(--bmbo-duration);
+		}
+
+		&.bmbo-caret-left {
+			&:before {
+				transform: rotate(180deg);
+			}
+		}
+
+		&.bmbo-caret-up {
+			&:before {
+				transform: rotate(-90deg) translate(10%, 0);
+			}
+		}
+
+		&.bmbo-caret-down {
+			&:before {
+				transform: rotate(90deg) translate(10%, 0);
+			}
+		}
+	}
 }

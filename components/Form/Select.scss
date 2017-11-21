@@ -4,17 +4,21 @@
 
 .bmbo-select {
 	.bmbo-select-value {
-		@extend .bmbo-input;
+		@include input;
 
+		display: table;
 		padding-right: 1.5em;
 
 		> .bmbo-caret {
-			position: absolute;
-			right: .5em;
-			top: .6em;
+			display: table-cell;
+			width: 1em;
+			//position: absolute;
+			//right: .5em;
 		}
 
 		> .bmbo-list-inline {
+			display: table-cell;
+
 			> li:not(:last-child) {
 				padding-right: 0.5em;
 				margin-right: 0.5em;

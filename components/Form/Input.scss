@@ -1,13 +1,10 @@
 @charset "UTF-8";
 @import "../common";
 
-.bmbo-input {
-	display: block;
+@mixin input {
 	width: 100%;
 	border: 1px solid var(--bmbo-border);
 	border-radius: 3px;
-	//height: 28px;
-	//padding: 0 6px;
 	color: var(--bmbo-font-size);
 	position: relative;
 
@@ -19,4 +16,9 @@
 
 	// Size
 	@include padding;
+}
+
+.bmbo-input {
+	@include input;
+	display: block;
 }

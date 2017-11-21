@@ -8,11 +8,14 @@ import {
 } from '../../../components';
 
 import { toString } from '../../utils/objectUtil';
+import Select from "../../../components/Form/Select";
 
 class GroupPage extends React.Component {
 	constructor() {
 		super();
-		this.state = {};
+		this.state = {
+			direct: 'right',
+		};
 	}
 
 	render() {
@@ -83,6 +86,33 @@ class GroupPage extends React.Component {
 <Icon.Loading id={3} />
 <Icon.Loading id={4} />
 `.trim()}
+					</pre>
+				</div>
+
+				<p>
+					此外，我们还提供了箭头图标。您可以通过<code>Icon.Caret</code>来使用。
+				</p>
+				<div className="measurement">
+					<div className="preview">
+						这是个
+						<Icon.Caret direct={this.state.direct} />
+						图标
+					</div>
+
+					<div className="form">
+						<Form instance={this}>
+							<Form.Field name="direct">
+								{['right', 'left', 'up', 'down'].map(direct => (
+									<Radio value={direct} key={direct}>
+										{direct}
+									</Radio>
+								))}
+							</Form.Field>
+						</Form>
+					</div>
+
+					<pre className="code">
+						{`<Icon.Caret direct="${this.state.direct}" />`}
 					</pre>
 				</div>
 			</div>

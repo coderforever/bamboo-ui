@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-const Loading = ({ id, classname }) => (
+const Loading = ({ id, className }) => (
 	<span
-		className={classNames('bmbo-icon bmbo-loading', id && `bmbo-loading-${id}`, classname)}
+		className={classNames('bmbo-icon bmbo-loading', id && `bmbo-loading-${id}`, className)}
 	/>
 );
 

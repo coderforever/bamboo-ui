@@ -1,0 +1,32 @@
+@charset "UTF-8";
+@import "../common";
+@import "../Form/Input";
+
+.bmbo-date-picker {
+	@extend .bmbo-input;
+	overflow: hidden;
+
+	text-align: center;
+}
+
+.bmbo-date-picker-dialog {
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	@include padding;
+
+	min-width: 200px;
+
+	> .bmbo-date-picker-header {
+		overflow: hidden;
+
+		> .bmbo-date-picker-year {
+			float: left;
+		}
+
+		> .bmbo-date-picker-month {
+			float: right;
+		}
+	}
+}
