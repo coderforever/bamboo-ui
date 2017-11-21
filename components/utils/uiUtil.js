@@ -60,14 +60,8 @@ export const requestAnimationFrame = (func, delayFrame = 1) => {
 };
 
 // =====================================================================================
-// =                                        UI                                         =
+// =                                      Scroll                                       =
 // =====================================================================================
-export const createPortal = (node) => {
-	if (!canUseDOM) return null;
-
-	return oriCreatePortal(node, $bambooHolder);
-};
-
 /**
  * Get Scroll bar size
  * @type {number}
@@ -97,6 +91,43 @@ export const hasVerticalScroll = () => {
 	return winHeight < bodyHeight;
 };
 
+let winScrollLocker = [];
+
+export function enableWinScrollBar(name) {
+	if (!canUseDOM) return;
+
+	if (name) {
+		winScrollLocker = winScrollLocker.filter(n => n !== name);
+		if (winScrollLocker.length) return;
+	} else {
+		winScrollLocker = [];
+	}
+
+	document.body.style.paddingRight = '';
+	document.body.style.overflowY = '';
+}
+
+export function disableWinScrollBar(name) {
+	if (!canUseDOM) return;
+	if (!hasVerticalScroll()) return;
+
+	if (name) {
+		winScrollLocker.push(name);
+	}
+
+	document.body.style.paddingRight = `${getScrollbarWidth()}px`;
+	document.body.style.overflowY = 'hidden';
+}
+
+
+// =====================================================================================
+// =                                     Position                                      =
+// =====================================================================================
+export const createPortal = (node) => {
+	if (!canUseDOM) return null;
+
+	return oriCreatePortal(node, $bambooHolder);
+};
 
 export const getWinWidth = () => {
 	let winWidth = window.innerWidth;

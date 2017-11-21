@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import {
 	ANIMATE_STATUS_NONE,
 	ANIMATE_STATUS_SHOWING, ANIMATE_STATUS_SHOWN, ANIMATE_STATUS_HIDING,
+	enableWinScrollBar, disableWinScrollBar,
 } from '../utils/uiUtil';
 import Sequence from '../utils/Sequence';
 
@@ -28,6 +29,7 @@ class Curtain extends React.Component {
 	onTransitionEnd = (event) => {
 		if (this.state.animateStatus === ANIMATE_STATUS_HIDING && this.$curtain === event.target) {
 			this.seq.next(() => {
+				enableWinScrollBar('Curtain');
 				this.setState({ animateStatus: ANIMATE_STATUS_NONE });
 			});
 		}
@@ -42,6 +44,7 @@ class Curtain extends React.Component {
 
 		if (nextProps.visible) {
 			this.seq.next(() => {
+				disableWinScrollBar('Curtain');
 				this.setState({ animateStatus: ANIMATE_STATUS_SHOWING });
 			}).next(() => {
 				this.setState({ animateStatus: ANIMATE_STATUS_SHOWN });
@@ -50,6 +53,7 @@ class Curtain extends React.Component {
 			this.seq.next(() => {
 				this.setState({ animateStatus: ANIMATE_STATUS_HIDING });
 			}).next(() => {
+				enableWinScrollBar('Curtain');
 				this.setState({ animateStatus: ANIMATE_STATUS_NONE });
 			}, { delay: 1000 });
 		}

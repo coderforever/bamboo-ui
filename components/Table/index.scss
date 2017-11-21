@@ -55,6 +55,19 @@ $narrowPadding: .2em 0.3em;
 		padding: $narrowPadding;
 	}
 
+	// Hover
+	&.bmbo-hover,
+	thead.bmbo-hover,
+	tbody.bmbo-hover {
+		tr:hover {
+			background: var(--bmbo-bac);
+		}
+	}
+
+	tr.bmbo-hover:hover {
+		background: var(--bmbo-bac);
+	}
+
 	// Misc
 	@include cellStyle(deprecated);
 	@include cellStyle(primary);

@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import {
 	ANIMATE_STATUS_NONE, ANIMATE_STATUS_SHOWING, ANIMATE_STATUS_SHOWN, ANIMATE_STATUS_HIDING,
-	createPortal, getScrollbarWidth, hasVerticalScroll,
+	createPortal, enableWinScrollBar, disableWinScrollBar,
 } from '../utils/uiUtil';
 import { canUseDOM } from '../utils/envUtil';
 import { mapChildrenByType, mapChildrenByNotType } from '../utils/componentUtil';
@@ -30,12 +30,10 @@ function refreshWinScrollBar() {
 		animateStatus !== ANIMATE_STATUS_NONE
 	));
 
-	if (hasActiveModal && hasVerticalScroll()) {
-		document.body.style.paddingRight = `${getScrollbarWidth()}px`;
-		document.body.style.overflowY = 'hidden';
+	if (hasActiveModal) {
+		disableWinScrollBar('Modal');
 	} else {
-		document.body.style.paddingRight = '';
-		document.body.style.overflowY = '';
+		enableWinScrollBar('Modal');
 	}
 }
 

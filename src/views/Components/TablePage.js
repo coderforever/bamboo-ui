@@ -9,8 +9,6 @@ import {
 import { TYPE_LIST, SIZE_LIST } from '../../utils/enum';
 import { toString } from '../../utils/propsUtil';
 
-
-
 class TablePage extends React.Component {
 	constructor() {
 		super();
@@ -63,12 +61,13 @@ class TablePage extends React.Component {
 					</tbody>
 				</table>
 
+
+				<h2>自适应</h2>
 				<p>
 					同<code>Bootstrap</code>一样，
 					你可以通过在<code>table</code>外包裹一个<code>{'className="bmbo-table-responsive"'}</code>的div来进行自适应支持。
 				</p>
-
-				<p>带内边框</p>
+				<strong>带内边框：</strong>
 				<div className="bmbo-table-responsive">
 					<table className="bmbo-table bmbo-border">
 						<tbody>
@@ -91,7 +90,7 @@ class TablePage extends React.Component {
 					</table>
 				</div>
 
-				<p>无内边框</p>
+				<strong>无内边框：</strong>
 				<div className="bmbo-table-responsive">
 					<table className="bmbo-table">
 						<tbody>
@@ -113,6 +112,23 @@ class TablePage extends React.Component {
 						</tbody>
 					</table>
 				</div>
+
+				<h2>悬浮</h2>
+				<p>
+					通过添加<code>bmbo-hover</code>来使表格获得鼠标悬浮高亮效果。
+					当然，您也可以将其添加到<code>thead</code>、<code>tbody</code>或者<code>tr</code>上来只让部分行支持悬浮高亮效果。
+				</p>
+				<table className="bmbo-table bmbo-hover">
+					<tbody>
+						{Array(5).fill(0).map((_, rowIndex) => (
+							<tr key={rowIndex}>
+								{Array(3).fill(0).map((__, index) => (
+									<td key={index}>Column_{index + 1}</td>
+								))}
+							</tr>
+						))}
+					</tbody>
+				</table>
 			</div>
 		);
 	}
