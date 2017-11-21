@@ -9,6 +9,8 @@ import {
 import { TYPE_LIST, SIZE_LIST } from '../../utils/enum';
 import { toString } from '../../utils/propsUtil';
 
+
+
 class TablePage extends React.Component {
 	constructor() {
 		super();
@@ -60,6 +62,57 @@ class TablePage extends React.Component {
 						</tr>
 					</tbody>
 				</table>
+
+				<p>
+					同<code>Bootstrap</code>一样，
+					你可以通过在<code>table</code>外包裹一个<code>{'className="bmbo-table-responsive"'}</code>的div来进行自适应支持。
+				</p>
+
+				<p>带内边框</p>
+				<div className="bmbo-table-responsive">
+					<table className="bmbo-table bmbo-border">
+						<tbody>
+							<tr>
+								{Array(10).fill(0).map((_, index) => (
+									<td key={index}>Column_{index + 1}</td>
+								))}
+							</tr>
+							<tr>
+								{Array(10).fill(0).map((_, index) => (
+									<td key={index}>Column_{index + 1}</td>
+								))}
+							</tr>
+							<tr>
+								{Array(10).fill(0).map((_, index) => (
+									<td key={index}>Column_{index + 1}</td>
+								))}
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<p>无内边框</p>
+				<div className="bmbo-table-responsive">
+					<table className="bmbo-table">
+						<tbody>
+							<tr>
+								{Array(10).fill(0).map((_, index) => (
+									<td key={index}>Column_{index + 1}</td>
+								))}
+							</tr>
+							<tr>
+								{Array(10).fill(0).map((_, index) => (
+									<td key={index}>Column_{index + 1}</td>
+								))}
+							</tr>
+							<tr>
+								{Array(10).fill(0).map((_, index) => (
+									<td key={index}>Column_{index + 1}</td>
+								))}
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		);
 	}
