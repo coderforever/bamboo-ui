@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+@mixin labelColor($color) {
+	&.bmbo-#{$color} {
+		background: var(--bmbo-#{$color});
+		font-size: inherit;
+	}
+}
+
+.bmbo-label {
+	color: var(--bmbo-color-light);
+	border-radius: 3px;
+	font-size: var(--bmbo-font-size);
+
+	transition: all var(--bmbo-duration-fast);
+
+	// Size
+	&.bmbo-xs {
+		padding: var(--bmbo-inline-padding-xs);
+	}
+	&.bmbo-sm {
+		padding: var(--bmbo-inline-padding-sm);
+	}
+	&.bmbo-md {
+		padding: var(--bmbo-inline-padding-md);
+	}
+	&.bmbo-lg {
+		padding: var(--bmbo-inline-padding-lg);
+	}
+	&.bmbo-xl {
+		padding: var(--bmbo-inline-padding-xl);
+	}
+
+	@include labelColor(weak);
+	@include labelColor(deprecated);
+	@include labelColor(primary);
+	@include labelColor(info);
+	@include labelColor(success);
+	@include labelColor(warning);
+	@include labelColor(danger);
+	@include labelColor(forbid);
+}

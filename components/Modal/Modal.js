@@ -231,6 +231,7 @@ class Modal extends React.Component {
 
 		return createPortal(
 			<div
+				{...props}
 				className={classNames(
 					'bmbo-modal', {
 						'bmbo-showing': animateStatus === ANIMATE_STATUS_SHOWING,

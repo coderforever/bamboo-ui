@@ -2,6 +2,14 @@
 
 $narrowPadding: .2em 0.3em;
 
+@mixin cellStyle($color) {
+	th.bmbo-#{$color},
+	td.bmbo-#{$color} {
+		background: var(--bmbo-#{$color}-light);
+		color: #FFF;
+	}
+}
+
 .bmbo-table {
 	width: 100%;
 	margin-bottom: var(--bmbo-component-margin);
@@ -46,4 +54,13 @@ $narrowPadding: .2em 0.3em;
 	td.bmbo-narrow {
 		padding: $narrowPadding;
 	}
+
+	// Misc
+	@include cellStyle(deprecated);
+	@include cellStyle(primary);
+	@include cellStyle(info);
+	@include cellStyle(success);
+	@include cellStyle(warning);
+	@include cellStyle(danger);
+	@include cellStyle(forbid);
 }

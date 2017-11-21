@@ -36,15 +36,27 @@ class TablePage extends React.Component {
 					<tbody>
 						<tr>
 							<td>TD 1</td>
-							<td>TD 2</td>
+							<td className="bmbo-primary">.primary</td>
 						</tr>
 						<tr>
 							<td>TD 1</td>
-							<td>TD 2</td>
+							<td className="bmbo-info">.info</td>
 						</tr>
 						<tr>
 							<td>TD 1</td>
-							<td>TD 2</td>
+							<td className="bmbo-success">.success</td>
+						</tr>
+						<tr>
+							<td>TD 1</td>
+							<td className="bmbo-danger">.danger</td>
+						</tr>
+						<tr>
+							<td>TD 1</td>
+							<td className="bmbo-warning">.warning</td>
+						</tr>
+						<tr>
+							<td>TD 1</td>
+							<td className="bmbo-forbid">.forbid</td>
 						</tr>
 					</tbody>
 				</table>

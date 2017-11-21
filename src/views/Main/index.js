@@ -23,6 +23,7 @@ import DynamicStringPage from '../Components/DynamicStringPage';
 import AutoCompletePage from '../Components/AutoCompletePage';
 import SelectPage from '../Components/SelectPage';
 import TablePage from '../Components/TablePage';
+import LabelPage from '../Components/LabelPage';
 
 import Navigation from '../../../components/Nav';
 
@@ -71,6 +72,7 @@ class Main extends React.Component {
 					<Route path="/auto_complete" component={withSideBar(AutoCompletePage)} />
 					<Route path="/select" component={withSideBar(SelectPage)} />
 					<Route path="/table" component={withSideBar(TablePage)} />
+					<Route path="/label" component={withSideBar(LabelPage)} />
 				</div>
 			</div>
 		);

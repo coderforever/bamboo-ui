@@ -53,6 +53,9 @@ export default (Component) => {
 			<Navigation.Item>
 				<Link to="/table">Table</Link>
 			</Navigation.Item>
+			<Navigation.Item>
+				<Link to="/label">Label</Link>
+			</Navigation.Item>
 		</Navigation>
 	);
 
