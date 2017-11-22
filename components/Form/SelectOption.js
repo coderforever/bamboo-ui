@@ -38,7 +38,7 @@ class SelectOption extends React.Component {
 			<li
 				role="button"
 				tabIndex={-1}
-				className={`bmbo-${bmboSelectSize || 'md'} bmbo-select-item`}
+				className="bmbo-select-item bmbo-padding"
 				{...props}
 				onClick={this.onClick}
 			>

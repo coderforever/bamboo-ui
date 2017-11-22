@@ -115,20 +115,22 @@ $border: #CCC;
 	list-style: none;
 }
 
-@mixin padding {
-	&.bmbo-xs {
-		padding: var(--bmbo-input-padding-xs);
+@mixin paddingFunc($size, $paddingRoot:true) {
+	&.bmbo-#{$size} {
+		@if $paddingRoot {
+			padding: var(--bmbo-input-padding-#{$size});
+		}
+
+		.bmbo-padding {
+			padding: var(--bmbo-input-padding-#{$size});
+		}
 	}
-	&.bmbo-sm {
-		padding: var(--bmbo-input-padding-sm);
-	}
-	&.bmbo-md {
-		padding: var(--bmbo-input-padding-md);
-	}
-	&.bmbo-lg {
-		padding: var(--bmbo-input-padding-lg);
-	}
-	&.bmbo-xl {
-		padding: var(--bmbo-input-padding-xl);
-	}
+}
+
+@mixin padding($paddingRoot:true) {
+	@include paddingFunc(xs, $paddingRoot);
+	@include paddingFunc(sm, $paddingRoot);
+	@include paddingFunc(md, $paddingRoot);
+	@include paddingFunc(lg, $paddingRoot);
+	@include paddingFunc(xl, $paddingRoot);
 }

@@ -30,6 +30,7 @@
 
 // TODO: Not handle transform when list show in top
 .bmbo-select-list {
+	@include padding(false);
 	transition: opacity var(--bmbo-duration-fast), transform var(--bmbo-duration-fast);
 
 	&.bmbo-showing {
@@ -44,9 +45,8 @@
 		pointer-events: none;
 	}
 
-	> .bmbo-select-item {
-		@include padding;
-
+	// Item
+	.bmbo-select-item {
 		transition: background var(--bmbo-duration);
 
 		&:hover {
@@ -59,6 +59,27 @@
 
 		&.bmbo-select-item-all {
 			border-bottom: 1px solid var(--bmbo-border);
+		}
+	}
+
+	// Group
+	.bmbo-select-group {
+		> .bmbo-select-group-title {
+			display: inline-block;
+			font-weight: bolder;
+			color: var(--bmbo-color-dim);
+
+			transform: scale(.9);
+		}
+
+		> ul {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+
+			> .bmbo-select-item {
+				padding-left: 1.2em;
+			}
 		}
 	}
 }

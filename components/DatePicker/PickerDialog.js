@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import Caret from '../Icon/Caret';
+import DatePanel from './DatePanel';
+
 import {
 	createPortal,
 } from '../utils/uiUtil';
@@ -24,8 +27,20 @@ class PickerDialog extends React.Component {
 					)}
 			>
 				<div className="bmbo-date-picker-header">
-					<span className="bmbo-date-picker-year">{year}</span>
-					<span className="bmbo-date-picker-month">{month}</span>
+					<span className="bmbo-date-picker-year">
+						<Caret direct="left" />
+						{year}
+						<Caret />
+					</span>
+					<span className="bmbo-date-picker-month">
+						<Caret direct="left" />
+						{month + 1}
+						<Caret />
+					</span>
+				</div>
+
+				<div>
+					<DatePanel year={year} month={month} />
 				</div>
 			</div>,
 		);

@@ -5,11 +5,12 @@ import { isDev } from '../utils/envUtil';
 import { requestAnimationFrame } from '../utils/uiUtil';
 import { addUniqueListener, removeUniqueListener, isSameSource, wrapperEventValue } from '../utils/eventUtil';
 import { toArray } from '../utils/arrayUtil';
-import { everyChildrenByType, mapChildrenByType } from '../utils/componentUtil';
 
 import Caret from '../Icon/Caret';
+import CheckBox from '../Form/Checkbox';
 import SelectList from './SelectList';
 import SelectOption, { BAMBOO_FORM_SELECT_OPTION } from './SelectOption';
+import SelectGroup, { BAMBOO_FORM_SELECT_GROUP, getValueList } from './SelectGroup';
 
 class Select extends React.Component {
 	constructor() {
@@ -24,7 +25,7 @@ class Select extends React.Component {
 			bmboSelectSize: this.props.size,
 			bmboSelectMulti: this.props.multi,
 			bmboOnSelectValue: this.onSelectValue,
-			bmboOnSelectAllValue: this.onSelectAllValue,
+			bmboOnSelectValues: this.onSelectValues,
 			bmboSelectIsChecked: this.isValueChecked,
 			bmboSelectIsAllChecked: this.isAllValueChecked,
 		};
@@ -89,22 +90,29 @@ class Select extends React.Component {
 		}
 	};
 
-	onSelectAllValue = (event) => {
-		const { onChange, children } = this.props;
+	onSelectValues = (event, valueList, checked) => {
+		const { children, value, onChange } = this.props;
+		const myList = valueList || getValueList(children);
+		const myChecked = checked !== undefined ? checked : !this.isAllValueChecked();
+		let newValue = toArray(value);
 
-		let newValue;
-		if (this.isAllValueChecked()) {
-			newValue = [];
-		} else {
-			newValue = mapChildrenByType(children, BAMBOO_FORM_SELECT_OPTION, (node) => {
-				const { value: nodeValue, children: nodeChildren } = node.props;
-				return nodeValue !== undefined ? nodeValue : nodeChildren;
+		if (myChecked) {
+			myList.forEach((val) => {
+				if (!newValue.includes(val)) {
+					newValue.push(val);
+				}
 			});
+		} else {
+			newValue = newValue.filter(val => !myList.includes(val));
 		}
 
 		if (onChange) {
 			onChange(wrapperEventValue(event, this.$ele, newValue));
 		}
+	};
+
+	onSelectAllValue = (event) => {
+		this.onSelectValues(event);
 	};
 
 	setRef = (ele) => {
@@ -120,12 +128,8 @@ class Select extends React.Component {
 		const { value, children } = this.props;
 		const myValue = toArray(value);
 
-		return everyChildrenByType(children, BAMBOO_FORM_SELECT_OPTION, (node) => {
-			const { value: nodeVal, children: nodeChildren } = node.props;
-			const myVal = nodeVal !== undefined ? nodeVal : nodeChildren;
-
-			return myValue.includes(myVal);
-		});
+		const allValueList = getValueList(children);
+		return allValueList.every(val => myValue.includes(val));
 	};
 
 	render() {
@@ -175,6 +179,16 @@ class Select extends React.Component {
 				</div>
 
 				<SelectList size={size} open={open} rect={rect}>
+					{multi && <li
+						className="bmbo-select-item bmbo-padding bmbo-select-item-all"
+						onClick={this.onSelectAllValue}
+						role="button"
+						tabIndex={-1}
+					>
+						<CheckBox checked={this.isAllValueChecked()}>
+							Select All
+						</CheckBox>
+					</li>}
 					{children}
 				</SelectList>
 			</div>
@@ -197,9 +211,10 @@ Select.childContextTypes = {
 	bmboSelectIsChecked: PropTypes.func,
 	bmboSelectIsAllChecked: PropTypes.func,
 	bmboOnSelectValue: PropTypes.func,
-	bmboOnSelectAllValue: PropTypes.func,
+	bmboOnSelectValues: PropTypes.func,
 };
 
 Select.Option = SelectOption;
+Select.Group = SelectGroup;
 
 export default Select;

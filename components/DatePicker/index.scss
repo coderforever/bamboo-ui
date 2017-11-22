@@ -14,12 +14,14 @@
 	top: 0;
 	left: 0;
 
-	@include padding;
-
 	min-width: 200px;
 
 	> .bmbo-date-picker-header {
 		overflow: hidden;
+		color: var(--bmbo-primary);
+		font-weight: 600;
+		border-bottom: 1px solid var(--bmbo-border-dim);
+		padding: 0.5em;
 
 		> .bmbo-date-picker-year {
 			float: left;

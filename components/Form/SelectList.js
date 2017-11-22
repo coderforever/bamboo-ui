@@ -83,9 +83,7 @@ class SelectList extends React.Component {
 	render() {
 		const { animateStatus, width, x, y } = this.state;
 		const { children } = this.props;
-		const {
-			bmboSelectSize, bmboSelectMulti, bmboSelectIsAllChecked, bmboOnSelectAllValue,
-		} = this.context;
+		const { bmboSelectSize } = this.context;
 
 		if (animateStatus === ANIMATE_STATUS_NONE) return null;
 
@@ -94,6 +92,7 @@ class SelectList extends React.Component {
 				className={classNames(
 					'bmbo-box-absolute',
 					'bmbo-select-list',
+					`bmbo-${bmboSelectSize || 'md'}`,
 					{
 						'bmbo-hidden': animateStatus === ANIMATE_STATUS_INIT,
 						'bmbo-showing': animateStatus === ANIMATE_STATUS_SHOWING,
@@ -104,16 +103,6 @@ class SelectList extends React.Component {
 				style={{ width: `${width}px`, left: `${x}px`, top: `${y}px` }}
 				onTransitionEnd={this.onTransitionEnd}
 			>
-				{bmboSelectMulti && <li
-					className={`bmbo-${bmboSelectSize || 'md'} bmbo-select-item bmbo-select-item-all`}
-					onClick={bmboOnSelectAllValue}
-					role="button"
-					tabIndex={-1}
-				>
-					<CheckBox checked={bmboSelectIsAllChecked()}>
-						Select All
-					</CheckBox>
-				</li>}
 				{children}
 			</ul>,
 		);
@@ -129,8 +118,6 @@ SelectList.propTypes = {
 SelectList.contextTypes = {
 	bmboSelectSize: PropTypes.string,
 	bmboSelectMulti: PropTypes.bool,
-	bmboSelectIsAllChecked: PropTypes.func,
-	bmboOnSelectAllValue: PropTypes.func,
 };
 
 export default SelectList;
