@@ -94,7 +94,7 @@ class Select extends React.Component {
 		const { children, value, onChange } = this.props;
 		const myList = valueList || getValueList(children);
 		const myChecked = checked !== undefined ? checked : !this.isAllValueChecked();
-		let newValue = toArray(value);
+		let newValue = [...toArray(value)];
 
 		if (myChecked) {
 			myList.forEach((val) => {
