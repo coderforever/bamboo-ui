@@ -132,9 +132,11 @@ class Field extends React.Component {
 
 		return (
 			<div className={classNames('bmbp-form-field', className)} {...props}>
-				<label htmlFor={name}>
-					{title}
-				</label>
+				{title !== undefined &&
+					<label htmlFor={name}>
+						{title}
+					</label>
+				}
 				{list}
 			</div>
 		);
