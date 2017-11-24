@@ -127,6 +127,12 @@
 	}
 }
 
+.bmbo-list-unstyled {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
 // box style
 // TODO: Remove this when <PinBox> is ready
 .bmbo-box-absolute {

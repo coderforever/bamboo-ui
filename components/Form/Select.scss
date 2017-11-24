@@ -12,8 +12,6 @@
 		> .bmbo-caret {
 			display: table-cell;
 			width: 1em;
-			//position: absolute;
-			//right: .5em;
 		}
 
 		> .bmbo-list-inline {
@@ -28,22 +26,8 @@
 	}
 }
 
-// TODO: Not handle transform when list show in top
 .bmbo-select-list {
 	@include padding(false);
-	transition: opacity var(--bmbo-duration-fast), transform var(--bmbo-duration-fast);
-
-	&.bmbo-showing {
-		opacity: 0;
-		transform: scale(1, 0.5);
-		transition: none;
-	}
-
-	&.bmbo-hiding {
-		opacity: 0;
-		transform: scale(1, 0.5);
-		pointer-events: none;
-	}
 
 	// Item
 	.bmbo-select-item {

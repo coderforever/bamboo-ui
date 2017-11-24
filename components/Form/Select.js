@@ -1,25 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { isDev } from '../utils/envUtil';
-import { requestAnimationFrame } from '../utils/uiUtil';
-import { addUniqueListener, removeUniqueListener, isSameSource, wrapperEventValue } from '../utils/eventUtil';
+import { wrapperEventValue } from '../utils/eventUtil';
 import { toArray } from '../utils/arrayUtil';
 
 import Caret from '../Icon/Caret';
 import CheckBox from '../Form/Checkbox';
-import SelectList from './SelectList';
-import SelectOption, { BAMBOO_FORM_SELECT_OPTION } from './SelectOption';
-import SelectGroup, { BAMBOO_FORM_SELECT_GROUP, getValueList } from './SelectGroup';
+import PinBox from '../PinBox';
+import SelectOption from './SelectOption';
+import SelectGroup, { getValueList } from './SelectGroup';
 
 class Select extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			open: false,
-		};
-	}
-
 	getChildContext() {
 		return {
 			bmboSelectSize: this.props.size,
@@ -30,37 +21,6 @@ class Select extends React.Component {
 			bmboSelectIsAllChecked: this.isAllValueChecked,
 		};
 	}
-
-	onWindowHide = (event) => {
-		if (isSameSource(event, this.$ele)) return;
-
-		removeUniqueListener('mousedown', this.onWindowHide);
-		removeUniqueListener('blur', this.onWindowHide);
-
-		this.setState({ open: false });
-	};
-
-	onTitleMouseDown = () => {
-		this.setState(({ open }) => {
-			const newState = {
-				open: !open,
-			};
-
-			// Show animation
-			if (newState.open) {
-				if (!this.$ele) return null;
-
-				newState.rect = this.$ele.getBoundingClientRect();
-
-				requestAnimationFrame(() => {
-					addUniqueListener('mousedown', this.onWindowHide);
-					if (!isDev) addUniqueListener('blur', this.onWindowHide);
-				});
-			}
-
-			return newState;
-		});
-	};
 
 	onSelectValue = (value, event) => {
 		const { onChange, multi, value: oriValue } = this.props;
@@ -85,8 +45,8 @@ class Select extends React.Component {
 			onChange(wrapperEventValue(event, this.$ele, newValue));
 		}
 
-		if (!multi) {
-			this.setState({ open: false });
+		if (!multi && this.$pin) {
+			this.$pin.setVisible(false);
 		}
 	};
 
@@ -119,6 +79,10 @@ class Select extends React.Component {
 		this.$ele = ele;
 	};
 
+	setPinRef = (ele) => {
+		this.$pin = ele;
+	};
+
 	isValueChecked = (val) => {
 		const { value } = this.props;
 		return toArray(value).includes(val);
@@ -134,10 +98,9 @@ class Select extends React.Component {
 
 	render() {
 		const { size, className, value, multi, children, ...props } = this.props;
-		const { open, rect } = this.state;
-
 		delete props.onChange;
 
+		// =============================== Value ===============================
 		let $value;
 		if (multi) {
 			const valueList = toArray(value);
@@ -157,41 +120,52 @@ class Select extends React.Component {
 			);
 		}
 
-		return (
-			<div
-				className="bmbo-select"
-				{...props}
-				ref={this.setRef}
+		// ================================ List ===============================
+		const $list = (
+			<ul
+				className={classNames(
+					'bmbo-select-list',
+					'bmbo-list-unstyled',
+					`bmbo-${size || 'md'}`,
+				)}
 			>
-				<div
-					className={classNames(
-						'bmbo-select-value',
-						`bmbo-${size || 'md'}`,
-						className,
-					)}
-
+				{multi && <li
+					className="bmbo-select-item bmbo-padding bmbo-select-item-all"
+					onClick={this.onSelectAllValue}
 					role="button"
-					tabIndex={0}
-					onMouseDown={this.onTitleMouseDown}
+					tabIndex={-1}
 				>
-					{$value}
-					<Caret direct="down" />
-				</div>
+					<CheckBox size={size} checked={this.isAllValueChecked()}>
+						Select All
+					</CheckBox>
+				</li>}
+				{children}
+			</ul>
+		);
 
-				<SelectList size={size} open={open} rect={rect}>
-					{multi && <li
-						className="bmbo-select-item bmbo-padding bmbo-select-item-all"
-						onClick={this.onSelectAllValue}
+		// =============================== Render ==============================
+		return (
+			<PinBox pin={$list} ref={this.setPinRef} backdrop stretch>
+				<div
+					className="bmbo-select"
+					{...props}
+					ref={this.setRef}
+				>
+					<div
+						className={classNames(
+							'bmbo-select-value',
+							`bmbo-${size || 'md'}`,
+							className,
+						)}
+
 						role="button"
-						tabIndex={-1}
+						tabIndex={0}
 					>
-						<CheckBox checked={this.isAllValueChecked()}>
-							Select All
-						</CheckBox>
-					</li>}
-					{children}
-				</SelectList>
-			</div>
+						{$value}
+						<Caret direct="down" />
+					</div>
+				</div>
+			</PinBox>
 		);
 	}
 }

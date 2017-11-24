@@ -48,6 +48,10 @@ class PinBox extends React.Component {
 		this.$ele = ele;
 	};
 
+	setVisible = (visible) => {
+		this.setState({ visible });
+	};
+
 	render() {
 		const { trigger, children, pin, stretch, ...props } = this.props;
 		const { visible, rect } = this.state;
@@ -63,7 +67,7 @@ class PinBox extends React.Component {
 				},
 			};
 
-			if (trigger === 'click') {
+			if (!trigger || trigger === 'click') {
 				// Click Trigger
 				newProps.onClick = (...args) => {
 					if (onClick) onClick(...args);
