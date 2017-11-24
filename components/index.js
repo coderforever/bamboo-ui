@@ -24,3 +24,4 @@ export AutoComplete from './AutoComplete';
 export Table from './Table';
 export Label from './Label';
 export DatePicker from './DatePicker';
+export PinBox from './PinBox';

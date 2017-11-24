@@ -59,7 +59,7 @@ class TooltipHolder extends React.Component {
 
 TooltipHolder.propTypes = {
 	className: PropTypes.string,
-	title: PropTypes.string,
+	title: PropTypes.node,
 	children: PropTypes.node,
 	placement: PropTypes.string,
 	maxWidth: PropTypes.number,

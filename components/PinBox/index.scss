@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+.bmbo-pin-box {
+	position: absolute;
+	border: 1px solid var(--bmbo-border);
+	background: #FFF;
+	box-shadow: var(--bmbo-shadow);
+
+	transform-origin: top;
+	transition: transform var(--bmbo-duration-fast), opacity var(--bmbo-duration-fast);
+
+	&.bmbo-up {
+		transform-origin: bottom;
+	}
+
+	&.bmbo-init {
+		pointer-events: none;
+		opacity: 0;
+		transition: none!important;
+	}
+
+	&.bmbo-showing {
+		opacity: 0;
+		transform: scale(1, .8);
+		transition: none!important;
+	}
+
+	&.bmbo-hiding {
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity var(--bmbo-duration);
+	}
+}

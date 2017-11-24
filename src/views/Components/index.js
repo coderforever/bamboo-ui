@@ -59,6 +59,9 @@ export default (Component) => {
 			<Navigation.Item>
 				<Link to="/date_picker">Date Picker</Link>
 			</Navigation.Item>
+			<Navigation.Item>
+				<Link to="/pin_box">Pin Box</Link>
+			</Navigation.Item>
 		</Navigation>
 	);
 

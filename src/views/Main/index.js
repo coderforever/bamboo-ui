@@ -25,6 +25,7 @@ import SelectPage from '../Components/SelectPage';
 import TablePage from '../Components/TablePage';
 import LabelPage from '../Components/LabelPage';
 import DatePickerPage from '../Components/DatePickerPage';
+import PinBoxPage from '../Components/PinBoxPage';
 
 import Navigation from '../../../components/Nav';
 
@@ -75,6 +76,7 @@ class Main extends React.Component {
 					<Route path="/table" component={withSideBar(TablePage)} />
 					<Route path="/label" component={withSideBar(LabelPage)} />
 					<Route path="/date_picker" component={withSideBar(DatePickerPage)} />
+					<Route path="/pin_box" component={withSideBar(PinBoxPage)} />
 				</div>
 			</div>
 		);
