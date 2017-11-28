@@ -28,11 +28,16 @@ class SelectPage extends React.Component {
 	}
 
 	getSampleCode = () => {
-		return '';
-
 		const { ...form } = this.state.form;
 		return `
+const VALUE_LIST = ${JSON.stringify(VALUE_LIST)};
+
 <Select${toString(form, { size: 'md' })}>
+	<Select.Group title="Group 1">
+		<Select.Option>Group Value 1</Select.Option>
+		<Select.Option>Group Value 2</Select.Option>
+		<Select.Option>Group Value 3</Select.Option>
+	</Select.Group>
 	{VALUE_LIST.map(val => (
 		<Select.Option key={val}>{val}</Select.Option>
 	))}

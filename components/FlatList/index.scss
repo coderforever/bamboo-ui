@@ -1,0 +1,36 @@
+@charset "UTF-8";
+@import "../common";
+
+.bmbo-flat-list {
+	border: 1px solid var(--bmbo-border);
+	display: flex;
+
+	@include padding(false);
+
+	> .bmbo-flat-list-column {
+		flex: 1 1 0;
+		overflow-y: auto;
+
+		@include listNoStyle;
+
+		+ .bmbo-flat-list-column {
+			border-left: 1px solid var(--bmbo-border);
+		}
+
+		> .bmbo-flat-list-item {
+			transition: background var(--bmbo-duration-fast);
+
+			> a {
+				display: block;
+			}
+
+			&:hover {
+				background: var(--bmbo-bac);
+			}
+
+			&.bmbo-active {
+				background: var(--bmbo-bac-dark);
+			}
+		}
+	}
+}

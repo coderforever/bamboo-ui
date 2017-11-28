@@ -26,6 +26,7 @@ import TablePage from '../Components/TablePage';
 import LabelPage from '../Components/LabelPage';
 import DatePickerPage from '../Components/DatePickerPage';
 import PinBoxPage from '../Components/PinBoxPage';
+import FlatListPage from '../Components/FlatListPage';
 
 import Navigation from '../../../components/Nav';
 
@@ -77,6 +78,7 @@ class Main extends React.Component {
 					<Route path="/label" component={withSideBar(LabelPage)} />
 					<Route path="/date_picker" component={withSideBar(DatePickerPage)} />
 					<Route path="/pin_box" component={withSideBar(PinBoxPage)} />
+					<Route path="/flat_list" component={withSideBar(FlatListPage)} />
 				</div>
 			</div>
 		);

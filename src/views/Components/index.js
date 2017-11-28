@@ -62,6 +62,9 @@ export default (Component) => {
 			<Navigation.Item>
 				<Link to="/pin_box">Pin Box</Link>
 			</Navigation.Item>
+			<Navigation.Item>
+				<Link to="/flat_list">Flat List</Link>
+			</Navigation.Item>
 		</Navigation>
 	);
 
