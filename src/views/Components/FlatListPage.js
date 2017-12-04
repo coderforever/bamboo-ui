@@ -38,6 +38,34 @@ const FLAT_LIST = [
 	},
 ];
 
+const FLAT_LIST2 = [
+	{
+		value: '1',
+
+		list: [
+			{
+				value: '1 - 1',
+				title: 'a - 1',
+				list: [{ value: 'a - 1 - 1' }],
+			},
+			{
+				value: '1 - 2',
+				title: 'a - 2',
+				list: [{ value: 'a - 2 - 1' }],
+			},
+		],
+	},
+	{
+		value: '2',
+		list: [
+			{
+				value: '2 - 1',
+				list: [{ value: 'b - 1 - 1' }],
+			},
+		],
+	},
+];
+
 class FlatListPage extends React.Component {
 	constructor() {
 		super();
@@ -48,6 +76,8 @@ class FlatListPage extends React.Component {
 				backdrop: false,
 				stretch: false,
 			},
+
+			list: FLAT_LIST,
 		};
 	}
 
@@ -73,7 +103,7 @@ const $pin = (
 	};
 
 	render() {
-		const { form } = this.state;
+		const { form, list } = this.state;
 
 		return (
 			<div>
@@ -90,7 +120,7 @@ const $pin = (
 						<Form instance={this} path="form">
 							<Form.Field name="value">
 								<FlatList
-									list={FLAT_LIST}
+									list={list}
 									columns={3}
 								/>
 							</Form.Field>
@@ -124,6 +154,12 @@ const $pin = (
 						{this.getSampleCode()}
 					</pre>
 				</div>
+
+				{/*<Button*/}
+					{/*onClick={() => {*/}
+						{/*this.setState({ list: FLAT_LIST2 });*/}
+					{/*}}*/}
+				{/*>Change</Button>*/}
 			</div>
 		);
 	}

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { toArray } from '../utils/arrayUtil';
-import { getValue } from '../utils/pathUtil';
 import { wrapperEventValue } from '../utils/eventUtil';
 
 class FlatList extends React.Component {
@@ -46,19 +45,18 @@ class FlatList extends React.Component {
 
 		if (level === 0) return list;
 
-		console.log('Get', levelLists);
-
 		return levelLists[level] || [];
 	};
 
 	refreshList = (prevProps, nextProps) => {
-		if (prevProps.value === nextProps.value) return;
+		if (
+			prevProps.value === nextProps.value &&
+			prevProps.list === nextProps.list
+		) return;
 
 		const { list = [] } = nextProps;
 		const levelLists = {};
 		const valueList = toArray(nextProps.value);
-
-		console.log('~>', valueList);
 
 		let current = list;
 		for (let i = 0; i < valueList.length; i += 1) {
@@ -66,7 +64,7 @@ class FlatList extends React.Component {
 			current = current.find(({ value }) => value === currentValue);
 
 			if (!current) {
-				console.warn('[FlatList] List not match');
+				// Skip if path not match
 				break;
 			}
 

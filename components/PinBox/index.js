@@ -7,6 +7,17 @@ import { addUniqueListener, removeUniqueListener, isSameSource } from '../utils/
 
 import Box from './Box';
 
+class EmptyWrapper extends React.Component {
+	render() {
+		const { children, ...props } = this.props;
+		return React.cloneElement(children, props);
+	}
+}
+
+EmptyWrapper.propTypes = {
+	children: PropTypes.node,
+};
+
 class PinBox extends React.Component {
 	constructor() {
 		super();
@@ -77,7 +88,12 @@ class PinBox extends React.Component {
 				console.warn('[PinBox] Trigger not realize:', trigger);
 			}
 
-			return React.cloneElement(node, newProps);
+			// Transform children to class component to avoid stateless function can't use ref
+			return (
+				<EmptyWrapper {...newProps}>
+					{node}
+				</EmptyWrapper>
+			);
 		});
 
 		return [
