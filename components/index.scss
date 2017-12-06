@@ -30,7 +30,6 @@
 
 	a {
 		text-decoration: none;
-		color: inherit;
 	}
 }
 
@@ -161,3 +160,17 @@
 .bmbo-text-right {
 	text-align: right;
 }
+
+@mixin textColor($type) {
+	.bmbo-text-#{$type} {
+		color: var(--bmbo-#{$type});
+	}
+}
+@include textColor(weak);
+@include textColor(deprecated);
+@include textColor(primary);
+@include textColor(info);
+@include textColor(success);
+@include textColor(warning);
+@include textColor(danger);
+@include textColor(forbid);

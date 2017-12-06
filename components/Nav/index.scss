@@ -37,6 +37,10 @@
 
 	transition: background var(--bmbo-duration);
 
+	a {
+		color: inherit;
+	}
+
 	@include navBarColor(lead, lead-active);
 	@include navBarColor(deprecated);
 	@include navBarColor(primary);

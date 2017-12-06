@@ -5,6 +5,7 @@
 	border: 1px solid var(--bmbo-border);
 	background: #FFF;
 	box-shadow: var(--bmbo-shadow);
+	z-index: 100;
 
 	transform-origin: top;
 	transition: transform var(--bmbo-duration-fast), opacity var(--bmbo-duration-fast);
