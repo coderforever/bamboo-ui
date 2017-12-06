@@ -108,3 +108,8 @@ pre {
 .lead {
 	font-size: 1.2em;
 }
+
+// Contaminate the style to check css impact
+a {
+	color: red;
+}

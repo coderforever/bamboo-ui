@@ -110,7 +110,7 @@ class FlatList extends React.Component {
 									className={classNames('bmbo-flat-list-item', levelValue === value && 'bmbo-active')}
 									key={value}
 								>
-									<a
+									<span
 										className="bmbo-padding"
 										role="button"
 										tabIndex={-1}
@@ -119,7 +119,7 @@ class FlatList extends React.Component {
 										}}
 									>
 										{title || value}
-									</a>
+									</span>
 								</li>
 							))}
 						</ul>
