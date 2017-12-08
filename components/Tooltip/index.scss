@@ -10,6 +10,7 @@ $bacColor: rgba(#000, 0.8);
 	position: absolute;
 	pointer-events: none;
 	transition: transform var(--bmbo-duration), opacity var(--bmbo-duration);
+	z-index: 100;
 
 	&.bmbo-showing {
 		opacity: 0;
