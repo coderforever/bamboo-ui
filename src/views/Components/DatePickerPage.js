@@ -6,6 +6,7 @@ import {
 	Navigation, Row, Col, Button, Group,
 	Form, Input, Radio, Checkbox, Menu,
 	Modal, A, Icon, Curtain, DatePicker,
+	Picker,
 } from '../../../components';
 
 import { TYPE_LIST } from '../../utils/enum';
@@ -16,9 +17,12 @@ import styles from './CurtainPage.scss';
 class CurtainPage extends React.Component {
 	constructor() {
 		super();
+
+		const now = new Date();
+
 		this.state = {
 			form: {
-				value: '',
+				value: now.toISOString().replace('T', ' ').slice(0, 19),
 			},
 			visible: false,
 		};
@@ -50,7 +54,7 @@ class CurtainPage extends React.Component {
 					<div className="preview">
 						<Form instance={this} path="form">
 							<Form.Field name="value">
-								<DatePicker date={form.value} />
+								<Picker date={form.value} />
 							</Form.Field>
 						</Form>
 					</div>

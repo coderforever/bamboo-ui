@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 @mixin boxSize($name, $width) {
-	&.bmbo-#{$name} {
+	&.bmbo-modal-#{$name} {
 		.bmbo-dialog-holder {
 			.bmbo-dialog {
 				max-width: $width;

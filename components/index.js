@@ -26,3 +26,4 @@ export Label from './Label';
 export DatePicker from './DatePicker';
 export PinBox from './PinBox';
 export FlatList from './FlatList';
+export Picker from './Picker';

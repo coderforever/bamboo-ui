@@ -1,0 +1,48 @@
+@charset "UTF-8";
+@import "../common";
+
+$dateBlockWidth: 3em;
+$dateBlockHeight: 2.6em;
+
+.bmbo-date-picker {
+	width: $dateBlockWidth * 7;
+	text-align: center;
+	cursor: default;
+
+	.bmbo-date-picker-title {
+		@include listNoStyle;
+
+		> li {
+			display: inline-block;
+			width: $dateBlockWidth;
+			line-height: 2em;
+
+			color: var(--bmbo-color-dim);
+
+			> strong {
+				font-size: 0.8em;
+			}
+		}
+	}
+
+	.bmbo-date-picker-content {
+		@include listNoStyle;
+
+		> li {
+			display: inline-block;
+			width: $dateBlockWidth;
+			line-height: $dateBlockHeight;
+			cursor: pointer;
+
+			transition: all var(--bmbo-duration-mid);
+
+			&:hover {
+				background: var(--bmbo-bac);
+			}
+
+			&.bmbo-deprecated {
+				color: var(--bmbo-color-dim);
+			}
+		}
+	}
+}
