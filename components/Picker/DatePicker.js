@@ -4,6 +4,7 @@ import classNames from 'classnames';
 
 import { BambooDate } from '../utils/dateUtils';
 import { wrapperEventValue } from '../utils/eventUtil';
+import { canUseDOM } from '../utils/envUtil';
 import {
 	ANIMATE_STATUS_HIDING, ANIMATE_STATUS_NONE, ANIMATE_STATUS_SHOWING,
 	ANIMATE_STATUS_SHOWN
@@ -27,9 +28,10 @@ class DatePicker extends React.Component {
 		super();
 
 		this.state = {
-			date: null,
-			targetDate: null,
 			animateStatus: ANIMATE_STATUS_NONE,
+
+			viewDate: null, // This is used for show current year-month panel
+			nextViewDate: null, // This is used for animation panel
 		};
 
 		this.seq = new Sequence();
@@ -43,14 +45,20 @@ class DatePicker extends React.Component {
 		this.checkUpdate(this.props, nextProps);
 	}
 
-	onTransitionEnd = (event) => {
-		const { animateStatus, targetDate } = this.state;
+	onSwitchDateView = (nextDate) => {
+		if (this.state.animateStatus !== ANIMATE_STATUS_NONE) return;
+		this.switchDateView(nextDate);
+	};
 
-		if (event.target === this.$transPanel && animateStatus === ANIMATE_STATUS_SHOWN) {
+	onTransitionEnd = (event) => {
+		const { animateStatus, nextViewDate } = this.state;
+
+		if (event.target === this.$nextView && animateStatus === ANIMATE_STATUS_SHOWN) {
 			this.seq.next(() => {
 				this.setState({
 					animateStatus: ANIMATE_STATUS_NONE,
-					date: targetDate,
+					viewDate: nextViewDate,
+					nextViewDate: null,
 				});
 			});
 		}
@@ -60,32 +68,45 @@ class DatePicker extends React.Component {
 		this.$ele = ele;
 	};
 
-	setTransPanelRef = (ele) => {
-		this.$transPanel = ele;
+	setViewRef = (ele) => {
+		this.$view = ele;
+	};
+
+	setNextViewRef = (ele) => {
+		this.$nextView = ele;
 	};
 
 	checkUpdate = (prevProps, nextProps) => {
 		if (prevProps.value === nextProps.value) return;
 
-		const { date } = this.state;
-		const myDate = new BambooDate(nextProps.value);
+		const { viewDate } = this.state;
+		const nextDate = new BambooDate(nextProps.value);
 
-		if (!date || date.format('YYYY-MM') === myDate.format('YYYY-MM')) {
-			this.setState({ date: myDate });
+		if (!prevProps.value || (viewDate && viewDate.format('YYYY-MM') === nextDate.format('YYYY-MM'))) {
+			this.setState({
+				viewDate: nextDate,
+			});
 		} else {
-			this.seq
-				.next((done) => {
-					this.setState({
-						animateStatus: ANIMATE_STATUS_SHOWING,
-						targetDate: myDate,
-					}, done);
-				})
-				.next((done) => {
-					this.setState({
-						animateStatus: ANIMATE_STATUS_SHOWN,
-					}, done);
-				});
+			const prevDate = new BambooDate(prevProps.value);
+			if (prevDate.format('YYYY-MM') === nextDate.format('YYYY-MM')) return;
+
+			this.switchDateView(nextDate);
 		}
+	};
+
+	switchDateView = (nextDate) => {
+		this.seq
+			.next((done) => {
+				this.setState({
+					animateStatus: ANIMATE_STATUS_SHOWING,
+					nextViewDate: nextDate,
+				}, done);
+			})
+			.next((done) => {
+				this.setState({
+					animateStatus: ANIMATE_STATUS_SHOWN,
+				}, done);
+			});
 	};
 
 	triggerChangeEvent = (event, date) => {
@@ -96,56 +117,71 @@ class DatePicker extends React.Component {
 	};
 
 	render() {
-		const { date, targetDate, animateStatus } = this.state;
-		if (!date) return null;
+		const { animateStatus, viewDate, nextViewDate } = this.state;
+		if (!viewDate) return null;
 
-		const { className, ...props } = this.props;
-		delete props.value;
+		const { value, className, ...props } = this.props;
 		delete props.onChange;
+
+		const date = new BambooDate(value);
 
 		const isShowing = animateStatus === ANIMATE_STATUS_SHOWING;
 		const isShown = animateStatus === ANIMATE_STATUS_SHOWN;
 
-		// Current Month
-		const startDate = date.clone().setDate(1);
-		const endDate = date.clone().setDate(1);
+		// Current view
+		const startDate = viewDate.clone().setDate(1);
+		const endDate = viewDate.clone().setDate(1);
 		startDate.setDay(0);
 		endDate.setMonth(endDate.getMonth() + 1).setDate(0).setDay(6);
-		const $current = (
+		const $view = (
 			<DatePanel
 				date={date}
+				viewDate={viewDate}
 				startDate={startDate}
 				endDate={endDate}
 				triggerChangeEvent={this.triggerChangeEvent}
-				onTransitionEnd={this.onTransitionEnd}
-				setRef={this.setTransPanelRef}
+				setRef={this.setViewRef}
 				className={classNames({
-					'bmbo-left': isShown && targetDate.getTime() > date.getTime(),
-					'bmbo-right': isShown && targetDate.getTime() < date.getTime(),
+					'bmbo-left': isShown && nextViewDate.getTime() > viewDate.getTime(),
+					'bmbo-right': isShown && nextViewDate.getTime() < viewDate.getTime(),
 				})}
 			/>
 		);
 
-		// TargetMonth
-		let $target;
+		// Next view
+		let $nextView;
 		if (animateStatus !== ANIMATE_STATUS_NONE) {
-			const targetStartDate = targetDate.clone().setDate(1);
-			const targetEndDate = targetDate.clone().setDate(1);
-			targetStartDate.setDay(0);
-			targetEndDate.setMonth(targetEndDate.getMonth() + 1).setDate(0).setDay(6);
-			$target = (
+			const nextStartDate = nextViewDate.clone().setDate(1);
+			const nextEndDate = nextViewDate.clone().setDate(1);
+			nextStartDate.setDay(0);
+			nextEndDate.setMonth(nextEndDate.getMonth() + 1).setDate(0).setDay(6);
+			$nextView = (
 				<DatePanel
-					startDate={targetStartDate}
-					endDate={targetEndDate}
+					date={date}
+					viewDate={nextViewDate}
+					startDate={nextStartDate}
+					endDate={nextEndDate}
+					setRef={this.setNextViewRef}
+					onTransitionEnd={this.onTransitionEnd}
 					className={classNames(
 						'bmbo-target',
 						{
-							'bmbo-left': isShowing && targetDate.getTime() < date.getTime(),
-							'bmbo-right': isShowing && targetDate.getTime() > date.getTime(),
+							'bmbo-left': isShowing && nextViewDate.getTime() < viewDate.getTime(),
+							'bmbo-right': isShowing && nextViewDate.getTime() > viewDate.getTime(),
 						},
 					)}
 				/>
 			);
+		}
+
+		// Content style
+		const contentStyle = {};
+		if (canUseDOM) {
+			if (isShowing && this.$view) {
+				contentStyle.height = `${this.$view.clientHeight}px`;
+			} else if (!isShowing && this.$nextView) {
+				contentStyle.height = `${this.$nextView.clientHeight}px`;
+			}
 		}
 
 		return (
@@ -154,6 +190,48 @@ class DatePicker extends React.Component {
 				ref={this.setRef}
 				{...props}
 			>
+				<div className="bmbo-date-picker-header">
+					<a
+						role="button"
+						tabIndex={-1}
+						aria-label="Prev Year"
+						className="bmbo-date-picker-operation bmbo-year-prev"
+						onClick={() => {
+							this.onSwitchDateView(viewDate.clone().setFullYear(viewDate.getFullYear() - 1));
+						}}
+					/>
+					<a
+						role="button"
+						tabIndex={-1}
+						aria-label="Prev Month"
+						className="bmbo-date-picker-operation bmbo-month-prev"
+						onClick={() => {
+							this.onSwitchDateView(viewDate.clone().setMonth(viewDate.getMonth() - 1));
+						}}
+					/>
+
+					{viewDate.format('YYYY-MM')}
+
+					<a
+						role="button"
+						tabIndex={-1}
+						aria-label="Next Year"
+						className="bmbo-date-picker-operation bmbo-year-next"
+						onClick={() => {
+							this.onSwitchDateView(viewDate.clone().setFullYear(viewDate.getFullYear() + 1));
+						}}
+					/>
+					<a
+						role="button"
+						tabIndex={-1}
+						aria-label="Next Month"
+						className="bmbo-date-picker-operation bmbo-month-next"
+						onClick={() => {
+							this.onSwitchDateView(viewDate.clone().setMonth(viewDate.getMonth() + 1));
+						}}
+					/>
+				</div>
+
 				<ul className="bmbo-date-picker-title">
 					{DATE_LIST.map(str => (
 						<li key={str}>
@@ -170,9 +248,10 @@ class DatePicker extends React.Component {
 							'bmbo-showing': isShowing,
 						},
 					)}
+					style={contentStyle}
 				>
-					{$current}
-					{$target}
+					{$view}
+					{$nextView}
 				</div>
 			</div>
 		);

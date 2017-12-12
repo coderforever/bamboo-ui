@@ -9,6 +9,46 @@ $dateBlockHeight: 2.3em;
 	text-align: center;
 	cursor: default;
 
+	.bmbo-date-picker-header {
+		padding: 0.5em 0.4em 0.4em 0.4em;
+		font-size: 1.2em;
+		border-bottom: 1px solid var(--bmbo-border);
+
+		.bmbo-date-picker-operation {
+			color: inherit;
+			display: inline-block;
+			width: 1.3em;
+			text-align: center;
+			cursor: pointer;
+
+			&:hover {
+				background: var(--bmbo-bac);
+			}
+		}
+
+		.bmbo-year-prev:before {
+			content: '\AB';
+		}
+		.bmbo-year-next:before {
+			content: '\BB';
+		}
+		.bmbo-month-prev:before {
+			content: '\2039';
+		}
+		.bmbo-month-next:before {
+			content: '\203A';
+		}
+
+		.bmbo-year-prev,
+		.bmbo-month-prev {
+			float: left;
+		}
+		.bmbo-year-next,
+		.bmbo-month-next {
+			float: right;
+		}
+	}
+
 	.bmbo-date-picker-title {
 		@include listNoStyle;
 
@@ -27,7 +67,9 @@ $dateBlockHeight: 2.3em;
 
 	.bmbo-date-picker-content {
 		position: relative;
-		overflow-x: hidden;
+		overflow: hidden;
+
+		transition: height var(--bmbo-duration);
 
 		.bmbo-date-picker-panel {
 			@include listNoStyle;
@@ -42,9 +84,11 @@ $dateBlockHeight: 2.3em;
 
 			&.bmbo-left {
 				transform: translateX(-100%);
+				pointer-events: none;
 			}
 			&.bmbo-right {
 				transform: translateX(100%);
+				pointer-events: none;
 			}
 
 			> li {

@@ -2,7 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-const DatePanel = ({ date, startDate, endDate, triggerChangeEvent, className, setRef, ...props }) => {
+const DatePanel = (
+	{
+		date, viewDate, startDate, endDate,
+		triggerChangeEvent, className, setRef, ...props
+	}) => {
 	const $dateList = [];
 	const currentDate = startDate.clone();
 	while (currentDate.getTime() <= endDate.getTime()) {
@@ -10,9 +14,9 @@ const DatePanel = ({ date, startDate, endDate, triggerChangeEvent, className, se
 
 		$dateList.push(
 			<li
-				key={pointDate.getTime()}
+				key={pointDate.format('YYYY-MM-DD')}
 				className={classNames({
-					'bmbo-deprecated': date && pointDate.getMonth() !== date.getMonth(),
+					'bmbo-deprecated': viewDate && pointDate.getMonth() !== viewDate.getMonth(),
 					'bmbo-active': (
 						date &&
 						pointDate.getFullYear() === date.getFullYear() &&
@@ -42,6 +46,7 @@ const DatePanel = ({ date, startDate, endDate, triggerChangeEvent, className, se
 
 DatePanel.propTypes = {
 	date: PropTypes.object,
+	viewDate: PropTypes.object,
 	startDate: PropTypes.object,
 	endDate: PropTypes.object,
 	className: PropTypes.string,

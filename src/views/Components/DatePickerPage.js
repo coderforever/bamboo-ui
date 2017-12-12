@@ -53,7 +53,7 @@ class CurtainPage extends React.Component {
 				<div className="measurement">
 					<div className="preview">
 						<Form instance={this} path="form">
-							<Form.Field name="value">
+							<Form.Field name="value" title="Date">
 								<Picker />
 							</Form.Field>
 						</Form>

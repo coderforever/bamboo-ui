@@ -40,7 +40,7 @@ class Field extends React.Component {
 
 	getList = () => {
 		const { formInstance, onFormChanged } = this.context;
-		const { children } = this.props;
+		const { title, children } = this.props;
 		const myValue = this.getValue();
 
 		return mapChildrenForNode(children, (node) => {
@@ -51,6 +51,7 @@ class Field extends React.Component {
 				const nodeValue = props.value !== undefined ? props.value : props.children;
 
 				return React.cloneElement(node, {
+					'aria-label': props.ariaLabel || title,
 					onClick: (...args) => {
 						if (props.onClick) props.onClick(...args);
 
@@ -67,6 +68,7 @@ class Field extends React.Component {
 			} else if (node.type[BAMBOO_COMPONENT] === BAMBOO_FORM_CHECKBOX) {
 				// ================== Check Box ==================
 				return React.cloneElement(node, {
+					'aria-label': props.ariaLabel || title,
 					onClick: (...args) => {
 						if (props.onClick) props.onClick(...args);
 
@@ -84,6 +86,7 @@ class Field extends React.Component {
 				// ==================== Input ====================
 				return React.cloneElement(node, {
 					value: props.value !== undefined ? props.value : myValue,
+					'aria-label': props.ariaLabel || title,
 					onChange: (...args) => {
 						if (props.onChange) props.onChange(...args);
 
@@ -105,6 +108,7 @@ class Field extends React.Component {
 			// ==================== Rest =====================
 			return React.cloneElement(node, {
 				value: myValue,
+				'aria-label': props.ariaLabel || title,
 				onChange: (...args) => {
 					if (props.onChange) props.onChange(...args);
 
