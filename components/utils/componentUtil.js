@@ -2,6 +2,8 @@ import React from 'react';
 
 export const BAMBOO_COMPONENT = 'BAMBOO_COMPONENT';
 
+export const BAMBOO_INTERNAL_REF = 'BAMBOO_INTERNAL_REF';
+
 export const mapChildren = (children, func) => {
 	const list = React.Children
 		.map(children, (node, index) => func(node, index)) || [];

@@ -5,18 +5,8 @@ import PropTypes from 'prop-types';
 import { mapChildrenForNode } from '../utils/componentUtil';
 import { addUniqueListener, removeUniqueListener, isSameSource } from '../utils/eventUtil';
 
+import EmptyWrapper from '../EmptyWrapper';
 import Box from './Box';
-
-class EmptyWrapper extends React.Component {
-	render() {
-		const { children, ...props } = this.props;
-		return React.cloneElement(children, props);
-	}
-}
-
-EmptyWrapper.propTypes = {
-	children: PropTypes.node,
-};
 
 class PinBox extends React.Component {
 	constructor() {

@@ -22,7 +22,7 @@ class CurtainPage extends React.Component {
 
 		this.state = {
 			form: {
-				value: now.toISOString().replace('T', ' ').slice(0, 19),
+				value: now.toISOString().replace('T', ' ').slice(0, 10),
 			},
 			visible: false,
 		};
@@ -54,7 +54,7 @@ class CurtainPage extends React.Component {
 					<div className="preview">
 						<Form instance={this} path="form">
 							<Form.Field name="value">
-								<Picker date={form.value} />
+								<Picker />
 							</Form.Field>
 						</Form>
 					</div>

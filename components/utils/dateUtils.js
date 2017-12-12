@@ -5,6 +5,7 @@ const FUNC_LIST = [
 	'getDay',
 	'getHours',
 	'getMinutes',
+	'getSeconds',
 	'getTime',
 
 	{ name: 'setFullYear', returnThis: true },
@@ -67,6 +68,16 @@ export class BambooDate {
 
 	clone() {
 		return new BambooDate(this.getTime());
+	}
+
+	format(format = '') {
+		return format
+			.replace(/YYYY/g, this.getFullYear())
+			.replace(/MM/g, String(this.getMonth() + 1).padStart(2, '0'))
+			.replace(/DD/g, String(this.getDate()).padStart(2, '0'))
+			.replace(/HH/g, String(this.getHours()).padStart(2, '0'))
+			.replace(/mm/g, String(this.getMinutes()).padStart(2, '0'))
+			.replace(/SS/g, String(this.getSeconds()).padStart(2, '0'));
 	}
 }
 

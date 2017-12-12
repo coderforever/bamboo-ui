@@ -2,7 +2,7 @@
 @import "../common";
 
 $dateBlockWidth: 3em;
-$dateBlockHeight: 2.6em;
+$dateBlockHeight: 2.3em;
 
 .bmbo-date-picker {
 	width: $dateBlockWidth * 7;
@@ -26,22 +26,57 @@ $dateBlockHeight: 2.6em;
 	}
 
 	.bmbo-date-picker-content {
-		@include listNoStyle;
+		position: relative;
+		overflow-x: hidden;
 
-		> li {
-			display: inline-block;
-			width: $dateBlockWidth;
-			line-height: $dateBlockHeight;
-			cursor: pointer;
+		.bmbo-date-picker-panel {
+			@include listNoStyle;
+			transition: transform var(--bmbo-duration);
 
-			transition: all var(--bmbo-duration-mid);
-
-			&:hover {
-				background: var(--bmbo-bac);
+			&.bmbo-target {
+				position: absolute;
+				pointer-events: none;
+				top: 0;
+				left: 0;
 			}
 
-			&.bmbo-deprecated {
-				color: var(--bmbo-color-dim);
+			&.bmbo-left {
+				transform: translateX(-100%);
+			}
+			&.bmbo-right {
+				transform: translateX(100%);
+			}
+
+			> li {
+				display: inline-block;
+				width: $dateBlockWidth;
+				line-height: $dateBlockHeight;
+				cursor: pointer;
+				border-radius: 3px;
+				margin-top: 0.2em;
+				outline: none;
+
+				transition: all var(--bmbo-duration-mid);
+
+				&:hover {
+					background: var(--bmbo-bac);
+				}
+
+				&.bmbo-deprecated {
+					color: var(--bmbo-color-dim);
+				}
+
+				&.bmbo-active {
+					color: var(--bmbo-color-light);
+					background: var(--bmbo-primary);
+				}
+			}
+		}
+
+		&.bmbo-none,
+		&.bmbo-showing {
+			.bmbo-date-picker-panel {
+				transition: none!important;
 			}
 		}
 	}
