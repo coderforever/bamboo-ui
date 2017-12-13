@@ -13,6 +13,7 @@ const data = [];
 for (let i = 0; i < 100; i += 1) {
 	data.push({
 		id: i,
+		name: `name_${i}`,
 	});
 }
 
@@ -24,12 +25,17 @@ class TablePage extends React.Component {
 		};
 	}
 
+	onPageChange = (page) => {
+		console.log('Page Change:', page);
+	};
+
 	render() {
 		return (
 			<div>
 				<h1>表格</h1>
-				<Table data={data}>
+				<Table data={data} bordered onPageChange={this.onPageChange}>
 					<Table.Column name="id" />
+					<Table.Column name="name" />
 				</Table>
 
 				<h2>使用样式</h2>

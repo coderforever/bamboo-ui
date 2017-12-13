@@ -6,20 +6,27 @@ import { BAMBOO_FORM_SELECT_OPTION } from './SelectOption';
 
 export const BAMBOO_FORM_SELECT_GROUP = 'BAMBOO_FORM_SELECT_GROUP';
 
-export function getValueList(children = []) {
+export function getNodeList(children = []) {
 	let valueList = [];
 
 	mapChildrenByType(children, BAMBOO_FORM_SELECT_OPTION, (node) => {
 		const { value: nodeVal, children: nodeChildren } = node.props;
 		const myVal = nodeVal !== undefined ? nodeVal : nodeChildren;
-		valueList.push(myVal);
+		valueList.push({
+			title: nodeChildren,
+			value: myVal,
+		});
 	});
 
 	mapChildrenByType(children, BAMBOO_FORM_SELECT_GROUP, (node) => {
-		valueList = valueList.concat(getValueList(node.props.children));
+		valueList = valueList.concat(getNodeList(node.props.children));
 	});
 
 	return valueList;
+}
+
+export function getValueList(children = []) {
+	return getNodeList(children).map(({ value }) => value);
 }
 
 class SelectGroup extends React.Component {

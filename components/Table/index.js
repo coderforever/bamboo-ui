@@ -31,8 +31,13 @@ class Table extends React.Component {
 	};
 
 	getList = () => {
-		const { pageSize } = this.props;
+		const { pageSize, async, data } = this.props;
 		const { list, page } = this.state;
+
+		if (async) {
+			return data;
+		}
+
 		return list.slice((page - 1) * pageSize, page * pageSize);
 	};
 
@@ -41,19 +46,24 @@ class Table extends React.Component {
 
 		this.setState({
 			list: (nextProps.data || []).concat(),
+		}, () => {
+			// TODO: Support sort function
 		});
 	};
 
 	gotoPage = (page) => {
+		const { onPageChange } = this.props;
 		this.setState({ page });
+
+		if (onPageChange) onPageChange(page);
 	};
 
 	render() {
 		const { page } = this.state;
 		const { className, pageSize, bordered, data, ...props } = this.props;
+		delete props.onPageChange;
 
 		const columnList = this.getColumnList().map(c => c.props);
-		console.log('~~>', columnList);
 		const list = this.getList();
 
 		return (
@@ -80,9 +90,9 @@ class Table extends React.Component {
 					<tbody>
 						{list.map((item, rowIndex) => (
 							<tr key={rowIndex}>
-								{columnList.map((column, colIndex) => (
-									<td key={colIndex}>
-										{getValue(item, column.name)}
+								{columnList.map(({ name, render, ...column }, colIndex) => (
+									<td key={colIndex} {...column}>
+										{render ? render(item) : getValue(item, name)}
 									</td>
 								))}
 							</tr>
@@ -110,6 +120,9 @@ Table.propTypes = {
 
 	data: PropTypes.array,
 	pageSize: PropTypes.number,
+	onPageChange: PropTypes.func,
+
+	async: PropTypes.bool,
 };
 
 Table.defaultProps = {

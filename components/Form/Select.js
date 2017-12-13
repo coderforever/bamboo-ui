@@ -8,7 +8,14 @@ import Caret from '../Icon/Caret';
 import CheckBox from '../Form/Checkbox';
 import PinBox from '../PinBox';
 import SelectOption from './SelectOption';
-import SelectGroup, { getValueList } from './SelectGroup';
+import SelectGroup, { getValueList, getNodeList } from './SelectGroup';
+
+function getTitle(optionList, value) {
+	const option = optionList.find(opt => opt.value === value);
+	if (!option) return null;
+
+	return option.title;
+}
 
 class Select extends React.Component {
 	getChildContext() {
@@ -101,13 +108,17 @@ class Select extends React.Component {
 		delete props.onChange;
 
 		// =============================== Value ===============================
+		const optionList = getNodeList(children);
+
 		let $value;
 		if (multi) {
 			const valueList = toArray(value);
 			$value = (
 				<ul className="bmbo-list-inline">
 					{valueList.map(val => (
-						<li key={val}>{val}</li>
+						<li key={val}>
+							{getTitle(optionList, val)}
+						</li>
 					))}
 					{!valueList.length && <li>{'\u00A0'}</li>}
 				</ul>
@@ -115,7 +126,7 @@ class Select extends React.Component {
 		} else {
 			$value = (
 				<ul className="bmbo-list-inline">
-					<li>{value || '\u00A0'}</li>
+					<li>{getTitle(optionList, value) || '\u00A0'}</li>
 				</ul>
 			);
 		}
