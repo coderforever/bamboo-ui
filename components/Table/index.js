@@ -25,6 +25,11 @@ class Table extends React.Component {
 		this.checkUpdate(this.props, nextProps);
 	}
 
+	getPage = () => {
+		const { page } = this.props;
+		return page === undefined ? this.state.page : page;
+	};
+
 	getColumnList = () => {
 		const { children } = this.props;
 		return mapChildrenByType(children, BAMBOO_TABLE_COLUMN);
@@ -32,7 +37,8 @@ class Table extends React.Component {
 
 	getList = () => {
 		const { pageSize, async, data } = this.props;
-		const { list, page } = this.state;
+		const { list } = this.state;
+		const page = this.getPage();
 
 		if (async) {
 			return data;
@@ -59,9 +65,11 @@ class Table extends React.Component {
 	};
 
 	render() {
-		const { page } = this.state;
 		const { className, pageSize, bordered, data, ...props } = this.props;
+		delete props.page;
 		delete props.onPageChange;
+
+		const page = this.getPage();
 
 		const columnList = this.getColumnList().map(c => c.props);
 		const list = this.getList();
@@ -119,6 +127,7 @@ Table.propTypes = {
 	children: PropTypes.node,
 
 	data: PropTypes.array,
+	page: PropTypes.number,
 	pageSize: PropTypes.number,
 	onPageChange: PropTypes.func,
 

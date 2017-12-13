@@ -54,10 +54,11 @@ class Pagination extends React.Component {
 		if (minPage < 1) minPage = 1;
 
 		const $navItems = [];
+		let index = 0;
 		for (let i = minPage; i <= maxPage; i += 1) {
 			$navItems.push(
 				<Button
-					key={i}
+					key={index}
 					disabled={disabled}
 					onClick={() => {
 						this.gotoPage(i);
@@ -66,6 +67,8 @@ class Pagination extends React.Component {
 					transparent
 				>{i}</Button>,
 			);
+
+			index += 1;
 		}
 
 		return (
