@@ -1,4 +1,6 @@
 export const getValue = (unit, path, defaultValue) => {
+	if (!path) return unit;
+
 	const desList = Array.isArray(path) ? path : [path];
 	let current = unit;
 	const len = desList.length;
@@ -7,7 +9,7 @@ export const getValue = (unit, path, defaultValue) => {
 		const des = desList[i];
 		current = current[des];
 
-		if (current === undefined) {
+		if (current === undefined || (i !== len - 1 && current === null)) {
 			current = defaultValue;
 			break;
 		}

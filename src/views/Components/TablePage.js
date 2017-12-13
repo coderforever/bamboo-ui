@@ -2,12 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-	Navigation, Row, Col, Button, DynamicNumber,
+	Navigation, Row, Col, Button, DynamicNumber, Table,
 	Form, Input, Radio, Checkbox, Tooltip, AutoComplete,
 } from '../../../components';
 
 import { TYPE_LIST, SIZE_LIST } from '../../utils/enum';
 import { toString } from '../../utils/propsUtil';
+
+const data = [];
+for (let i = 0; i < 100; i += 1) {
+	data.push({
+		id: i,
+	});
+}
 
 class TablePage extends React.Component {
 	constructor() {
@@ -21,9 +28,14 @@ class TablePage extends React.Component {
 		return (
 			<div>
 				<h1>表格</h1>
+				<Table data={data}>
+					<Table.Column name="id" />
+				</Table>
+
+				<h2>使用样式</h2>
 				<p>
 					你可以通过添加<code>bmbo-table</code>class来将表格变为Bamboo UI风格。
-					同时添加<code>bmbo-border</code>class来添加边框线。
+					同时添加<code>bmbo-bordered</code>class来添加边框线。
 				</p>
 
 				<table className="bmbo-table bmbo-border">

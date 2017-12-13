@@ -34,7 +34,7 @@ $narrowPadding: .2em 0.3em;
 		border-top: 2px solid var(--bmbo-table-border);
 	}
 
-	&.bmbo-border {
+	&.bmbo-bordered {
 		th,
 		td {
 			border-left: 1px solid var(--bmbo-table-border);
@@ -117,6 +117,16 @@ $narrowPadding: .2em 0.3em;
 					}
 				}
 			}
+		}
+	}
+}
+
+.bmbo-table-container {
+	.bmbo-table-pagination {
+		overflow: hidden;
+
+		.bmbo-pagination {
+			float: right;
 		}
 	}
 }
