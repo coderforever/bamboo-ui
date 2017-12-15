@@ -61,7 +61,7 @@ class PinBox extends React.Component {
 	};
 
 	render() {
-		const { trigger, children, pin, stretch, ...props } = this.props;
+		const { trigger, children, pin, stretch, onVisibilityChanged, ...props } = this.props;
 		const { visible, rect } = this.state;
 
 		delete props.onVisibilityChange;
@@ -96,7 +96,14 @@ class PinBox extends React.Component {
 
 		return [
 			...$children,
-			<Box key="__BMBO_PIN_BOX_BOX__" {...props} visible={visible} rect={rect} stretch={stretch}>
+			<Box
+				key="__BMBO_PIN_BOX_BOX__"
+				{...props}
+				visible={visible}
+				rect={rect}
+				stretch={stretch}
+				onVisibilityChanged={onVisibilityChanged}
+			>
 				{pin}
 			</Box>,
 		];
@@ -111,6 +118,7 @@ PinBox.propTypes = {
 	pin: PropTypes.node,
 
 	onVisibilityChange: PropTypes.func,
+	onVisibilityChanged: PropTypes.func,
 };
 
 export default PinBox;

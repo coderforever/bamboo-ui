@@ -48,6 +48,8 @@ class Box extends React.Component {
 	checkUpdate = (prevProps, nextProps) => {
 		if (!prevProps.visible === !nextProps.visible) return;
 
+		const { onVisibilityChanged } = nextProps;
+
 		if (nextProps.visible) {
 			this.seq
 				.next((done) => {
@@ -64,6 +66,10 @@ class Box extends React.Component {
 					const { rect } = nextProps;
 					const pinRect = this.$ele.getBoundingClientRect();
 
+					if (onVisibilityChanged) {
+						onVisibilityChanged(true);
+					}
+
 					this.setState({
 						animateStatus: ANIMATE_STATUS_SHOWING,
 						...getEnablePosition(rect, pinRect, 'b'),
@@ -78,8 +84,12 @@ class Box extends React.Component {
 					this.setState({
 						animateStatus: ANIMATE_STATUS_HIDING,
 					}, done);
-				})
+				}, { frame: 1 })
 				.next(() => {
+					if (onVisibilityChanged) {
+						onVisibilityChanged(false);
+					}
+				}, { delay: 0 }).next(() => {
 					/** Reset to none status.
 					 ** This will not trigger if `onTransitionEnd` works.
 					 */
@@ -98,6 +108,7 @@ class Box extends React.Component {
 		delete props.visible;
 		delete props.rect;
 		delete props.stretch;
+		delete props.onVisibilityChanged;
 
 		const style = {
 			left: `${x}px`,
@@ -135,6 +146,7 @@ Box.propTypes = {
 	visible: PropTypes.bool,
 	rect: PropTypes.object,
 	stretch: PropTypes.bool,
+	onVisibilityChanged: PropTypes.func,
 
 	children: PropTypes.node,
 	className: PropTypes.string,
