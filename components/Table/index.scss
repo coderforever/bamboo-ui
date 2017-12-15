@@ -29,7 +29,7 @@ $narrowPadding: .2em 0.3em;
 		font-weight: 600;
 	}
 
-	thead:not(:first-child),
+	//thead:not(:first-child),
 	tbody:not(:first-child) {
 		border-top: 2px solid var(--bmbo-table-border);
 	}

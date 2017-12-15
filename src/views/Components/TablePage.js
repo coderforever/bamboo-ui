@@ -29,13 +29,23 @@ class TablePage extends React.Component {
 		console.log('Page Change:', page);
 	};
 
+	onRowClick = (item) => {
+		console.log('Row Click:', item);
+	};
+
 	render() {
 		return (
 			<div>
 				<h1>表格</h1>
-				<Table data={data} bordered onPageChange={this.onPageChange}>
-					<Table.Column name="id" />
-					<Table.Column name="name" />
+				<Table
+					data={data}
+					onPageChange={this.onPageChange}
+					onRowClick={this.onRowClick}
+					bordered
+					hover
+				>
+					<Table.Column width="100" name="id" />
+					<Table.Column width="200" name="name" />
 				</Table>
 
 				<h2>使用样式</h2>

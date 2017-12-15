@@ -32,10 +32,14 @@ class Field extends React.Component {
 	getValue = () => {
 		const { formInstance } = this.context;
 
+		if ('value' in this.props) {
+			return this.props.value;
+		}
+
 		if (formInstance) {
 			return getValue(formInstance, ['state', ...this.getPath()]);
 		}
-		return this.props.value || this.state.value;
+		return this.state.value;
 	};
 
 	getList = () => {

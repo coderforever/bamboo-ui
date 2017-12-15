@@ -115,6 +115,19 @@ class GroupPage extends React.Component {
 						{`<Icon.Caret direct="${this.state.direct}" />`}
 					</pre>
 				</div>
+
+				<p>
+					搜索图标：
+				</p>
+				<div className="measurement">
+					<div className="preview">
+						<Icon.Search />
+					</div>
+
+					<pre className="code">
+						{'<Icon.Search />'}
+					</pre>
+				</div>
 			</div>
 		);
 	}

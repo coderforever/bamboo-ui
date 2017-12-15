@@ -51,6 +51,9 @@ export default (Component) => {
 				<Link to="/select">Select</Link>
 			</Navigation.Item>
 			<Navigation.Item>
+				<Link to="/input">Input</Link>
+			</Navigation.Item>
+			<Navigation.Item>
 				<Link to="/table">Table</Link>
 			</Navigation.Item>
 			<Navigation.Item>

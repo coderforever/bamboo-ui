@@ -30,21 +30,26 @@ class Table extends React.Component {
 		return page === undefined ? this.state.page : page;
 	};
 
+	getCount = () => {
+		const { count, data } = this.props;
+		return count === undefined ? (data || []).length : count;
+	};
+
 	getColumnList = () => {
 		const { children } = this.props;
 		return mapChildrenByType(children, BAMBOO_TABLE_COLUMN);
 	};
 
 	getList = () => {
-		const { pageSize, async, data } = this.props;
+		const { pageSize, page, count, data } = this.props;
 		const { list } = this.state;
-		const page = this.getPage();
 
-		if (async) {
+		if (page !== undefined && count !== undefined) {
 			return data;
 		}
 
-		return list.slice((page - 1) * pageSize, page * pageSize);
+		const myPage = this.getPage();
+		return list.slice((myPage - 1) * pageSize, myPage * pageSize);
 	};
 
 	checkUpdate = (prevProps, nextProps) => {
@@ -65,8 +70,10 @@ class Table extends React.Component {
 	};
 
 	render() {
-		const { className, pageSize, bordered, data, ...props } = this.props;
+		const { className, pageSize, bordered, hover, onRowClick, ...props } = this.props;
 		delete props.page;
+		delete props.count;
+		delete props.data;
 		delete props.onPageChange;
 
 		const page = this.getPage();
@@ -85,26 +92,49 @@ class Table extends React.Component {
 
 					{...props}
 				>
+					<colgroup>
+						{columnList.map(({ width }, colIndex) => (
+							<col key={colIndex} width={width} />
+						))}
+					</colgroup>
+
 					<thead>
 						<tr>
-							{columnList.map((column, colIndex) => (
+							{columnList.map(({ title, name }, colIndex) => (
 								<td key={colIndex}>
-									{column.title || column.name}
+									{title || name}
 								</td>
 							))}
 						</tr>
 					</thead>
 
-					<tbody>
-						{list.map((item, rowIndex) => (
-							<tr key={rowIndex}>
-								{columnList.map(({ name, render, ...column }, colIndex) => (
-									<td key={colIndex} {...column}>
-										{render ? render(item) : getValue(item, name)}
-									</td>
-								))}
-							</tr>
-						))}
+					<tbody className={classNames(hover && 'bmbo-hover')}>
+						{list.map((item, rowIndex) => {
+							const trProps = {};
+
+							if (onRowClick) {
+								trProps.role = 'button';
+								trProps.tabIndex = -1;
+								trProps.onClick = () => {
+									onRowClick(item, rowIndex);
+								};
+							}
+
+							return (
+								<tr key={rowIndex} {...trProps}>
+									{columnList.map((column, colIndex) => {
+										const { name, render, ...colProps } = column;
+										delete colProps.width;
+
+										return (
+											<td key={colIndex} {...colProps}>
+												{render ? render(item) : getValue(item, name)}
+											</td>
+										);
+									})}
+								</tr>
+							);
+						})}
 					</tbody>
 				</table>
 
@@ -112,7 +142,7 @@ class Table extends React.Component {
 					<Pagination
 						page={page}
 						pageSize={pageSize}
-						count={(data || []).length}
+						count={this.getCount()}
 						gotoPage={this.gotoPage}
 					/>
 				</div>
@@ -124,14 +154,16 @@ class Table extends React.Component {
 Table.propTypes = {
 	className: PropTypes.string,
 	bordered: PropTypes.bool,
+	hover: PropTypes.bool,
 	children: PropTypes.node,
 
 	data: PropTypes.array,
 	page: PropTypes.number,
+	count: PropTypes.number,
 	pageSize: PropTypes.number,
-	onPageChange: PropTypes.func,
 
-	async: PropTypes.bool,
+	onPageChange: PropTypes.func,
+	onRowClick: PropTypes.func,
 };
 
 Table.defaultProps = {

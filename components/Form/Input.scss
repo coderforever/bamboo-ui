@@ -21,4 +21,21 @@
 .bmbo-input {
 	@include input;
 	display: block;
+
+	&.bmbo-with-icon {
+		padding-left: 1.8em;
+	}
+}
+
+.bmbo-input-container {
+	position: relative;
+
+	> .bmbo-input-icon {
+		position: absolute;
+		left: .5em;
+		top: 50%;
+		opacity: .3;
+
+		transform: translate(0, -50%);
+	}
 }
