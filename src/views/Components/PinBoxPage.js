@@ -62,6 +62,7 @@ const $pin = (
 					粘附框可使你的组件拥有弹出粘附弹框的能力，
 					例如<code>{'<Select>'}</code>、<code>{'<DatePciker>'}</code>等组件。
 					使用该组件请确保子组件接受对应的鼠标事件。
+					此外，我们还提供了<code>onVisibilityChange(visibility)</code>事件用于你来处理弹出框额显示/隐藏事件。
 				</p>
 
 				<div className="measurement">
@@ -71,6 +72,9 @@ const $pin = (
 							backdrop={form.backdrop}
 							stretch={form.stretch}
 							pin={$pin}
+							onVisibilityChange={(visibility) => {
+								console.log('Do trigger:', visibility);
+							}}
 						>
 							<Button>
 								点击此按钮尝试粘附框

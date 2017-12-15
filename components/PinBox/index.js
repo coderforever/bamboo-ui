@@ -19,7 +19,7 @@ class PinBox extends React.Component {
 	onBackdrop = (event) => {
 		if (isSameSource(event, findDOMNode(this.$ele))) return;
 
-		this.setState({ visible: false });
+		this.setState({ visible: false }, this.onVisibilityChange);
 		removeUniqueListener('mousedown', this.onBackdrop);
 	};
 
@@ -42,7 +42,14 @@ class PinBox extends React.Component {
 			}
 
 			return newState;
-		});
+		}, this.onVisibilityChange);
+	};
+
+	onVisibilityChange = () => {
+		const { onVisibilityChange } = this.props;
+		const { visible } = this.state;
+
+		if (onVisibilityChange) onVisibilityChange(visible);
 	};
 
 	setRef = (ele) => {
@@ -50,13 +57,14 @@ class PinBox extends React.Component {
 	};
 
 	setVisible = (visible) => {
-		this.setState({ visible });
+		this.setState({ visible }, this.onVisibilityChange);
 	};
 
 	render() {
 		const { trigger, children, pin, stretch, ...props } = this.props;
 		const { visible, rect } = this.state;
 
+		delete props.onVisibilityChange;
 		delete props.backdrop;
 
 		const $children = mapChildrenForNode(children, (node) => {
@@ -101,6 +109,8 @@ PinBox.propTypes = {
 	stretch: PropTypes.bool,
 	children: PropTypes.node,
 	pin: PropTypes.node,
+
+	onVisibilityChange: PropTypes.func,
 };
 
 export default PinBox;
