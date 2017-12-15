@@ -8,40 +8,54 @@ import Icon from '../Icon';
 
 export const BAMBOO_FORM_INPUT = 'BAMBOO_FORM_INPUT';
 
-const Input = (props) => {
-	const { size, icon, className, ...rest } = props;
-	const setRef = rest[BAMBOO_INTERNAL_REF];
-	delete rest[BAMBOO_INTERNAL_REF];
+class Input extends React.PureComponent {
+	setRef = (ele) => {
+		const setRef = this.props[BAMBOO_INTERNAL_REF];
+		this.$input = ele;
 
-	const $input = (
-		<input
-			className={classNames(
-				'bmbo-input',
-				icon && 'bmbo-with-icon',
-				`bmbo-${size || 'md'}`,
-				className,
-			)}
-			ref={setRef}
-			{...rest}
-		/>
-	);
+		if (setRef) setRef(ele);
+	};
 
-	if (icon) {
-		return (
-			<div
+	focus = () => {
+		if (this.$input) {
+			this.$input.focus();
+		}
+	};
+
+	render() {
+		const { size, icon, className, ...rest } = this.props;
+		delete rest[BAMBOO_INTERNAL_REF];
+
+		const $input = (
+			<input
 				className={classNames(
-					'bmbo-input-container',
+					'bmbo-input',
+					icon && 'bmbo-with-icon',
 					`bmbo-${size || 'md'}`,
+					className,
 				)}
-			>
-				{$input}
-				<Icon name={icon} size={size} className="bmbo-input-icon" />
-			</div>
+				ref={this.setRef}
+				{...rest}
+			/>
 		);
-	}
 
-	return $input;
-};
+		if (icon) {
+			return (
+				<div
+					className={classNames(
+						'bmbo-input-container',
+						`bmbo-${size || 'md'}`,
+					)}
+				>
+					{$input}
+					<Icon name={icon} size={size} className="bmbo-input-icon" />
+				</div>
+			);
+		}
+
+		return $input;
+	}
+}
 
 Input.propTypes = {
 	size: PropTypes.string,
