@@ -8,7 +8,7 @@ import {
 } from '../../../components';
 
 import { toString } from '../../utils/objectUtil';
-import { SIZE_LIST } from '../../utils/enum';
+import { TYPE_LIST, SIZE_LIST } from '../../utils/enum';
 
 class GroupPage extends React.Component {
 	constructor() {
@@ -16,6 +16,7 @@ class GroupPage extends React.Component {
 		this.state = {
 			form: {
 				hasIcon: false,
+				type: '',
 				size: 'md',
 				value: '',
 			},
@@ -38,6 +39,7 @@ class GroupPage extends React.Component {
 								<Input
 									icon={form.hasIcon ? 'search' : null}
 									size={form.size}
+									type={form.type}
 								/>
 							</Form.Field>
 						</Form>
@@ -50,6 +52,14 @@ class GroupPage extends React.Component {
 									<Radio key={name} value={name}>
 										{displayName}
 										{isDefault && ' (default)'}
+									</Radio>
+								))}
+							</Form.Field>
+							<Form.Field name="type" title="Type">
+								<Radio value="">(default)</Radio>
+								{TYPE_LIST.map(({ name }) => (
+									<Radio key={name} value={name}>
+										{name}
 									</Radio>
 								))}
 							</Form.Field>

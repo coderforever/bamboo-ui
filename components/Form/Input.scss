@@ -1,6 +1,12 @@
 @charset "UTF-8";
 @import "../common";
 
+@mixin inputType($type) {
+	&.bmbo-#{$type} {
+		border-color: var(--bmbo-#{$type});
+	}
+}
+
 @mixin input {
 	width: 100%;
 	border: 1px solid var(--bmbo-border);
@@ -16,6 +22,16 @@
 
 	// Size
 	@include padding;
+
+	// Type
+	@include inputType(weak);
+	@include inputType(deprecated);
+	@include inputType(primary);
+	@include inputType(info);
+	@include inputType(success);
+	@include inputType(warning);
+	@include inputType(danger);
+	@include inputType(forbid);
 }
 
 .bmbo-input {

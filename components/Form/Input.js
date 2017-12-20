@@ -23,7 +23,7 @@ class Input extends React.PureComponent {
 	};
 
 	render() {
-		const { size, icon, className, ...rest } = this.props;
+		const { size, type, icon, className, ...rest } = this.props;
 		delete rest[BAMBOO_INTERNAL_REF];
 
 		const $input = (
@@ -32,6 +32,7 @@ class Input extends React.PureComponent {
 					'bmbo-input',
 					icon && 'bmbo-with-icon',
 					`bmbo-${size || 'md'}`,
+					type && `bmbo-${type}`,
 					className,
 				)}
 				ref={this.setRef}
@@ -59,6 +60,7 @@ class Input extends React.PureComponent {
 
 Input.propTypes = {
 	size: PropTypes.string,
+	type: PropTypes.string,
 	icon: PropTypes.string,
 	className: PropTypes.string,
 };
