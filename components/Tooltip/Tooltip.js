@@ -73,7 +73,7 @@ class Tooltip extends React.Component {
 					top: top - ARROW_DES,
 					width: width + (2 * ARROW_DES),
 					height: height + (2 * ARROW_DES),
-				}, tgtRect, ps, false);
+				}, tgtRect, ps);
 
 				const arrowOffsetX = _x - pos.x;
 				const arrowOffsetY = _y - pos.y;

@@ -146,10 +146,97 @@ export const getWinHeight = () => {
  * @param surroundRect
  * @param targetRect
  * @param position
+ * @returns {{x: number, y: number}}
+ */
+export const getEnablePosition = (surroundRect, targetRect, position = 'dr') => {
+	if (typeof window === 'undefined') return { x: 0, y: 0 };
+
+	const { width: sw = 0, height: sh = 0 } = surroundRect;
+	const sx = surroundRect.left || 0;
+	const sy = surroundRect.top || 0;
+	const { width: tw = 0, height: th = 0 } = targetRect;
+
+	const winWidth = getWinWidth();
+	const winHeight = getWinHeight();
+	const scrollX = window.scrollX;
+	const scrollY = window.scrollY;
+
+	const isR = position.includes('r');
+	const isB = position.includes('b');
+	const isT = position.includes('t');
+	const isL = position.includes('l');
+	const isLorR = (isL && !isR) || (!isL && isR);
+	const isTorB = (isT && !isB) || (!isT && isB);
+
+	const target = {
+		x: sx + scrollX,
+		y: sy + scrollY,
+		direct: '',
+	};
+
+	if (isL && !isR) target.x = (sx - tw) + scrollX;
+	if (isR && !isL) target.x = (sx + sw) + scrollX;
+	if (isT && !isB) target.y = (sy - th) + scrollY;
+	if (isB && !isT) target.y = (sy + sh) + scrollY;
+
+	if (isL && isR) target.x = (sx - ((tw - sw) / 2)) + scrollX;
+	if (isT && isB) target.y = (sy - ((th - sh) / 2)) + scrollY;
+
+	target._x = target.x;
+	target._y = target.y;
+
+	// Bottom out of the window
+	if ((target.y - scrollY) + th > winHeight) {
+		if (isLorR) {
+			target.y = (winHeight - th) + scrollY;
+		} else {
+			const ty = sy - th;
+			if (ty >= 0) {
+				target.y = (sy + scrollY) - th;
+				target.direct = 'up';
+			}
+		}
+	}
+
+	// Top out of the window
+	if ((target.y - scrollY) < 0) {
+		if (isLorR) {
+			target.y = scrollY;
+		} else {
+			target.y = sy + sh + scrollY;
+		}
+	}
+
+	// Left out of the window
+	if (target.x - scrollX < 0) {
+		if (isTorB) {
+			target.x = scrollX;
+		} else {
+			target.x = sx + sw + scrollX;
+		}
+	}
+
+	// Right out of the window
+	if ((target.x - scrollX) + tw > winWidth) {
+		if (isTorB) {
+			target.x = (winWidth - tw) + scrollX;
+		} else {
+			target.x = (sx + scrollX) - tw;
+		}
+	}
+
+	return target;
+};
+
+/**
+ * Get enabled position for element.
+ * @param surroundRect
+ * @param targetRect
+ * @param position
  * @param switchPos		Switch position when position has no space left
  * @returns {{x: number, y: number}}
  */
-export const getEnablePosition = (surroundRect, targetRect, position = 'dr', switchPos = true) => {
+/* export const getEnablePosition2 = (surroundRect, targetRect, position = 'dr', switchPos = true) => {
 	if (typeof window === 'undefined') return { x: 0, y: 0 };
 
 	const { width: sw = 0, height: sh = 0 } = surroundRect;
@@ -224,7 +311,7 @@ export const getEnablePosition = (surroundRect, targetRect, position = 'dr', swi
 	}
 
 	return target;
-};
+}; */
 
 export function isInRect(x, y, rect) {
 	return (
