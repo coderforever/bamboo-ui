@@ -156,7 +156,7 @@ Field.propTypes = {
 	className: PropTypes.string,
 
 	name: PropTypes.string,
-	title: PropTypes.string,
+	title: PropTypes.node,
 	value: PropTypes.node,
 	defaultValue: PropTypes.node,
 };
