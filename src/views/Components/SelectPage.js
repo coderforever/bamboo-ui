@@ -24,6 +24,7 @@ class SelectPage extends React.Component {
 				multi: false,
 				size: 'md',
 				disabled: false,
+				noSelectAll: false,
 				optionDisabled: false,
 				groupDisabled: false,
 			},
@@ -31,18 +32,18 @@ class SelectPage extends React.Component {
 	}
 
 	getSampleCode = () => {
-		const { ...form } = this.state.form;
+		const { optionDisabled, groupDisabled, ...form } = this.state.form;
 		return `
 const VALUE_LIST = ${JSON.stringify(VALUE_LIST)};
 
 <Select${toString(form, { size: 'md' })}>
-	<Select.Group title="Group 1">
+	<Select.Group title="Group 1"${toString({ disabled: groupDisabled })}>
 		<Select.Option>Group Value 1</Select.Option>
 		<Select.Option>Group Value 2</Select.Option>
 		<Select.Option>Group Value 3</Select.Option>
 	</Select.Group>
 	{VALUE_LIST.map(val => (
-		<Select.Option key={val}>{val}</Select.Option>
+		<Select.Option key={val}${toString({ disabled: optionDisabled })}>{val}</Select.Option>
 	))}
 </Button>`.trim().replace(/\t/g, '   ');
 	};
@@ -62,6 +63,7 @@ const VALUE_LIST = ${JSON.stringify(VALUE_LIST)};
 									multi={form.multi}
 									size={form.size}
 									disabled={form.disabled}
+									noSelectAll={form.noSelectAll}
 								>
 									<Select.Group title="Group 1" disabled={form.groupDisabled}>
 										<Select.Option>Group Value 1</Select.Option>
@@ -92,6 +94,12 @@ const VALUE_LIST = ${JSON.stringify(VALUE_LIST)};
 							<Form.Field name="multi" title="Multi">
 								<Checkbox>multi</Checkbox>
 							</Form.Field>
+
+							{form.multi &&
+								<Form.Field name="noSelectAll" title="No Select All">
+									<Checkbox>noSelectAll</Checkbox>
+								</Form.Field>
+							}
 
 							<Form.Field name="disabled" title="Disabled">
 								<Checkbox>disabled</Checkbox>

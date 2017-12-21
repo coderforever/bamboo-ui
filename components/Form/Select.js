@@ -104,7 +104,7 @@ class Select extends React.Component {
 	};
 
 	render() {
-		const { disabled, size, className, value, multi, children, ...props } = this.props;
+		const { disabled, size, className, value, multi, children, noSelectAll, ...props } = this.props;
 		delete props.onChange;
 
 		// =============================== Value ===============================
@@ -132,7 +132,7 @@ class Select extends React.Component {
 		}
 
 		// ================================ List ===============================
-		const canSelectAll = optionList.every(opt => !opt.disabled);
+		const canSelectAll = !noSelectAll && optionList.every(opt => !opt.disabled);
 
 		const $list = disabled ? null : (
 			<ul
@@ -194,6 +194,7 @@ Select.propTypes = {
 	children: PropTypes.node,
 	multi: PropTypes.bool,
 	disabled: PropTypes.bool,
+	noSelectAll: PropTypes.bool,
 };
 
 Select.childContextTypes = {
