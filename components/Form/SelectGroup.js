@@ -54,13 +54,13 @@ class SelectGroup extends React.Component {
 	};
 
 	render() {
-		const { title, children, disabled, ...props } = this.props;
+		const { title, children, noSelectAll, disabled, ...props } = this.props;
 		const { bmboSelectMulti, bmboSelectSize } = this.context;
 
 		let $title = title;
 		let selectAllProps = {};
 
-		if (bmboSelectMulti) {
+		if (bmboSelectMulti && !noSelectAll) {
 			$title = (
 				<Checkbox size={bmboSelectSize} disabled={disabled} checked={this.isAllSelected()}>
 					{title}
@@ -99,6 +99,7 @@ SelectGroup.propTypes = {
 	children: PropTypes.node,
 	title: PropTypes.node,
 	disabled: PropTypes.bool,
+	noSelectAll: PropTypes.bool,
 };
 
 SelectGroup.childContextTypes = {
