@@ -41,7 +41,7 @@
 		display: inline-block;
 	}
 
-	&:hover {
+	&:not(.bmbo-disabled):hover {
 		> .bmbo-checkbox-check {
 			border-color: var(--bmbo-primary);
 		}
@@ -60,5 +60,9 @@
 				border-color: var(--bmbo-color-light);
 			}
 		}
+	}
+
+	&.bmbo-disabled {
+		opacity: 0.5;
 	}
 }

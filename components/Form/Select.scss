@@ -24,6 +24,13 @@
 			}
 		}
 	}
+
+	&.bmbo-disabled {
+		.bmbo-select-value {
+			background: var(--bmbo-bac);
+			cursor: not-allowed;
+		}
+	}
 }
 
 .bmbo-select-list {
@@ -33,7 +40,7 @@
 	.bmbo-select-item {
 		transition: background var(--bmbo-duration);
 
-		&:hover {
+		&:not(.bmbo-disabled):hover {
 			background: var(--bmbo-bac);
 		}
 
@@ -43,6 +50,11 @@
 
 		&.bmbo-select-item-all {
 			border-bottom: 1px solid var(--bmbo-border);
+		}
+
+		&.bmbo-disabled {
+			opacity: 0.5;
+			cursor: default;
 		}
 	}
 

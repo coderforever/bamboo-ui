@@ -23,6 +23,9 @@ class SelectPage extends React.Component {
 				value: VALUE_LIST[0],
 				multi: false,
 				size: 'md',
+				disabled: false,
+				optionDisabled: false,
+				groupDisabled: false,
 			},
 		};
 	}
@@ -58,14 +61,17 @@ const VALUE_LIST = ${JSON.stringify(VALUE_LIST)};
 									value={form.value}
 									multi={form.multi}
 									size={form.size}
+									disabled={form.disabled}
 								>
-									<Select.Group title="Group 1">
+									<Select.Group title="Group 1" disabled={form.groupDisabled}>
 										<Select.Option>Group Value 1</Select.Option>
 										<Select.Option>Group Value 2</Select.Option>
 										<Select.Option>Group Value 3</Select.Option>
 									</Select.Group>
 									{VALUE_LIST.map(val => (
-										<Select.Option key={val}>{val}</Select.Option>
+										<Select.Option key={val} disabled={form.optionDisabled}>
+											{val}
+										</Select.Option>
 									))}
 								</Select>
 							</Form.Field>
@@ -74,10 +80,6 @@ const VALUE_LIST = ${JSON.stringify(VALUE_LIST)};
 
 					<div className="form">
 						<Form instance={this} path="form">
-							<Form.Field name="multi" title="Multi">
-								<Checkbox>multi</Checkbox>
-							</Form.Field>
-
 							<Form.Field name="size" title="Size">
 								{SIZE_LIST.map(({ name, displayName, isDefault }) => (
 									<Radio key={name} value={name}>
@@ -85,6 +87,22 @@ const VALUE_LIST = ${JSON.stringify(VALUE_LIST)};
 										{isDefault && ' (default)'}
 									</Radio>
 								))}
+							</Form.Field>
+
+							<Form.Field name="multi" title="Multi">
+								<Checkbox>multi</Checkbox>
+							</Form.Field>
+
+							<Form.Field name="disabled" title="Disabled">
+								<Checkbox>disabled</Checkbox>
+							</Form.Field>
+
+							<Form.Field name="optionDisabled" title="Option Disabled">
+								<Checkbox>Option Disabled</Checkbox>
+							</Form.Field>
+
+							<Form.Field name="groupDisabled" title="Group Disabled">
+								<Checkbox>Group Disabled</Checkbox>
 							</Form.Field>
 						</Form>
 					</div>

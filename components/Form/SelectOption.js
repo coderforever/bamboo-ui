@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Checkbox from './Checkbox';
+import classNames from 'classnames';
+
 import { BAMBOO_COMPONENT } from '../utils/componentUtil';
+
+import Checkbox from './Checkbox';
 
 export const BAMBOO_FORM_SELECT_OPTION = 'BAMBOO_FORM_SELECT_OPTION';
 
@@ -22,13 +25,27 @@ class SelectOption extends React.Component {
 	};
 
 	render() {
-		const { value, children, ...props } = this.props;
-		const { bmboSelectMulti, bmboSelectSize, bmboSelectIsChecked } = this.context;
+		const { disabled, value, children, ...props } = this.props;
+		const {
+			bmboSelectMulti, bmboSelectDisabled,
+			bmboSelectSize, bmboSelectIsChecked,
+		} = this.context;
+
+		let myDisabled;
+		if (disabled !== undefined) {
+			myDisabled = disabled;
+		} else if (bmboSelectDisabled !== undefined) {
+			myDisabled = bmboSelectDisabled;
+		}
 
 		let $children = children;
 		if (bmboSelectMulti) {
 			$children = (
-				<Checkbox size={bmboSelectSize} checked={bmboSelectIsChecked(value || children)}>
+				<Checkbox
+					size={bmboSelectSize}
+					checked={bmboSelectIsChecked(value || children)}
+					disabled={myDisabled}
+				>
 					{children}
 				</Checkbox>
 			);
@@ -38,9 +55,12 @@ class SelectOption extends React.Component {
 			<li
 				role="button"
 				tabIndex={-1}
-				className="bmbo-select-item bmbo-padding"
+				className={classNames(
+					'bmbo-select-item bmbo-padding',
+					myDisabled && 'bmbo-disabled',
+				)}
 				{...props}
-				onClick={this.onClick}
+				onClick={myDisabled ? null : this.onClick}
 			>
 				{$children}
 			</li>
@@ -52,11 +72,13 @@ SelectOption.propTypes = {
 	onClick: PropTypes.func,
 	children: PropTypes.node,
 	value: PropTypes.node,
+	disabled: PropTypes.bool,
 };
 
 SelectOption.contextTypes = {
 	bmboSelectSize: PropTypes.string,
 	bmboSelectMulti: PropTypes.bool,
+	bmboSelectDisabled: PropTypes.bool,
 	bmboOnSelectValue: PropTypes.func,
 	bmboSelectIsChecked: PropTypes.func,
 };

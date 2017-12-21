@@ -104,7 +104,7 @@ class Select extends React.Component {
 	};
 
 	render() {
-		const { size, className, value, multi, children, ...props } = this.props;
+		const { disabled, size, className, value, multi, children, ...props } = this.props;
 		delete props.onChange;
 
 		// =============================== Value ===============================
@@ -132,7 +132,9 @@ class Select extends React.Component {
 		}
 
 		// ================================ List ===============================
-		const $list = (
+		const canSelectAll = optionList.every(opt => !opt.disabled);
+
+		const $list = disabled ? null : (
 			<ul
 				className={classNames(
 					'bmbo-select-list',
@@ -140,7 +142,7 @@ class Select extends React.Component {
 					`bmbo-${size || 'md'}`,
 				)}
 			>
-				{multi && <li
+				{multi && canSelectAll && <li
 					className="bmbo-select-item bmbo-padding bmbo-select-item-all"
 					onClick={this.onSelectAllValue}
 					role="button"
@@ -158,7 +160,10 @@ class Select extends React.Component {
 		return (
 			<PinBox pin={$list} ref={this.setPinRef} backdrop stretch>
 				<div
-					className="bmbo-select"
+					className={classNames(
+						'bmbo-select',
+						disabled && 'bmbo-disabled',
+					)}
 					{...props}
 					ref={this.setRef}
 				>
@@ -187,7 +192,8 @@ Select.propTypes = {
 	className: PropTypes.string,
 	value: PropTypes.any,
 	children: PropTypes.node,
-	multi: PropTypes.bool, // TODO: Support number if necessary
+	multi: PropTypes.bool,
+	disabled: PropTypes.bool,
 };
 
 Select.childContextTypes = {

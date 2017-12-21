@@ -96,7 +96,7 @@ class PinBox extends React.Component {
 
 		return [
 			...$children,
-			<Box
+			pin ? <Box
 				key="__BMBO_PIN_BOX_BOX__"
 				{...props}
 				visible={visible}
@@ -105,7 +105,7 @@ class PinBox extends React.Component {
 				onVisibilityChanged={onVisibilityChanged}
 			>
 				{pin}
-			</Box>,
+			</Box> : null,
 		];
 	}
 }

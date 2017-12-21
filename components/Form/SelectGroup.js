@@ -6,20 +6,21 @@ import { BAMBOO_FORM_SELECT_OPTION } from './SelectOption';
 
 export const BAMBOO_FORM_SELECT_GROUP = 'BAMBOO_FORM_SELECT_GROUP';
 
-export function getNodeList(children = []) {
+export function getNodeList(children = [], parentProps = {}) {
 	let valueList = [];
 
 	mapChildrenByType(children, BAMBOO_FORM_SELECT_OPTION, (node) => {
-		const { value: nodeVal, children: nodeChildren } = node.props;
+		const { value: nodeVal, children: nodeChildren, disabled } = node.props;
 		const myVal = nodeVal !== undefined ? nodeVal : nodeChildren;
 		valueList.push({
 			title: nodeChildren,
 			value: myVal,
+			disabled: disabled !== undefined ? disabled : parentProps.disabled,
 		});
 	});
 
 	mapChildrenByType(children, BAMBOO_FORM_SELECT_GROUP, (node) => {
-		valueList = valueList.concat(getNodeList(node.props.children));
+		valueList = valueList.concat(getNodeList(node.props.children, node.props || {}));
 	});
 
 	return valueList;
@@ -30,9 +31,10 @@ export function getValueList(children = []) {
 }
 
 class SelectGroup extends React.Component {
-	constructor() {
-		super();
-		this.state = {};
+	getChildContext() {
+		return {
+			bmboSelectDisabled: this.props.disabled,
+		};
 	}
 
 	selectAllValue = (event) => {
@@ -52,7 +54,7 @@ class SelectGroup extends React.Component {
 	};
 
 	render() {
-		const { title, children, ...props } = this.props;
+		const { title, children, disabled, ...props } = this.props;
 		const { bmboSelectMulti, bmboSelectSize } = this.context;
 
 		let $title = title;
@@ -60,7 +62,7 @@ class SelectGroup extends React.Component {
 
 		if (bmboSelectMulti) {
 			$title = (
-				<Checkbox size={bmboSelectSize} checked={this.isAllSelected()}>
+				<Checkbox size={bmboSelectSize} disabled={disabled} checked={this.isAllSelected()}>
 					{title}
 				</Checkbox>
 			);
@@ -68,7 +70,7 @@ class SelectGroup extends React.Component {
 			selectAllProps = {
 				role: 'button',
 				tabIndex: -1,
-				onClick: this.selectAllValue,
+				onClick: disabled ? null : this.selectAllValue,
 			};
 		} else {
 			$title = <span>{title}</span>;
@@ -96,6 +98,11 @@ class SelectGroup extends React.Component {
 SelectGroup.propTypes = {
 	children: PropTypes.node,
 	title: PropTypes.node,
+	disabled: PropTypes.bool,
+};
+
+SelectGroup.childContextTypes = {
+	bmboSelectDisabled: PropTypes.bool,
 };
 
 SelectGroup.contextTypes = {
