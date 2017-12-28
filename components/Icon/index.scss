@@ -12,8 +12,6 @@
 }
 
 .bmbo-icon {
-	vertical-align: middle;
-
 	transition: font-size var(--bmbo-duration);
 }
 
@@ -24,6 +22,7 @@
 	&.bmbo-loading {
 		display: inline-block;
 		position: relative;
+		vertical-align: middle;
 
 		width: 1em;
 		height: 1em;
@@ -122,6 +121,7 @@
 		height: 1em;
 		display: inline-block;
 		position: relative;
+		vertical-align: middle;
 
 		&:before {
 			position: absolute;
@@ -167,6 +167,7 @@
 		height: 1em;
 		display: inline-block;
 		position: relative;
+		vertical-align: middle;
 
 		&:before {
 			content: '';
