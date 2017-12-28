@@ -104,14 +104,19 @@ class Select extends React.Component {
 	};
 
 	render() {
-		const { disabled, size, className, value, multi, children, noSelectAll, ...props } = this.props;
+		const {
+			disabled, size, title, className, value, multi, children, noSelectAll,
+			...props
+		} = this.props;
 		delete props.onChange;
 
 		// =============================== Value ===============================
 		const optionList = getNodeList(children);
 
 		let $value;
-		if (multi) {
+		if (title !== undefined) {
+			$value = title || '\u00A0';
+		} else if (multi) {
 			const valueList = toArray(value);
 			$value = (
 				<ul className="bmbo-list-inline">
@@ -124,11 +129,7 @@ class Select extends React.Component {
 				</ul>
 			);
 		} else {
-			$value = (
-				<ul className="bmbo-list-inline">
-					<li>{getTitle(optionList, value) || '\u00A0'}</li>
-				</ul>
-			);
+			$value = getTitle(optionList, value) || '\u00A0';
 		}
 
 		// ================================ List ===============================
@@ -190,6 +191,7 @@ Select.propTypes = {
 	onChange: PropTypes.func,
 	size: PropTypes.string,
 	className: PropTypes.string,
+	title: PropTypes.node,
 	value: PropTypes.any,
 	children: PropTypes.node,
 	multi: PropTypes.bool,

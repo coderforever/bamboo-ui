@@ -28,12 +28,21 @@ class SelectPage extends React.Component {
 				optionDisabled: false,
 				groupDisabled: false,
 				groupNoSelectAll: false,
+				customizeTitle: false,
 			},
 		};
 	}
 
 	getSampleCode = () => {
-		const { optionDisabled, groupDisabled, groupNoSelectAll, ...form } = this.state.form;
+		const {
+			optionDisabled, groupDisabled, groupNoSelectAll, customizeTitle,
+			...form
+		} = this.state.form;
+
+		if (customizeTitle) {
+			form.title = `My Value: ${form.value}`;
+		}
+
 		return `
 const VALUE_LIST = ${JSON.stringify(VALUE_LIST)};
 
@@ -65,6 +74,7 @@ const VALUE_LIST = ${JSON.stringify(VALUE_LIST)};
 									size={form.size}
 									disabled={form.disabled}
 									noSelectAll={form.noSelectAll}
+									title={form.customizeTitle ? `My Value: ${form.value}` : undefined}
 								>
 									<Select.Group title="Group 1" disabled={form.groupDisabled} noSelectAll={form.groupNoSelectAll}>
 										<Select.Option>Group Value 1</Select.Option>
@@ -118,6 +128,10 @@ const VALUE_LIST = ${JSON.stringify(VALUE_LIST)};
 
 							<Form.Field name="groupDisabled" title="Group Disabled">
 								<Checkbox>Group Disabled</Checkbox>
+							</Form.Field>
+
+							<Form.Field name="customizeTitle" title="Customize Title">
+								<Checkbox>Customize Title</Checkbox>
 							</Form.Field>
 						</Form>
 					</div>
