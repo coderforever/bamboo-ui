@@ -12,7 +12,8 @@ function getMatch(numerator, denominator, total) {
 }
 
 function getName(val) {
-	const match = Array.isArray(val) ? [null, ...val] : val.match(REGEX);
+	const myVal = val === '1' ? '1/1' : val;
+	const match = Array.isArray(myVal) ? [null, ...myVal] : myVal.match(REGEX);
 
 	// Return full row if not match
 	if (!match) return '10-10';
