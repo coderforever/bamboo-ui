@@ -32,8 +32,11 @@ export function getValueList(children = []) {
 
 class SelectGroup extends React.Component {
 	getChildContext() {
+		const { bmboSelectDisabled } = this.context;
+
 		return {
-			bmboSelectDisabled: this.props.disabled,
+			bmboSelectDisabled: this.props.disabled !== undefined ?
+				this.props.disabled : bmboSelectDisabled,
 		};
 	}
 
@@ -55,14 +58,21 @@ class SelectGroup extends React.Component {
 
 	render() {
 		const { title, children, noSelectAll, disabled, ...props } = this.props;
-		const { bmboSelectMulti, bmboSelectSize } = this.context;
+		const { bmboSelectMulti, bmboSelectSize, bmboSelectDisabled } = this.context;
+
+		let myDisabled;
+		if (disabled !== undefined) {
+			myDisabled = disabled;
+		} else if (bmboSelectDisabled !== undefined) {
+			myDisabled = bmboSelectDisabled;
+		}
 
 		let $title = title;
 		let selectAllProps = {};
 
 		if (bmboSelectMulti && !noSelectAll) {
 			$title = (
-				<Checkbox size={bmboSelectSize} disabled={disabled} checked={this.isAllSelected()}>
+				<Checkbox size={bmboSelectSize} disabled={myDisabled} checked={this.isAllSelected()}>
 					{title}
 				</Checkbox>
 			);
@@ -70,7 +80,7 @@ class SelectGroup extends React.Component {
 			selectAllProps = {
 				role: 'button',
 				tabIndex: -1,
-				onClick: disabled ? null : this.selectAllValue,
+				onClick: myDisabled ? null : this.selectAllValue,
 			};
 		} else {
 			$title = <span>{title}</span>;
@@ -109,6 +119,7 @@ SelectGroup.childContextTypes = {
 SelectGroup.contextTypes = {
 	bmboSelectSize: PropTypes.string,
 	bmboSelectMulti: PropTypes.bool,
+	bmboSelectDisabled: PropTypes.bool,
 	bmboOnSelectValue: PropTypes.func,
 	bmboOnSelectValues: PropTypes.func,
 	bmboSelectIsChecked: PropTypes.func,

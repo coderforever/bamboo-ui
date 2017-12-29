@@ -21,6 +21,7 @@ class PinBoxPage extends React.Component {
 				trigger: 'click',
 				backdrop: false,
 				stretch: false,
+				disabled: false,
 			},
 		};
 	}
@@ -75,6 +76,7 @@ const $pin = (
 							trigger={form.trigger}
 							backdrop={form.backdrop}
 							stretch={form.stretch}
+							disabled={form.disabled}
 							pin={$pin}
 							onVisibilityChange={(visibility) => {
 								console.log('Do trigger:', visibility);
@@ -98,6 +100,10 @@ const $pin = (
 										{isDefault && ' (default)'}
 									</Radio>
 								))}
+							</Form.Field>
+
+							<Form.Field name="disabled" title="Disabled">
+								<Checkbox>disabled</Checkbox>
 							</Form.Field>
 
 							<Form.Field name="backdrop" title="Backdrop">

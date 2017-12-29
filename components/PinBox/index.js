@@ -24,7 +24,9 @@ class PinBox extends React.Component {
 	};
 
 	onClick = () => {
-		const { backdrop } = this.props;
+		const { backdrop, disabled } = this.props;
+
+		if (disabled) return;
 
 		this.setState(({ visible }) => {
 			const newState = { visible: !visible };
@@ -116,6 +118,7 @@ PinBox.propTypes = {
 	stretch: PropTypes.bool,
 	children: PropTypes.node,
 	pin: PropTypes.node,
+	disabled: PropTypes.bool,
 
 	onVisibilityChange: PropTypes.func,
 	onVisibilityChanged: PropTypes.func,

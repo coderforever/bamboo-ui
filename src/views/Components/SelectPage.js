@@ -15,6 +15,11 @@ const VALUE_LIST = [
 	'Just So So',
 ];
 
+function toDisabled(disabled) {
+	if (disabled === true) return true;
+	return undefined;
+}
+
 class SelectPage extends React.Component {
 	constructor() {
 		super();
@@ -29,6 +34,7 @@ class SelectPage extends React.Component {
 				groupDisabled: false,
 				groupNoSelectAll: false,
 				customizeTitle: false,
+				flatten: false,
 			},
 		};
 	}
@@ -75,14 +81,15 @@ const VALUE_LIST = ${JSON.stringify(VALUE_LIST)};
 									disabled={form.disabled}
 									noSelectAll={form.noSelectAll}
 									title={form.customizeTitle ? `My Value: ${form.value}` : undefined}
+									flatten={form.flatten}
 								>
-									<Select.Group title="Group 1" disabled={form.groupDisabled} noSelectAll={form.groupNoSelectAll}>
+									<Select.Group title="Group 1" disabled={toDisabled(form.groupDisabled)} noSelectAll={form.groupNoSelectAll}>
 										<Select.Option>Group Value 1</Select.Option>
 										<Select.Option>Group Value 2</Select.Option>
 										<Select.Option>Group Value 3</Select.Option>
 									</Select.Group>
 									{VALUE_LIST.map(val => (
-										<Select.Option key={val} disabled={form.optionDisabled}>
+										<Select.Option key={val} disabled={toDisabled(form.optionDisabled)}>
 											{val}
 										</Select.Option>
 									))}
@@ -105,6 +112,14 @@ const VALUE_LIST = ${JSON.stringify(VALUE_LIST)};
 							<Form.Field name="multi" title="Multi">
 								<Checkbox>multi</Checkbox>
 							</Form.Field>
+
+							{form.multi &&
+								<Form.Field name="flatten" title="Flatten">
+									<Checkbox>
+										Flatten the list. Only work in <code>multi</code> mode
+									</Checkbox>
+								</Form.Field>
+							}
 
 							{form.multi &&
 								<Form.Field name="noSelectAll" title="No Select All">

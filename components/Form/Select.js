@@ -22,6 +22,7 @@ class Select extends React.Component {
 		return {
 			bmboSelectSize: this.props.size,
 			bmboSelectMulti: this.props.multi,
+			bmboSelectDisabled: this.props.disabled,
 			bmboOnSelectValue: this.onSelectValue,
 			bmboOnSelectValues: this.onSelectValues,
 			bmboSelectIsChecked: this.isValueChecked,
@@ -105,7 +106,9 @@ class Select extends React.Component {
 
 	render() {
 		const {
-			disabled, size, title, className, value, multi, children, noSelectAll,
+			disabled, size, title, className, value,
+			multi, flatten, noSelectAll,
+			children,
 			...props
 		} = this.props;
 		delete props.onChange;
@@ -135,7 +138,7 @@ class Select extends React.Component {
 		// ================================ List ===============================
 		const canSelectAll = !noSelectAll && optionList.every(opt => !opt.disabled);
 
-		const $list = disabled ? null : (
+		const $list = (
 			<ul
 				className={classNames(
 					'bmbo-select-list',
@@ -158,8 +161,24 @@ class Select extends React.Component {
 		);
 
 		// =============================== Render ==============================
+		if (multi && flatten) {
+			return (
+				<div
+					className={classNames(
+						'bmbo-select',
+						'bmbo-select-flatten',
+						disabled && 'bmbo-disabled',
+					)}
+					{...props}
+					ref={this.setRef}
+				>
+					{$list}
+				</div>
+			);
+		}
+
 		return (
-			<PinBox pin={$list} ref={this.setPinRef} backdrop stretch>
+			<PinBox pin={$list} ref={this.setPinRef} disabled={disabled} backdrop stretch>
 				<div
 					className={classNames(
 						'bmbo-select',
@@ -197,11 +216,13 @@ Select.propTypes = {
 	multi: PropTypes.bool,
 	disabled: PropTypes.bool,
 	noSelectAll: PropTypes.bool,
+	flatten: PropTypes.bool,
 };
 
 Select.childContextTypes = {
 	bmboSelectSize: PropTypes.string,
 	bmboSelectMulti: PropTypes.bool,
+	bmboSelectDisabled: PropTypes.bool,
 	bmboSelectIsChecked: PropTypes.func,
 	bmboSelectIsAllChecked: PropTypes.func,
 	bmboOnSelectValue: PropTypes.func,
