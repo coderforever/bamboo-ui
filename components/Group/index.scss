@@ -28,7 +28,13 @@
 			vertical-align: top;
 		}
 
+		> .bmbp-form-field {
+			margin: 0;
+		}
+
 		&.bmbo-middle {
+			> .bmbp-form-field > .bmbo-button,
+			> .bmbp-form-field > .bmbo-input,
 			> .bmbo-button,
 			> .bmbo-input {
 				border-radius: 0;
@@ -36,6 +42,8 @@
 		}
 
 		&.bmbo-first {
+			> .bmbp-form-field > .bmbo-button,
+			> .bmbp-form-field > .bmbo-input,
 			> .bmbo-button,
 			> .bmbo-input {
 				border-top-right-radius: 0;
@@ -44,6 +52,8 @@
 		}
 
 		&.bmbo-last {
+			> .bmbp-form-field > .bmbo-button,
+			> .bmbp-form-field > .bmbo-input,
 			> .bmbo-button,
 			> .bmbo-input {
 				border-top-left-radius: 0;
