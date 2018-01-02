@@ -27,6 +27,7 @@ class Nav extends React.Component {
 Nav.propTypes = {
 	vertical: PropTypes.bool,
 	type: PropTypes.string,
+	inline: PropTypes.bool,
 };
 
 Nav.childContextTypes = {

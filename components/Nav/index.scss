@@ -82,6 +82,10 @@
 		pointer-events: none;
 	}
 
+	a {
+		color: inherit;
+	}
+
 	@include navItemColor(lead);
 	@include navItemColor(deprecated);
 	@include navItemColor(primary);
