@@ -30,6 +30,10 @@ class Box extends React.Component {
 		this.checkUpdate(this.props, nextProps);
 	}
 
+	componentWillUnmount() {
+		this.seq.destroy();
+	}
+
 	onTransitionEnd = (event) => {
 		if (this.state.animateStatus === ANIMATE_STATUS_HIDING && event.target === this.$ele) {
 			this.seq.next(() => {
