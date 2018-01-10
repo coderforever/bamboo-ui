@@ -11,7 +11,10 @@ function getMatch(numerator, denominator, total) {
 	return `${numerator * multiple}-${total}`;
 }
 
-function getName(val) {
+function getName(prefix, val) {
+	if (!val) return '';
+	if (val === '0') return `${prefix}0`;
+
 	const myVal = val === '1' ? '1/1' : val;
 	const match = Array.isArray(myVal) ? [null, ...myVal] : myVal.match(REGEX);
 
@@ -21,7 +24,8 @@ function getName(val) {
 	const numerator = Number(match[1]);
 	const denominator = Number(match[2]);
 
-	return getMatch(numerator, denominator, 24) || getMatch(numerator, denominator, 10);
+	const cal = getMatch(numerator, denominator, 24) || getMatch(numerator, denominator, 10);
+	return `${prefix}${cal}`;
 }
 
 const Col = (props, context) => {
@@ -32,17 +36,17 @@ const Col = (props, context) => {
 	} = props;
 	const { rowGutter } = context;
 
-	const xsClassName = xs ? `bmbo-col-xs-${getName(xs)}` : '';
-	const smClassName = sm ? `bmbo-col-sm-${getName(sm)}` : '';
-	const mdClassName = md ? `bmbo-col-md-${getName(md)}` : '';
-	const lgClassName = lg ? `bmbo-col-lg-${getName(lg)}` : '';
-	const xlClassName = xl ? `bmbo-col-xl-${getName(xl)}` : '';
+	const xsClassName = getName('bmbo-col-xs-', xs);
+	const smClassName = getName('bmbo-col-sm-', sm);
+	const mdClassName = getName('bmbo-col-md-', md);
+	const lgClassName = getName('bmbo-col-lg-', lg);
+	const xlClassName = getName('bmbo-col-xl-', xl);
 
-	const xsOffsetClassName = xsOffset ? `bmbo-col-xs-offset-${getName(xsOffset)}` : '';
-	const smOffsetClassName = smOffset ? `bmbo-col-sm-offset-${getName(smOffset)}` : '';
-	const mdOffsetClassName = mdOffset ? `bmbo-col-md-offset-${getName(mdOffset)}` : '';
-	const lgOffsetClassName = lgOffset ? `bmbo-col-lg-offset-${getName(lgOffset)}` : '';
-	const xlOffsetClassName = xlOffset ? `bmbo-col-xl-offset-${getName(xlOffset)}` : '';
+	const xsOffsetClassName = getName('bmbo-col-xs-offset-', xsOffset);
+	const smOffsetClassName = getName('bmbo-col-sm-offset-', smOffset);
+	const mdOffsetClassName = getName('bmbo-col-md-offset-', mdOffset);
+	const lgOffsetClassName = getName('bmbo-col-lg-offset-', lgOffset);
+	const xlOffsetClassName = getName('bmbo-col-xl-offset-', xlOffset);
 
 	const hg = rowGutter / 2;
 

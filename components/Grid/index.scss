@@ -25,6 +25,10 @@
 		}
 	}
 
+	.bmbo-col-#{$size}-0 {
+		width: 0;
+	}
+
 	// Offset
 	@for $i from 1 through 24 {
 		.bmbo-col-#{$size}-offset-#{$i}-24 {
@@ -36,6 +40,10 @@
 		.bmbo-col-#{$size}-offset-#{$i}-10 {
 			margin-left: percentage($i / 10);
 		}
+	}
+
+	.bmbo-col-#{$size}-offset-0 {
+		margin-left: 0;
 	}
 }
 
