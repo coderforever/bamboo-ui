@@ -24,20 +24,39 @@ function getName(val) {
 	return getMatch(numerator, denominator, 24) || getMatch(numerator, denominator, 10);
 }
 
-const Col = ({ xs, sm, md, lg, xl, children, className, ...props }, { rowGutter }) => {
+const Col = (props, context) => {
+	const {
+		xs, sm, md, lg, xl,
+		xsOffset, smOffset, mdOffset, lgOffset, xlOffset,
+		children, className, ...rest
+	} = props;
+	const { rowGutter } = context;
+
 	const xsClassName = xs ? `bmbo-col-xs-${getName(xs)}` : '';
 	const smClassName = sm ? `bmbo-col-sm-${getName(sm)}` : '';
 	const mdClassName = md ? `bmbo-col-md-${getName(md)}` : '';
 	const lgClassName = lg ? `bmbo-col-lg-${getName(lg)}` : '';
 	const xlClassName = xl ? `bmbo-col-xl-${getName(xl)}` : '';
 
+	const xsOffsetClassName = xsOffset ? `bmbo-col-xs-offset-${getName(xsOffset)}` : '';
+	const smOffsetClassName = smOffset ? `bmbo-col-sm-offset-${getName(smOffset)}` : '';
+	const mdOffsetClassName = mdOffset ? `bmbo-col-md-offset-${getName(mdOffset)}` : '';
+	const lgOffsetClassName = lgOffset ? `bmbo-col-lg-offset-${getName(lgOffset)}` : '';
+	const xlOffsetClassName = xlOffset ? `bmbo-col-xl-offset-${getName(xlOffset)}` : '';
+
 	const hg = rowGutter / 2;
 
 	return (
 		<div
-			className={classNames('bmbo-col', xsClassName, smClassName, mdClassName, lgClassName, xlClassName, className)}
+			className={classNames(
+				'bmbo-col',
+				xsClassName, smClassName, mdClassName, lgClassName, xlClassName,
+				xsOffsetClassName, smOffsetClassName,
+				mdOffsetClassName, lgOffsetClassName, xlOffsetClassName,
+				className,
+			)}
 			style={{ paddingLeft: `${hg}px`, paddingRight: `${hg}px` }}
-			{...props}
+			{...rest}
 		>
 			{children}
 		</div>
@@ -46,11 +65,19 @@ const Col = ({ xs, sm, md, lg, xl, children, className, ...props }, { rowGutter 
 
 Col.propTypes = {
 	className: PropTypes.string,
+
 	xs: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 	sm: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 	md: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 	lg: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 	xl: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+
+	xsOffset: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+	smOffset: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+	mdOffset: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+	lgOffset: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+	xlOffset: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+
 	children: PropTypes.node,
 };
 

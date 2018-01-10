@@ -34,6 +34,7 @@ class GridPage extends React.Component {
 		this.state = {
 			form: {
 				countIndex: 1,
+				hasOffset: false,
 				gutter: 15,
 			},
 		};
@@ -46,8 +47,13 @@ class GridPage extends React.Component {
 			gutter = ` gutter={${Math.max(0, form.gutter)}}`;
 		}
 
+		let offset = '';
+		if (form.hasOffset) {
+			offset = ' xsOffset="1/12"';
+		}
+
 		return `<Row${gutter}>
-   <Col xs="1/${GRID_COUNT[form.countIndex]}">Column</Col>
+   <Col xs="1/${GRID_COUNT[form.countIndex]}"${offset}>Column</Col>
 </Row>`;
 	};
 
@@ -56,8 +62,8 @@ class GridPage extends React.Component {
 		const $cols = [];
 
 		const sampleCount = GRID_COUNT[form.countIndex];
-		for (let i = 0; i < sampleCount; i += 1) {
-			$cols.push(<Col key={i} xs={[1, sampleCount]}>
+		for (let i = 0; i < (form.hasOffset ? 1 : sampleCount); i += 1) {
+			$cols.push(<Col key={i} xs={[1, sampleCount]} xsOffset={form.hasOffset ? '1/12' : null}>
 				<div styleName="col" />
 			</Col>);
 		}
@@ -98,6 +104,9 @@ class GridPage extends React.Component {
 						<Form instance={this} path="form">
 							<Form.Field name="countIndex" title="Count">
 								<Slider marks={GRID_COUNT_MARKS} min={0} max={GRID_COUNT.length - 1} />
+							</Form.Field>
+							<Form.Field name="hasOffset" title="With Offset">
+								<Checkbox>Show with offset: 1/12</Checkbox>
 							</Form.Field>
 							<Form.Field name="gutter" title="Gutter ( >= 0)">
 								<Input type="number" />

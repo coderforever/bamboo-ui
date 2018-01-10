@@ -11,72 +11,45 @@
 	box-sizing: border-box;
 }
 
-@for $i from 1 through 24 {
-	.bmbo-col-#{$i}-24,
-	.bmbo-col-xs-#{$i}-24 {
-		width: percentage($i / 24);
+@mixin gridColumns($size) {
+	// Columns
+	@for $i from 1 through 24 {
+		.bmbo-col-#{$size}-#{$i}-24 {
+			width: percentage($i / 24);
+		}
+	}
+
+	@for $i from 1 through 10 {
+		.bmbo-col-#{$size}-#{$i}-10 {
+			width: percentage($i / 10);
+		}
+	}
+
+	// Offset
+	@for $i from 1 through 24 {
+		.bmbo-col-#{$size}-offset-#{$i}-24 {
+			margin-left: percentage($i / 24);
+		}
+	}
+
+	@for $i from 1 through 10 {
+		.bmbo-col-#{$size}-offset-#{$i}-10 {
+			margin-left: percentage($i / 10);
+		}
 	}
 }
 
-@for $i from 1 through 10 {
-	.bmbo-col-#{$i}-10,
-	.bmbo-col-xs-#{$i}-10 {
-		width: percentage($i / 10);
-	}
-}
+@include gridColumns(xs)
 
 @media (min-width: 576px) {
-	@for $i from 1 through 24 {
-		.bmbo-col-sm-#{$i}-24 {
-			width: percentage($i / 24);
-		}
-	}
-
-	@for $i from 1 through 10 {
-		.bmbo-col-sm-#{$i}-10 {
-			width: percentage($i / 10);
-		}
-	}
+	@include gridColumns(sm)
 }
-
 @media (min-width: 768px) {
-	@for $i from 1 through 24 {
-		.bmbo-col-md-#{$i}-24 {
-			width: percentage($i / 24);
-		}
-	}
-
-	@for $i from 1 through 10 {
-		.bmbo-col-md-#{$i}-10 {
-			width: percentage($i / 10);
-		}
-	}
+	@include gridColumns(md)
 }
-
 @media (min-width: 992px) {
-	@for $i from 1 through 24 {
-		.bmbo-col-lg-#{$i}-24 {
-			width: percentage($i / 24);
-		}
-	}
-
-	@for $i from 1 through 10 {
-		.bmbo-col-lg-#{$i}-10 {
-			width: percentage($i / 10);
-		}
-	}
+	@include gridColumns(lg)
 }
-
 @media (min-width: 1200px) {
-	@for $i from 1 through 24 {
-		.bmbo-col-xl-#{$i}-24 {
-			width: percentage($i / 24);
-		}
-	}
-
-	@for $i from 1 through 10 {
-		.bmbo-col-xl-#{$i}-10 {
-			width: percentage($i / 10);
-		}
-	}
+	@include gridColumns(xl)
 }
