@@ -16,6 +16,10 @@ class PinBox extends React.Component {
 		};
 	}
 
+	componentWillUnmount() {
+		removeUniqueListener('mousedown', this.onBackdrop);
+	}
+
 	onBackdrop = (event) => {
 		if (isSameSource(event, findDOMNode(this.$ele))) return;
 
