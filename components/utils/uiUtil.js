@@ -156,8 +156,9 @@ export const getEnablePosition = (surroundRect, targetRect, position = 'dr') => 
 	const sy = surroundRect.top || 0;
 	const { width: tw = 0, height: th = 0 } = targetRect;
 
-	const winWidth = getWinWidth();
-	const winHeight = getWinHeight();
+	// Since decimals will cause scroll, let's shorten the window size.
+	const winWidth = getWinWidth() - 1;
+	const winHeight = getWinHeight() - 1;
 	const scrollX = window.scrollX;
 	const scrollY = window.scrollY;
 
