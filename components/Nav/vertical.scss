@@ -19,6 +19,7 @@
 			left: 0;
 			width: 5px;
 			background: #FFF;
+			pointer-events: none;
 
 			opacity: 0;
 			transform: scaleY(0);
@@ -69,9 +70,7 @@
 			pointer-events: none;
 			opacity: 0.5;
 		}
-	}
 
-	.bmbo-nav-item {
 		a:before {
 			content: '';
 			position: absolute;

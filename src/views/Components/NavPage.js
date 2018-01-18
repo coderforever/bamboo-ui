@@ -65,7 +65,15 @@ class NavPage extends React.Component {
 									<Navigation.Group title="Group 1" active={form.active === 0}>
 										<Navigation.Item>Item 1</Navigation.Item>
 										<Navigation.Item>Item 2</Navigation.Item>
-										<Navigation.Item>Item 3</Navigation.Item>
+										<Navigation.Item>
+											<a
+												href="https://github.com/zombieJ/bamboo-ui"
+												target="_blank"
+												rel="noopener noreferrer"
+											>
+												Link
+											</a>
+										</Navigation.Item>
 									</Navigation.Group>
 									<Navigation.Item active={form.active === 1}>
 										<a
@@ -73,7 +81,7 @@ class NavPage extends React.Component {
 											target="_blank"
 											rel="noopener noreferrer"
 										>
-											Item 1
+											Link
 										</a>
 									</Navigation.Item>
 									<Navigation.Item active={form.active === 2} disabled>
