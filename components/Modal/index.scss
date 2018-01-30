@@ -4,7 +4,8 @@
 	&.bmbo-modal-#{$name} {
 		.bmbo-dialog-holder {
 			.bmbo-dialog {
-				max-width: $width;
+				max-width: 100%;
+				width: $width;
 			}
 		}
 	}
@@ -44,7 +45,6 @@
 
 		.bmbo-dialog {
 			background: #FFF;
-			width: 600px;
 			display: table-cell;
 			vertical-align: top;
 			position: relative;
@@ -124,6 +124,7 @@
 
 	@include boxSize(xs, 300px);
 	@include boxSize(sm, 450px);
+	@include boxSize(md, 600px);
 	@include boxSize(lg, 900px);
 	@include boxSize(xl, 1200px);
 

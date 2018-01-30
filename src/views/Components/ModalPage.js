@@ -7,7 +7,7 @@ import {
 	Modal,
 } from '../../../components';
 
-import { TYPE_LIST } from '../../utils/enum';
+import { TYPE_LIST, SIZE_LIST } from '../../utils/enum';
 import { toString } from '../../utils/objectUtil';
 
 class GroupPage extends React.Component {
@@ -16,6 +16,7 @@ class GroupPage extends React.Component {
 		this.state = {
 			visible: false,
 			typesVisible: {},
+			sizesVisible: {},
 			prefaceVisible: false,
 			confirmVisible: false,
 			loadingVisible: false,
@@ -32,7 +33,7 @@ class GroupPage extends React.Component {
 
 	render() {
 		const {
-			visible, typesVisible, prefaceVisible, confirmVisible,
+			visible, typesVisible, sizesVisible, prefaceVisible, confirmVisible,
 			loadingVisible, loading,
 			lockVisible, lock,
 		} = this.state;
@@ -93,6 +94,42 @@ Hello, Bamboo UI!~
 									this.setState({
 										typesVisible: {
 											...typesVisible,
+											[name]: false,
+										},
+									});
+								}}
+							>
+								Hello, Bamboo UI!~
+							</Modal>
+						</div>
+					))}
+				</div>
+
+				<h2>设置尺寸</h2>
+				<p>
+					同时，你可以通过设置尺寸来显示对应大小的对话框。
+				</p>
+				<div className="preview">
+					{SIZE_LIST.map(({ name, displayName }) => (
+						<div className="inline" key={name}>
+							<Button
+								onClick={() => {
+									this.setState({
+										sizesVisible: {
+											...sizesVisible,
+											[name]: true,
+										},
+									});
+								}}
+							>{displayName}</Button>{' '}
+							<Modal
+								title="Primary Modal"
+								size={name}
+								visible={sizesVisible[name]}
+								onClose={() => {
+									this.setState({
+										sizesVisible: {
+											...sizesVisible,
 											[name]: false,
 										},
 									});

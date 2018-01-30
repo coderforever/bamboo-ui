@@ -237,7 +237,7 @@ class Modal extends React.Component {
 						'bmbo-loading': loading,
 						className,
 					},
-					size && `bmbo-modal-${size}`,
+					`bmbo-modal-${size || 'md'}`,
 					type && `bmbo-${type}`,
 				)}
 				role="presentation"
