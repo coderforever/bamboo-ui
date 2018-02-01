@@ -26,3 +26,4 @@ export Label from './Label';
 export PinBox from './PinBox';
 export FlatList from './FlatList';
 export Picker from './Picker';
+export Pagination from './Pagination';
