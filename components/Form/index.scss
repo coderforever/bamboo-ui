@@ -22,3 +22,7 @@
 		}
 	}
 }
+
+.bmbo-form-label {
+	@include fieldLabel;
+}
