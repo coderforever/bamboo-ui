@@ -43,7 +43,7 @@ class SelectOption extends React.Component {
 			$children = (
 				<Checkbox
 					size={bmboSelectSize}
-					checked={bmboSelectIsChecked(value || children)}
+					checked={bmboSelectIsChecked(value === undefined ? children : value)}
 					disabled={myDisabled}
 				>
 					{children}
