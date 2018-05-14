@@ -1,10 +1,7 @@
-# Bamboo UI (dev)
-使用全新CSS及HTML特性构建的React现代游览器组件库。
-在线演示请点击[这里](http://zombiej.github.io/bamboo-ui).
+# Bamboo UI
+A brand-new React UI Component library. [Online Demo](http://zombiej.github.io/bamboo-ui).
 
-(基于react 16开发。项目未完成，请勿直接使用)
-
-### 安装
+### Installation
 ```bash
 npm install --save bamboo-ui
 ```
